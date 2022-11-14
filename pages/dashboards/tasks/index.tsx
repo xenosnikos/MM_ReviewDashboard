@@ -178,7 +178,9 @@ function DashboardTasks() {
                 </>
               )}
               {currentTab === 'reviews' && (
-                <ReviewsTable />
+                <Grid item xs={12}>
+                  <ReviewsTable />
+                </Grid>
               )}
             </Grid>
           </Box>
@@ -189,6 +191,6 @@ function DashboardTasks() {
   );
 }
 
-DashboardTasks.getLayout = (page) => <SidebarLayout>{page}</SidebarLayout>;
+DashboardTasks.getLayout = (page) => page;
 
 export default DashboardTasks;
