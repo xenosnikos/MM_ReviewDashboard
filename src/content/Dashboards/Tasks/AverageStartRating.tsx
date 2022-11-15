@@ -52,7 +52,7 @@ function AverageStartRating() {
           >
             4.09
           </Typography>
-          <Rating value={4.09} defaultValue={5} precision={0.01} readOnly />
+          <Rating value={4.09} defaultValue={5} precision={0.1} readOnly />
         </Box>
       </CardContent>
     </RootWrapper>

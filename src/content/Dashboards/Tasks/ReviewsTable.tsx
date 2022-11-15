@@ -206,7 +206,7 @@ function ReviewsTable() {
                   </TableCell>
                   <TableCell>
                     <Box display="flex" alignItems="center" gap={1}>
-                      <Rating value={review.rating} defaultValue={5} precision={0.01} readOnly />
+                      <Rating value={review.rating} defaultValue={5} precision={0.1} readOnly />
                       {review.rating}
                     </Box>
                   </TableCell>

@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import SidebarLayout from '@/layouts/SidebarLayout';
 import { ChangeEvent, useState } from 'react';
 import PageHeader from '@/content/Dashboards/Tasks/PageHeader';
 import Footer from '@/components/Footer';
@@ -21,6 +20,8 @@ import ReviewGrowth from '@/content/Dashboards/Tasks/ReviewGrowth';
 import StarRatingBreakDown from '@/content/Dashboards/Tasks/StarRatingBreakDown';
 import ReviewSourceBreakDown from '@/content/Dashboards/Tasks/ReviewSourceBreakDown';
 import ReviewsTable from '@/content/Dashboards/Tasks/ReviewsTable';
+import SourceGraph from '@/content/Dashboards/Tasks/SourceGraph';
+import SourceTable from '@/content/Dashboards/Tasks/SourceTable';
 
 const TabsContainerWrapper = styled(Box)(
   ({ theme }) => `
@@ -181,6 +182,16 @@ function DashboardTasks() {
                 <Grid item xs={12}>
                   <ReviewsTable />
                 </Grid>
+              )}
+              {currentTab === 'sources' && (
+                <>
+                  <Grid item xs={12}>
+                    <SourceGraph />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <SourceTable />
+                  </Grid>
+                </>
               )}
             </Grid>
           </Box>
