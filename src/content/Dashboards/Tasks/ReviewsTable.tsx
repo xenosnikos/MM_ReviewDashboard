@@ -17,46 +17,63 @@ import {
   TableCell,
   TableBody,
   TablePagination,
-  Rating
+  Rating,
+  InputLabel
 } from '@mui/material';
+import { getReviewsData } from '@/services';
+import { providers, ratings } from '@/helpers/constant';
+const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL;
 
-function ReviewsTable() {
+function ReviewsTable({ client }) {
   const theme = useTheme();
-  const [selected, setSelected] = useState([]);
+  const [selectedSources, setSelectedSources] = useState(providers);
+  const [selectedRatings, setSelectedRatings] = useState(ratings);
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(5);
+  const [data, setData] = useState(null);
 
-  const sourcesOptions = [
-    "Foursquare",
-    "WebLocal",
-    "Glassdoor",
-    "Yellow Pages",
-    "Google",
-    "Yelp"
-  ];
+  const isAllSelectedSources = providers.length > 0 && selectedSources.length === providers.length;
+  const isAllSelectedRatings = ratings.length > 0 && selectedRatings.length === ratings.length;
 
-  const isAllSelected = sourcesOptions.length > 0 && selected.length === sourcesOptions.length;
+  const getData = (url: string) => {
+    getReviewsData(url, {client, per_page: limit, page: page + 1, sources: JSON.stringify(selectedSources), ratings: JSON.stringify(selectedRatings)})
+      .then(response => setData(response))
+      .catch(error => console.log(error));
+  }
 
-  const handleChange = (event) => {
+  const handleChangeSelectSources = (event) => {
     const value = event.target.value;
     if (value[value.length - 1] === "all") {
-      setSelected(selected.length === sourcesOptions.length ? [] : sourcesOptions);
+      setSelectedSources(selectedSources.length === providers.length ? [] : providers);
       return;
     }
-    setSelected(value);
+    setSelectedSources(value);
   };
 
-  const reviews = [
-    {date: '1st Nov 2022', source: 'Google', rating: 5, review: 'Very helpful staff, fast service and accurate timing', reviewer: 'Antonios Oueiss', status: 'Unread'},
-    {date: '1st Nov 2022', source: 'Google', rating: 5, review: 'Very helpful staff, fast service and accurate timing', reviewer: 'Antonios Oueiss', status: 'Unread'},
-    {date: '1st Nov 2022', source: 'Google', rating: 5, review: 'Very helpful staff, fast service and accurate timing', reviewer: 'Antonios Oueiss', status: 'Unread'},
-    {date: '1st Nov 2022', source: 'Google', rating: 5, review: 'Very helpful staff, fast service and accurate timing', reviewer: 'Antonios Oueiss', status: 'Unread'},
-    {date: '1st Nov 2022', source: 'Google', rating: 5, review: 'Very helpful staff, fast service and accurate timing', reviewer: 'Antonios Oueiss', status: 'Unread'}
-  ];
+  const handleChangeSelectRatings = (event) => {
+    const value = event.target.value;
+    if (value[value.length - 1] === "all") {
+      setSelectedRatings(selectedRatings.length === ratings.length ? [] : ratings);
+      return;
+    }
+    setSelectedRatings(value);
+  }
+
+  const handlePageChange = (_event: any, newPage: number): void => {
+    setPage(newPage);
+  }
 
   useEffect(() => {
-    setPage(0);
-  }, [])
+    console.log(selectedRatings);
+  }, [selectedRatings])
+
+  useEffect(() => {
+    console.log(data);
+  }, [data])
+
+  useEffect(() => {
+    getData(`${BACKEND_API_URL}/getReviewsData`);
+  }, [page, limit, selectedSources, selectedRatings])
 
   return (
     <Box>
@@ -79,57 +96,61 @@ function ReviewsTable() {
             marginRight: 3
           }}
         >
-          Showing 1 to 20 of 582 Results
+          Showing {data?.from || 0} to {data?.to || 0} of {data?.total || 0} Results
         </Typography>
-        <FormControl>
+        <FormControl style={{minWidth: 150}}>
+          <InputLabel htmlFor="sourcesSelect">Select Sources</InputLabel>
           <Select
             multiple
-            value={selected}
-            renderValue={() => "Select Sources"}
-            onChange={handleChange}
+            inputProps={{
+              id: "sourcesSelect"
+            }}
+            value={selectedSources}
+            renderValue={() => {
+              return "Select Sources";
+            }}
+            notched={true}
+            onChange={handleChangeSelectSources}
+            autoWidth
           >
-            <MenuItem
-              value="all"
-            >
+            <MenuItem value="all">
               <ListItemIcon>
                 <Checkbox
-                  checked={isAllSelected}
-                  indeterminate={
-                    selected.length > 0 && selected.length < sourcesOptions.length
-                  }
+                  checked={isAllSelectedSources}
+                  indeterminate={selectedSources.length > 0 && selectedSources.length < providers.length}
                 />
               </ListItemIcon>
-              <ListItemText
-                primary="Select All"
-              />
+              <ListItemText primary="Select All"/>
             </MenuItem>
-            {sourcesOptions.map((option) => (
+            {providers.map((option) => (
               <MenuItem key={option} value={option}>
                 <ListItemIcon>
-                  <Checkbox
-                    checked={selected.indexOf(option) > -1}
-                  />
+                  <Checkbox checked={selectedSources.indexOf(option) > -1}/>
                 </ListItemIcon>
                 <ListItemText primary={option} />
               </MenuItem>
             ))}
           </Select>
         </FormControl>
-        <FormControl>
+        <FormControl style={{minWidth: 150}}>
+          <InputLabel htmlFor="ratingsSelect">Select Ratings</InputLabel>
           <Select
             multiple
-            value={selected}
+            inputProps={{
+              id: "ratingsSelect"
+            }}
+            value={selectedRatings}
             renderValue={() => "Select Ratings"}
-            onChange={handleChange}
+            onChange={handleChangeSelectRatings}
           >
             <MenuItem
               value="all"
             >
               <ListItemIcon>
                 <Checkbox
-                  checked={isAllSelected}
+                  checked={isAllSelectedRatings}
                   indeterminate={
-                    selected.length > 0 && selected.length < sourcesOptions.length
+                    selectedRatings.length > 0 && selectedRatings.length < ratings.length
                   }
                 />
               </ListItemIcon>
@@ -137,53 +158,57 @@ function ReviewsTable() {
                 primary="Select All"
               />
             </MenuItem>
-            {sourcesOptions.map((option) => (
+            {ratings.map((option) => (
               <MenuItem key={option} value={option}>
                 <ListItemIcon>
                   <Checkbox
-                    checked={selected.indexOf(option) > -1}
+                    checked={selectedRatings.indexOf(option) > -1}
                   />
                 </ListItemIcon>
-                <ListItemText primary={option} />
+                <ListItemText primary={option + " Stars"} />
               </MenuItem>
             ))}
           </Select>
         </FormControl>
-        <FormControl>
-          <Select
-            multiple
-            value={selected}
-            renderValue={() => "Select Time"}
-            onChange={handleChange}
-          >
-            <MenuItem
-              value="all"
-            >
-              <ListItemIcon>
-                <Checkbox
-                  checked={isAllSelected}
-                  indeterminate={
-                    selected.length > 0 && selected.length < sourcesOptions.length
-                  }
-                />
-              </ListItemIcon>
-              <ListItemText
-                primary="Select All"
-              />
-            </MenuItem>
-            {sourcesOptions.map((option) => (
-              <MenuItem key={option} value={option}>
-                <ListItemIcon>
-                  <Checkbox
-                    checked={selected.indexOf(option) > -1}
-                  />
-                </ListItemIcon>
-                <ListItemText primary={option} />
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <Button variant="outlined">
+        {/*<FormControl style={{minWidth: 150}}>*/}
+        {/*  <Select*/}
+        {/*    multiple*/}
+        {/*    value={selected}*/}
+        {/*    renderValue={() => "Select Time"}*/}
+        {/*    onChange={handleChange}*/}
+        {/*  >*/}
+        {/*    <MenuItem value="all">*/}
+        {/*      <ListItemIcon>*/}
+        {/*        <Checkbox*/}
+        {/*          checked={isAllSelected}*/}
+        {/*          indeterminate={*/}
+        {/*            selected.length > 0 && selected.length < providers.length*/}
+        {/*          }*/}
+        {/*        />*/}
+        {/*      </ListItemIcon>*/}
+        {/*      <ListItemText*/}
+        {/*        primary="Select All"*/}
+        {/*      />*/}
+        {/*    </MenuItem>*/}
+        {/*    {providers.map((option) => (*/}
+        {/*      <MenuItem key={option} value={option}>*/}
+        {/*        <ListItemIcon>*/}
+        {/*          <Checkbox*/}
+        {/*            checked={selected.indexOf(option) > -1}*/}
+        {/*          />*/}
+        {/*        </ListItemIcon>*/}
+        {/*        <ListItemText primary={option} />*/}
+        {/*      </MenuItem>*/}
+        {/*    ))}*/}
+        {/*  </Select>*/}
+        {/*</FormControl>*/}
+        <Button
+          variant="outlined"
+          onClick={() => {
+            setSelectedSources(providers);
+            setSelectedRatings(ratings);
+          }}
+        >
           Reset
         </Button>
       </Box>
@@ -195,12 +220,11 @@ function ReviewsTable() {
               <TableCell>Source</TableCell>
               <TableCell>Rating</TableCell>
               <TableCell>Review</TableCell>
-              <TableCell>Status</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {reviews.map((review, index) => {
+            {data?.data?.map((review, index) => {
               return (
                 <TableRow
                   hover
@@ -210,7 +234,7 @@ function ReviewsTable() {
                     {review.date}
                   </TableCell>
                   <TableCell>
-                    {review.source}
+                    {review.type}
                   </TableCell>
                   <TableCell>
                     <Box display="flex" alignItems="center" gap={1}>
@@ -224,12 +248,9 @@ function ReviewsTable() {
                         {review.review}
                       </Typography>
                       <Typography>
-                        Reviewer: {review.reviewer}
+                        Reviewer: {review.author}
                       </Typography>
                     </Box>
-                  </TableCell>
-                  <TableCell>
-                    {review.status}
                   </TableCell>
                   <TableCell>
                     <Button variant="outlined">
@@ -245,11 +266,12 @@ function ReviewsTable() {
       <Box p={2}>
         <TablePagination
           component="div"
-          count={20}
-          onPageChange={() => {
-
+          count={data?.total || 0}
+          onPageChange={handlePageChange}
+          onRowsPerPageChange={(event: ChangeEvent<HTMLInputElement>) => {
+            setPage(0);
+            setLimit(parseInt(event.target.value))
           }}
-          onRowsPerPageChange={(event: ChangeEvent<HTMLInputElement>) => setLimit(parseInt(event.target.value))}
           page={page}
           rowsPerPage={limit}
           rowsPerPageOptions={[5, 10, 25, 30]}

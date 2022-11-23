@@ -213,7 +213,9 @@ function DashboardTasks() {
               )}
               {currentTab === 'reviews' && (
                 <Grid item xs={12}>
-                  <ReviewsTable />
+                  <ReviewsTable
+                    client={client}
+                  />
                 </Grid>
               )}
               {currentTab === 'sources' && (

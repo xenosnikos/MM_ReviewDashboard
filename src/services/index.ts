@@ -16,13 +16,39 @@ const getDashboardData = (client: string) => {
             reject('Something went wrong');
         })
         .catch(error => {
-          console.log(error);
+          if (error?.message)
+            reject(error.message);
+          else
+            reject("Something went wrong");
         });
     }
   );
+}
 
+const getReviewsData = (url: string, params: {client: string, per_page: number, page: number, sources: string, ratings: string}) => {
+  return new Promise(
+    (resolve, reject) => {
+      axios
+        .get(url, {
+          params,
+        })
+        .then(response => {
+          if (response?.data?.status === 'success' && response?.data?.data)
+            resolve(response.data.data);
+          else
+            reject('Something went wrong');
+        })
+        .catch(error => {
+          if (error?.message)
+            reject(error.message);
+          else
+            reject("Something went wrong");
+        });
+    }
+  );
 }
 
 export {
-  getDashboardData
+  getDashboardData,
+  getReviewsData
 }
