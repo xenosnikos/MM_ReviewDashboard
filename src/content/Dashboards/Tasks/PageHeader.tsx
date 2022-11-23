@@ -34,12 +34,7 @@ const AvatarPageTitle = styled(Avatar)(
 `
 );
 
-function PageHeader() {
-  const user = {
-    name: 'Catherine Pike',
-    avatar: '/static/images/avatars/1.jpg'
-  };
-
+function PageHeader({ clientName }) {
   return (
     <Box
       display="flex"
@@ -52,12 +47,18 @@ function PageHeader() {
           <AddAlertTwoToneIcon fontSize="large" />
         </AvatarPageTitle>
         <Box>
-          <Typography variant="h3" component="h3" gutterBottom>
-            Welcome, {user.name}!
-          </Typography>
+          <Box display="flex">
+            <Typography variant="h3" component="h3" gutterBottom>
+              Welcome
+            </Typography>
+            {clientName &&
+            <Typography variant="h3" component="h3" gutterBottom>
+              , {clientName}!
+            </Typography>
+            }
+          </Box>
           <Typography variant="subtitle2">
-            Manage your day to day tasks with style! Enjoy a well built UI
-            system.
+            Monitor all your reviews in your new personal dashboard.
           </Typography>
         </Box>
       </Box>

@@ -18,7 +18,14 @@ function Footer() {
       >
         <Box>
           <Typography variant="subtitle1">
-            &copy; 2022 - Tokyo Free Black Next.js Typescript Admin Dashboard
+            &copy; 2022 - &nbsp;
+            <Link
+              href={"http://gopinion.ca"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Gopinion.ca
+            </Link>
           </Typography>
         </Box>
         <Typography
@@ -27,13 +34,13 @@ function Footer() {
           }}
           variant="subtitle1"
         >
-          Crafted by{' '}
+          Powered by{' '}
           <Link
-            href="https://bloomui.com"
+            href="http://maxxmedia.ca/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            BloomUI.com
+            MaxxMedia
           </Link>
         </Typography>
       </Box>

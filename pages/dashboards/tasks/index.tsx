@@ -146,10 +146,10 @@ function DashboardTasks() {
   return (
     <>
       <Head>
-        <title>Tasks Dashboard</title>
+        <title>Maxxmedia Dashboard</title>
       </Head>
       <PageTitleWrapper>
-        <PageHeader />
+        <PageHeader clientName={data?.clientName || ""} />
       </PageTitleWrapper>
       <Container maxWidth="lg">
         <TabsContainerWrapper>
