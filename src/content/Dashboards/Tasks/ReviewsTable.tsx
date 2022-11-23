@@ -62,15 +62,7 @@ function ReviewsTable({ client }) {
   const handlePageChange = (_event: any, newPage: number): void => {
     setPage(newPage);
   }
-
-  useEffect(() => {
-    console.log(selectedRatings);
-  }, [selectedRatings])
-
-  useEffect(() => {
-    console.log(data);
-  }, [data])
-
+  
   useEffect(() => {
     getData(`${BACKEND_API_URL}/getReviewsData`);
   }, [page, limit, selectedSources, selectedRatings])
