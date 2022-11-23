@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import {
   Box,
   Typography,
@@ -53,6 +53,10 @@ function ReviewsTable() {
     {date: '1st Nov 2022', source: 'Google', rating: 5, review: 'Very helpful staff, fast service and accurate timing', reviewer: 'Antonios Oueiss', status: 'Unread'},
     {date: '1st Nov 2022', source: 'Google', rating: 5, review: 'Very helpful staff, fast service and accurate timing', reviewer: 'Antonios Oueiss', status: 'Unread'}
   ];
+
+  useEffect(() => {
+    setPage(0);
+  }, [])
 
   return (
     <Box>
