@@ -219,10 +219,14 @@ function DashboardTasks() {
               {currentTab === 'sources' && (
                 <>
                   <Grid item xs={12}>
-                    <SourceGraph />
+                    <SourceGraph
+                      data={data?.sourcesGraphData?.series}
+                    />
                   </Grid>
                   <Grid item xs={12}>
-                    <SourceTable />
+                    <SourceTable
+                      data={data?.sourceTableData}
+                    />
                   </Grid>
                 </>
               )}

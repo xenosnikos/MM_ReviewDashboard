@@ -7,16 +7,7 @@ import {
   TableBody
 } from '@mui/material';
 
-function SourceTable() {
-  const sources = [
-    {type: 'Google', totalReviews: 912, lastThirtyDays: 23, thisMonth: 0, lastMonth: 30, thisYear: 218},
-    {type: 'Yellow Pages', totalReviews: 912, lastThirtyDays: 23, thisMonth: 0, lastMonth: 30, thisYear: 218},
-    {type: 'Foursquare', totalReviews: 912, lastThirtyDays: 23, thisMonth: 0, lastMonth: 30, thisYear: 218},
-    {type: 'Yelp', totalReviews: 912, lastThirtyDays: 23, thisMonth: 0, lastMonth: 30, thisYear: 218},
-    {type: 'Glassdoor', totalReviews: 912, lastThirtyDays: 23, thisMonth: 0, lastMonth: 30, thisYear: 218},
-    {type: 'WebLocal', totalReviews: 912, lastThirtyDays: 23, thisMonth: 0, lastMonth: 30, thisYear: 218},
-  ];
-
+function SourceTable({ data }) {
   return (
     <TableContainer>
       <Table>
@@ -31,15 +22,15 @@ function SourceTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {sources.map((source, index) => {
+          {data?.map((item, index) => {
             return (
               <TableRow key={index}>
-                <TableCell>{source.type}</TableCell>
-                <TableCell>{source.totalReviews}</TableCell>
-                <TableCell>{source.lastThirtyDays}</TableCell>
-                <TableCell>{source.thisMonth}</TableCell>
-                <TableCell>{source.lastMonth}</TableCell>
-                <TableCell>{source.thisYear}</TableCell>
+                <TableCell>{item.type}</TableCell>
+                <TableCell>{item.totalCount}</TableCell>
+                <TableCell>{item.lastThirtyDaysCount}</TableCell>
+                <TableCell>{item.thisMonth}</TableCell>
+                <TableCell>{item.lastMonth}</TableCell>
+                <TableCell>{item.thisYear}</TableCell>
               </TableRow>
             )
           })}

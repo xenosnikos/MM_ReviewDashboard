@@ -1,0 +1,1 @@
+export const providers = ['Google', 'Yelp', 'Yellow Page'];

@@ -7,8 +7,7 @@ import {
 import { ApexOptions } from "apexcharts";
 import { Chart } from '@/components/Chart';
 import { useEffect, useState } from 'react';
-
-const providers = ['Google', 'Yelp', 'Yellow Page'];
+import { providers } from '@/helpers/constant';
 
 const initOptions: ApexOptions = {
   chart: {
