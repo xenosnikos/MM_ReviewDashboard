@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import {
   Box,
   Typography,
@@ -15,12 +15,16 @@ import {
   TableHead,
   TableRow,
   TableCell,
-  TableBody, Rating
+  TableBody,
+  TablePagination,
+  Rating
 } from '@mui/material';
 
 function ReviewsTable() {
   const theme = useTheme();
   const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState<number>(0);
+  const [limit, setLimit] = useState<number>(5);
 
   const sourcesOptions = [
     "Foursquare",
@@ -234,6 +238,19 @@ function ReviewsTable() {
           </TableBody>
         </Table>
       </TableContainer>
+      <Box p={2}>
+        <TablePagination
+          component="div"
+          count={20}
+          onPageChange={() => {
+
+          }}
+          onRowsPerPageChange={(event: ChangeEvent<HTMLInputElement>) => setLimit(parseInt(event.target.value))}
+          page={page}
+          rowsPerPage={limit}
+          rowsPerPageOptions={[5, 10, 25, 30]}
+        />
+      </Box>
     </Box>
   )
 }
