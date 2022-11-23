@@ -6,45 +6,66 @@ import {
 } from '@mui/material';
 import { ApexOptions } from "apexcharts";
 import { Chart } from '@/components/Chart';
+import { useEffect, useState } from 'react';
 
-function ReviewSourceBreakDown() {
+const providers = ['Google', 'Yelp', 'Yellow Page'];
+
+const initOptions: ApexOptions = {
+  chart: {
+    width: 380,
+    type: 'donut'
+  },
+  plotOptions: {
+    pie: {
+      startAngle: -90,
+      endAngle: 270
+    }
+  },
+  dataLabels: {
+    enabled: true
+  },
+  labels: providers,
+  fill: {
+    type: 'gradient',
+  },
+  legend: {
+    formatter: function(val, opts) {
+      return opts.w.globals.series[opts.seriesIndex] + '% ' + val
+    }
+  },
+  responsive: [{
+    breakpoint: 480,
+    options: {
+      chart: {
+        width: 200
+      },
+      legend: {
+        position: 'bottom'
+      }
+    }
+  }],
+  series: [0, 0, 0]
+};
+
+function ReviewSourceBreakDown({ data }) {
   const theme = useTheme();
+  const [options, setOptions] = useState<ApexOptions>(initOptions);
 
-  const chartOptions: ApexOptions = {
-    chart: {
-      width: 380,
-      type: 'donut'
-    },
-    plotOptions: {
-      pie: {
-        startAngle: -90,
-        endAngle: 270
-      }
-    },
-    dataLabels: {
-      enabled: true
-    },
-    labels: ['Google', 'Yellow Pages', 'Yelp', 'Foursquare'],
-    fill: {
-      type: 'gradient',
-    },
-    legend: {
-      formatter: function(val, opts) {
-        return opts.w.globals.series[opts.seriesIndex] + '% ' + val
-      }
-    },
-    responsive: [{
-      breakpoint: 480,
-      options: {
-        chart: {
-          width: 200
-        },
-        legend: {
-          position: 'bottom'
-        }
-      }
-    }]
-  }
+  useEffect(() => {
+    if (!data)
+      return;
+
+    const newSeries = [];
+    providers.forEach(provider => {
+      const index = data.findIndex(item => item.type === provider);
+      if (index > -1 && data[index].count)
+        newSeries.push(parseFloat(data[index].count));
+      else
+        newSeries.push(0);
+    });
+
+    setOptions({...options, series: newSeries});
+  }, [data])
 
   return (
     <Box>
@@ -64,8 +85,8 @@ function ReviewSourceBreakDown() {
       <Chart
         type="donut"
         width={500}
-        options={chartOptions}
-        series={[98, 2, 0, 0]}
+        options={options}
+        series={options.series}
       />
     </Box>
   )

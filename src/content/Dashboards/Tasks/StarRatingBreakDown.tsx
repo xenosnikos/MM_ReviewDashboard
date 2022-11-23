@@ -6,45 +6,65 @@ import {
 } from '@mui/material';
 import { Chart } from '@/components/Chart';
 import type { ApexOptions } from 'apexcharts';
+import { useEffect, useState } from 'react';
 
-function StarRatingBreakDown() {
+const initOptions: ApexOptions = {
+  chart: {
+    width: 380,
+    type: 'donut'
+  },
+  plotOptions: {
+    pie: {
+      startAngle: -90,
+      endAngle: 270
+    }
+  },
+  dataLabels: {
+    enabled: true
+  },
+  labels: ['5 stars', '4 stars', '3 stars', '2 stars', '1 star'],
+  fill: {
+    type: 'gradient',
+  },
+  legend: {
+    formatter: function(val, opts) {
+      return opts.w.globals.series[opts.seriesIndex] + '% ' + val
+    }
+  },
+  responsive: [{
+    breakpoint: 480,
+    options: {
+      chart: {
+        width: 200
+      },
+      legend: {
+        position: 'bottom'
+      }
+    }
+  }],
+  series: [0, 0, 0, 0, 0]
+}
+
+function StarRatingBreakDown({ data }) {
   const theme = useTheme();
+  const [options, setOptions] = useState<ApexOptions>(initOptions);
 
-  const chartOptions: ApexOptions = {
-    chart: {
-      width: 380,
-      type: 'donut'
-    },
-    plotOptions: {
-      pie: {
-        startAngle: -90,
-        endAngle: 270
-      }
-    },
-    dataLabels: {
-      enabled: true
-    },
-    labels: ['5 stars', '4 stars', '3 stars', '2 stars', '1 star', 'No Rating', 'Recommended', 'Not Recommended'],
-    fill: {
-      type: 'gradient',
-    },
-    legend: {
-      formatter: function(val, opts) {
-        return opts.w.globals.series[opts.seriesIndex] + '% ' + val
-      }
-    },
-    responsive: [{
-      breakpoint: 480,
-      options: {
-        chart: {
-          width: 200
-        },
-        legend: {
-          position: 'bottom'
+  useEffect(() => {
+    if (data) {
+      const newSeries = [];
+
+      for (let i = 5; i > 0; i--) {
+        const index = data.findIndex(item => item.rating === i);
+        if (index > -1 && data[index].count) {
+          newSeries.push(parseFloat(data[index].count));
+        } else {
+          newSeries.push(0);
         }
       }
-    }]
-  }
+
+      setOptions({...options, series: newSeries});
+    }
+  }, [data])
 
   return (
     <Box>
@@ -64,8 +84,8 @@ function StarRatingBreakDown() {
       <Chart
         type="donut"
         width={500}
-        options={chartOptions}
-        series={[70, 11, 4, 2, 13, 0, 0, 0]}
+        options={options}
+        series={options.series}
       />
     </Box>
   )

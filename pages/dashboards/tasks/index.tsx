@@ -1,5 +1,6 @@
 import Head from 'next/head';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import PageHeader from '@/content/Dashboards/Tasks/PageHeader';
 import Footer from '@/components/Footer';
 import {
@@ -22,6 +23,8 @@ import ReviewSourceBreakDown from '@/content/Dashboards/Tasks/ReviewSourceBreakD
 import ReviewsTable from '@/content/Dashboards/Tasks/ReviewsTable';
 import SourceGraph from '@/content/Dashboards/Tasks/SourceGraph';
 import SourceTable from '@/content/Dashboards/Tasks/SourceTable';
+
+import { getDashboardData } from '@/services';
 
 const TabsContainerWrapper = styled(Box)(
   ({ theme }) => `
@@ -106,7 +109,11 @@ const TabsContainerWrapper = styled(Box)(
 );
 
 function DashboardTasks() {
+  const router = useRouter();
   const theme = useTheme();
+  const [data, setData] = useState(null);
+
+  const { client } = router.query;
 
   const [currentTab, setCurrentTab] = useState<string>('overview');
 
@@ -119,6 +126,22 @@ function DashboardTasks() {
   const handleTabsChange = (_event: ChangeEvent<{}>, value: string): void => {
     setCurrentTab(value);
   };
+
+  useEffect(() => {
+    console.log(data);
+  }, [data])
+
+  useEffect(() => {
+    if (typeof client === 'string') {
+      getDashboardData(client)
+        .then(data => {
+          setData(data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }, [client])
 
   return (
     <>
@@ -156,8 +179,12 @@ function DashboardTasks() {
                 <>
                   <Grid item xs={4}>
                     <Box display="flex" flexDirection="column" gap={2}>
-                      <AverageStartRating />
-                      <TotalReviews />
+                      <AverageStartRating
+                        rating={data?.averageRating ? parseFloat(data.averageRating) : null}
+                      />
+                      <TotalReviews
+                        amount={data?.totalReviews}
+                      />
                     </Box>
                   </Grid>
                   <Grid item xs={8}>
@@ -167,14 +194,20 @@ function DashboardTasks() {
                         background: `${theme.colors.alpha.black[5]}`
                       }}
                     >
-                      <ReviewGrowth />
+                      <ReviewGrowth
+                        data={data?.reviewGrowth}
+                      />
                     </Box>
                   </Grid>
                   <Grid item xs={6}>
-                    <StarRatingBreakDown />
+                    <StarRatingBreakDown
+                      data={data?.starRatingBreakdown}
+                    />
                   </Grid>
                   <Grid item xs={6}>
-                    <ReviewSourceBreakDown />
+                    <ReviewSourceBreakDown
+                      data={data?.reviewSourceBreakDown}
+                    />
                   </Grid>
                 </>
               )}

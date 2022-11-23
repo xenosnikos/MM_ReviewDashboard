@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Button,
   Box,
@@ -6,39 +6,16 @@ import {
   alpha,
   MenuItem,
   Typography,
-  styled,
   useTheme
 } from '@mui/material';
 import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
 import { Chart } from 'src/components/Chart';
 import type { ApexOptions } from 'apexcharts';
 
-const DotPrimaryLight = styled('span')(
-  ({ theme }) => `
-    border-radius: 22px;
-    background: ${theme.colors.primary.lighter};
-    width: ${theme.spacing(1.5)};
-    height: ${theme.spacing(1.5)};
-    display: inline-block;
-    margin-right: ${theme.spacing(0.5)};
-`
-);
-
-const DotPrimary = styled('span')(
-  ({ theme }) => `
-    border-radius: 22px;
-    background: ${theme.colors.primary.main};
-    width: ${theme.spacing(1.5)};
-    height: ${theme.spacing(1.5)};
-    display: inline-block;
-    margin-right: ${theme.spacing(0.5)};
-`
-);
-
-function ReviewGrowth() {
+function ReviewGrowth({ data }) {
   const theme = useTheme();
 
-  const chartOptions: ApexOptions = {
+  const initOptions: ApexOptions = {
     chart: {
       background: 'transparent',
       type: 'bar',
@@ -127,24 +104,19 @@ function ReviewGrowth() {
         show: false
       },
       y: {
-        formatter: function (val) {
-          return '$ ' + val + 'k';
+        formatter: function ( val) {
+          return val.toString();
         }
       },
       theme: 'dark'
-    }
-  };
-
-  const chartData = [
-    {
-      name: 'Income',
-      data: [28, 47, 41, 34, 69, 91, 49, 82, 52, 72, 32, 99]
     },
-    {
-      name: 'Expenses',
-      data: [38, 85, 64, 40, 97, 82, 58, 42, 55, 46, 57, 70]
-    }
-  ];
+    series: [
+      {
+        name: 'Reviews',
+        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      }
+    ]
+  };
 
   const periods = [
     {
@@ -168,6 +140,32 @@ function ReviewGrowth() {
   const actionRef1 = useRef<any>(null);
   const [openPeriod, setOpenMenuPeriod] = useState<boolean>(false);
   const [period, setPeriod] = useState<string>(periods[3].text);
+  const [options, setOptions] = useState<ApexOptions>(initOptions);
+
+  useEffect(() => {
+    if (!data)
+      return;
+
+    const newSeriesData = [];
+
+    for (let i = 1; i <= 12; i++) {
+      const index = data.findIndex(item => item.month === i);
+      if (index > -1 && data[index].count)
+        newSeriesData.push(data[index].count);
+      else
+        newSeriesData.push(0);
+    }
+
+    setOptions({
+      ...options,
+      series: [
+        {
+          name: 'Reviews',
+          data: newSeriesData
+        }
+      ]
+    });
+  }, [data])
 
   return (
     <Box>
@@ -215,34 +213,9 @@ function ReviewGrowth() {
           ))}
         </Menu>
       </Box>
-      <Box display="flex" alignItems="center" pb={2}>
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            mr: 2
-          }}
-        >
-          <DotPrimary />
-          tasks created
-        </Typography>
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          sx={{
-            display: 'flex',
-            alignItems: 'center'
-          }}
-        >
-          <DotPrimaryLight />
-          tasks completed
-        </Typography>
-      </Box>
       <Chart
-        options={chartOptions}
-        series={chartData}
+        options={options}
+        series={options.series}
         type="bar"
         height={270}
       />

@@ -12,7 +12,7 @@ const RootWrapper = styled(Card)(
 `
 );
 
-function TotalReviews() {
+function TotalReviews({ amount }) {
   const theme = useTheme();
 
   return (
@@ -46,7 +46,7 @@ function TotalReviews() {
           color: `${theme.colors.alpha.white[100]}`
         }}
       >
-        926
+        {amount}
       </Typography>
     </RootWrapper>
   );

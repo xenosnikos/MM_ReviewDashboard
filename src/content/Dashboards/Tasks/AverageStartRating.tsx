@@ -14,7 +14,7 @@ const RootWrapper = styled(Card)(
 `
 );
 
-function AverageStartRating() {
+function AverageStartRating({ rating }) {
   const theme = useTheme();
 
   return (
@@ -50,9 +50,9 @@ function AverageStartRating() {
               marginBottom: 2
             }}
           >
-            4.09
+            {rating}
           </Typography>
-          <Rating value={4.09} defaultValue={5} precision={0.1} readOnly />
+          <Rating value={rating} defaultValue={5} precision={0.1} readOnly />
         </Box>
       </CardContent>
     </RootWrapper>
