@@ -112,6 +112,7 @@ function DashboardTasks() {
   const router = useRouter();
   const theme = useTheme();
   const [data, setData] = useState(null);
+  const [pdfUrl, setPdfUrl] = useState<string>(" ");
 
   const { client } = router.query;
 
@@ -149,7 +150,7 @@ function DashboardTasks() {
         <title>Maxxmedia Dashboard</title>
       </Head>
       <PageTitleWrapper>
-        <PageHeader clientName={data?.clientName || ""} />
+        <PageHeader clientName={data?.clientName || ""} data={data} pdfUrl={pdfUrl} setPdfUrl={setPdfUrl}/>
       </PageTitleWrapper>
       <Container maxWidth="lg">
         <TabsContainerWrapper>
@@ -196,6 +197,7 @@ function DashboardTasks() {
                     >
                       <ReviewGrowth
                         data={data?.reviewGrowth}
+                        setPdfUrl={setPdfUrl}
                       />
                     </Box>
                   </Grid>

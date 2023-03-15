@@ -32,6 +32,8 @@ function ReviewsTable({ client }) {
   const [limit, setLimit] = useState<number>(5);
   const [data, setData] = useState(null);
 
+  console.log(data);
+
   const isAllSelectedSources = providers.length > 0 && selectedSources.length === providers.length;
   const isAllSelectedRatings = ratings.length > 0 && selectedRatings.length === ratings.length;
 

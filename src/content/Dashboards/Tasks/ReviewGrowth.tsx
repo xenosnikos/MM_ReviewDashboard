@@ -12,7 +12,7 @@ import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
 import { Chart } from 'src/components/Chart';
 import type { ApexOptions } from 'apexcharts';
 
-function ReviewGrowth({ data }) {
+function ReviewGrowth({ data, setPdfUrl }) {
   const theme = useTheme();
 
   const initOptions: ApexOptions = {
@@ -104,7 +104,7 @@ function ReviewGrowth({ data }) {
         show: false
       },
       y: {
-        formatter: function ( val) {
+        formatter: function (val) {
           return val.toString();
         }
       },
@@ -143,29 +143,29 @@ function ReviewGrowth({ data }) {
   const [options, setOptions] = useState<ApexOptions>(initOptions);
 
   useEffect(() => {
-    if (!data)
-      return;
+      if (!data)
+        return;
 
-    const newSeriesData = [];
+      const newSeriesData = [];
 
-    for (let i = 1; i <= 12; i++) {
-      const index = data.findIndex(item => item.month === i);
-      if (index > -1 && data[index].count)
-        newSeriesData.push(data[index].count);
-      else
-        newSeriesData.push(0);
-    }
+      for (let i = 1; i <= 12; i++) {
+        const index = data.findIndex(item => item.month === i);
+        if (index > -1 && data[index].count)
+          newSeriesData.push(data[index].count);
+        else
+          newSeriesData.push(0);
+      }
 
-    setOptions({
-      ...options,
-      series: [
-        {
-          name: 'Reviews',
-          data: newSeriesData
-        }
-      ]
-    });
-  }, [data])
+      setOptions({
+        ...options,
+        series: [
+          {
+            name: 'Reviews',
+            data: newSeriesData
+          }
+        ]
+      });
+  }, [data]);
 
   return (
     <Box>
@@ -214,6 +214,7 @@ function ReviewGrowth({ data }) {
         </Menu>
       </Box>
       <Chart
+        id="review-chart"
         options={options}
         series={options.series}
         type="bar"

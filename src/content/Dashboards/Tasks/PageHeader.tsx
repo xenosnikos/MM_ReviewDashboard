@@ -9,6 +9,10 @@ import {
 } from '@mui/material';
 import DocumentScannerTwoToneIcon from '@mui/icons-material/DocumentScannerTwoTone';
 import AddAlertTwoToneIcon from '@mui/icons-material/AddAlertTwoTone';
+import { useEffect, useState } from 'react';
+import ExportPDF from './ExportPDF';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import * as htmlToImage from 'html-to-image';
 
 const AvatarPageTitle = styled(Avatar)(
   ({ theme }) => `
@@ -34,7 +38,19 @@ const AvatarPageTitle = styled(Avatar)(
 `
 );
 
-function PageHeader({ clientName }) {
+function PageHeader({ clientName, data, pdfUrl, setPdfUrl }) {
+  const [SSRing, setSSring] = useState(false);
+
+  useEffect(() => {
+    setSSring(true)
+  }, []);
+
+  async function generatePDF() {
+      const myId = document.getElementById("review-chart");
+      const response = await htmlToImage.toPng(myId);
+      setPdfUrl(response);
+  }
+
   return (
     <Box
       display="flex"
@@ -63,9 +79,17 @@ function PageHeader({ clientName }) {
         </Box>
       </Box>
       <Box mt={{ xs: 3, md: 0 }}>
-        <Button variant="contained" startIcon={<DocumentScannerTwoToneIcon />}>
-          Export
-        </Button>
+        {SSRing && (
+          <PDFDownloadLink document={<ExportPDF data={data} pdfUrl={pdfUrl}/>} fileName="document.pdf" onClick={generatePDF}>
+            {({ loading }) =>
+              loading ? (<Button variant="contained" startIcon={<DocumentScannerTwoToneIcon />} >
+              Export
+            </Button>) : (<Button variant="contained" startIcon={<DocumentScannerTwoToneIcon />} >
+              Export
+            </Button>)
+            }
+          </PDFDownloadLink>
+        )}        
       </Box>
     </Box>
   );

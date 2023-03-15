@@ -56,6 +56,7 @@ const initOptions: ApexOptions = {
 
 function SourceGraph({ data }) {
   const [options, setOptions] = useState<ApexOptions>(initOptions);
+  console.log(options);
 
   useEffect(() => {
     if (data) {
