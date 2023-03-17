@@ -41,8 +41,6 @@ function ReviewsTable() {
   const isAllSelectedSources = providers.length > 0 && selectedSources.length === providers.length;
   const isAllSelectedRatings = ratings.length > 0 && selectedRatings.length === ratings.length;
 
-
-
   const handleChangeSelectSources = (event) => {
     const value = event.target.value;
     if (value[value.length - 1] === "all") {

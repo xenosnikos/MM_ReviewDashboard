@@ -26,7 +26,6 @@ import SourceTable from '@/content/Dashboards/Tasks/SourceTable';
 
 import { getDashboardData, getReviewsData } from '@/services';
 import DataContext from '@/contexts/DataContext';
-const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL;
 
 const TabsContainerWrapper = styled(Box)(
   ({ theme }) => `

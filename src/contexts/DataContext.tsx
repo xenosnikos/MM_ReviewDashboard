@@ -30,7 +30,7 @@ export const DataProvider = ({ children }: Props) => {
   const [limit, setLimit] = useState<number>(5);
   const [reviewsData, setReviewsData] = useState(null);
   const [data, setData] = useState(null);
-
+  
   return (
     <DataContext.Provider 
       value={{ 

@@ -57,13 +57,14 @@ function PageHeader({ clientName, params }) {
       const asPdf = pdf(doc);
       asPdf.updateContainer(doc);
       const blob = await asPdf.toBlob();
-      saveAs(blob, 'document.pdf');
+      saveAs(blob, `${clientName}.pdf`);
       await getReviewsData(params)
       .then(response => setReviewsData(response))
       .catch(error => console.log(error));
     }
 
     if(refresh) {
+      setRefresh(!refresh);
       getPDF();
     }
   }, [refresh])

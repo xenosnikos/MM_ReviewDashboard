@@ -1,7 +1,10 @@
-import { Document, Page, Text, View } from '@react-pdf/renderer';
+import { Document, Page, Text, View, Image } from '@react-pdf/renderer';
 import { styles } from './styles';
 
-function ExportPDF({ data, limit, reviewsData }) {
+function ExportPDF({ data, reviewsData }) {
+  const googleLogo = 'http://localhost:3000/static/images/reviewslogo/google-logo.png';
+  const yelpLogo = 'http://localhost:3000/static/images/reviewslogo/yelp-logo.png';
+  const yellowPagesLogo = 'http://localhost:3000/static/images/reviewslogo/yellow-pages-logo.png';
 
   const positive = data?.sourcesGraphData?.series
     ?.filter(value => value.name === '4 Stars' || value.name === '5 Stars')
@@ -16,6 +19,8 @@ function ExportPDF({ data, limit, reviewsData }) {
     ?.filter(value => value.name === '2 Stars' || value.name === '1 Stars')
     .reduce((prev, curr) => prev.concat(curr.data), [])
     .reduce((prev, curr) => prev + curr, 0);
+
+  const reviewsReverse = reviewsData?.data?.reverse();  
 
   return (
     <Document>
@@ -78,7 +83,23 @@ function ExportPDF({ data, limit, reviewsData }) {
             </View>
           </View>
         ))}
-        <Text>test: {limit} and {reviewsData?.data?.length}</Text>
+        <View style={[styles.sectionAverage, styles.borderTop, styles.paddingTop]}>
+          <Text style={styles.title}>Reviews</Text>
+        </View>
+        {reviewsReverse.map((value: any, index: number) => (
+          <View key={index} style={[styles.reviewBox, styles.borderTop]} >
+            <View style={styles.sectionReview}>
+              <Image src={googleLogo} style={styles.logo}/>
+              <Text style={styles.textDate}>{value.date}</Text>
+            </View>
+            <View style={styles.sectionReview}>
+              <Text style={styles.textReviewer}>Review by {value.author}: {value.rating} stars</Text>              
+            </View>
+            <View style={styles.sectionReview}>
+              <Text style={styles.textComment}>{value.review}</Text>              
+            </View>
+          </View>
+        ))}
       </Page>
     </Document>
   );

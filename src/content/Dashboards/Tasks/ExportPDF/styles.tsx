@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     paddingLeft: 15,
     width: '100%',
     height: 30,
-    backgroundColor: '#dce5ed',
+    backgroundColor: '#efefef',
   },
   textHeader: {
     fontSize: 13,
@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: 45,
-    backgroundColor: '#dce5ed',
+    backgroundColor: '#efefef',
   },
   totalReviews: {
     flexDirection: 'row',
@@ -106,7 +106,7 @@ export const styles = StyleSheet.create({
     paddingRight: 20,
     columnGap: 30,
     paddingTop: 10,
-    backgroundColor: '#dce5ed'
+    backgroundColor: '#efefef'
   },
   subSectionValues: {
     display: 'flex',
@@ -117,7 +117,8 @@ export const styles = StyleSheet.create({
   title: {
     marginRight: 5,
     fontFamily: 'Times-Bold',
-    paddingBottom: 10
+    paddingBottom: 10,
+    fontSize: 13
   },
   table: {
     flexDirection: 'row',
@@ -143,5 +144,41 @@ export const styles = StyleSheet.create({
   },
   box: {
     width: 75,
+  },
+  reviewBox: {
+    width: '100%',
+    height: 'auto',
+    padding: 7
+  },
+  backColor: {
+    backgroundColor: '#efefef'
+  },
+  sectionReview: {
+    width: '100%',
+    height: 30,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 60,
+    height: 60
+  },
+  textDate: {
+    marginRight: 5,
+    fontFamily: 'Times-Italic',
+    fontSize: 11,
+  },
+  textReviewer: {
+    fontFamily: 'Times-Bold',
+    fontSize: 11,
+    paddingLeft: 7
+  },
+  textComment: {
+    fontSize: 11,
+    paddingLeft: 7
+  },
+  paddingTop: {
+    paddingTop: 20
   }
 });
