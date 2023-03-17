@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useContext } from 'react';
 import {
   Box,
   Typography,
@@ -20,28 +20,28 @@ import {
   Rating,
   InputLabel
 } from '@mui/material';
-import { getReviewsData } from '@/services';
 import { providers, ratings } from '@/helpers/constant';
-const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL;
+import DataContext from '@/contexts/DataContext';
 
-function ReviewsTable({ client }) {
+function ReviewsTable() {
   const theme = useTheme();
-  const [selectedSources, setSelectedSources] = useState(providers);
-  const [selectedRatings, setSelectedRatings] = useState(ratings);
-  const [page, setPage] = useState<number>(0);
-  const [limit, setLimit] = useState<number>(5);
-  const [data, setData] = useState(null);
+  const { 
+    selectedSources, 
+    setSelectedSources, 
+    selectedRatings, 
+    setSelectedRatings, 
+    page, 
+    setPage, 
+    limit, 
+    setLimit, 
+    reviewsData } = useContext(DataContext);
 
-  console.log(data);
+  console.log(reviewsData);
 
   const isAllSelectedSources = providers.length > 0 && selectedSources.length === providers.length;
   const isAllSelectedRatings = ratings.length > 0 && selectedRatings.length === ratings.length;
 
-  const getData = (url: string) => {
-    getReviewsData(url, {client, per_page: limit, page: page + 1, sources: JSON.stringify(selectedSources), ratings: JSON.stringify(selectedRatings)})
-      .then(response => setData(response))
-      .catch(error => console.log(error));
-  }
+
 
   const handleChangeSelectSources = (event) => {
     const value = event.target.value;
@@ -65,10 +65,6 @@ function ReviewsTable({ client }) {
     setPage(newPage);
   }
 
-  useEffect(() => {
-    getData(`${BACKEND_API_URL}/getReviewsData`);
-  }, [page, limit, selectedSources, selectedRatings])
-
   return (
     <Box>
       <Typography
@@ -90,7 +86,7 @@ function ReviewsTable({ client }) {
             marginRight: 3
           }}
         >
-          Showing {data?.from || 0} to {data?.to || 0} of {data?.total || 0} Results
+          Showing {reviewsData?.from || 0} to {reviewsData?.to || 0} of {reviewsData?.total || 0} Results
         </Typography>
         <FormControl style={{minWidth: 150}}>
           <InputLabel htmlFor="sourcesSelect">Select Sources</InputLabel>
@@ -218,7 +214,7 @@ function ReviewsTable({ client }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data?.data?.map((review, index) => {
+            {reviewsData?.data?.map((review, index) => {
               return (
                 <TableRow
                   hover
@@ -260,7 +256,7 @@ function ReviewsTable({ client }) {
       <Box p={2}>
         <TablePagination
           component="div"
-          count={data?.total || 0}
+          count={reviewsData?.total || 0}
           onPageChange={handlePageChange}
           onRowsPerPageChange={(event: ChangeEvent<HTMLInputElement>) => {
             setPage(0);

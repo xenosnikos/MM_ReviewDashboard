@@ -1,12 +1,13 @@
 import axios from 'axios';
 const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL;
+const urlData = `${BACKEND_API_URL}/getDashboardData`;
+const urlReviews = `${BACKEND_API_URL}/getReviewsData`;
 
-const getDashboardData = (client: string) => {
-  const url = `${BACKEND_API_URL}/getDashboardData`;
+const getDashboardData = (client: string) => {  
   return new Promise(
     (resolve, reject) => {
       axios
-        .get(url, {
+        .get(urlData, {
           params: {client}
         })
         .then(response => {
@@ -25,11 +26,11 @@ const getDashboardData = (client: string) => {
   );
 }
 
-const getReviewsData = (url: string, params: {client: string, per_page: number, page: number, sources: string, ratings: string}) => {
+const getReviewsData = (params: {client: string, per_page: number, page: number, sources: string, ratings: string}) => {
   return new Promise(
     (resolve, reject) => {
       axios
-        .get(url, {
+        .get(urlReviews, {
           params,
         })
         .then(response => {

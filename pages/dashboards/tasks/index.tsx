@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import PageHeader from '@/content/Dashboards/Tasks/PageHeader';
 import Footer from '@/components/Footer';
@@ -24,7 +24,9 @@ import ReviewsTable from '@/content/Dashboards/Tasks/ReviewsTable';
 import SourceGraph from '@/content/Dashboards/Tasks/SourceGraph';
 import SourceTable from '@/content/Dashboards/Tasks/SourceTable';
 
-import { getDashboardData } from '@/services';
+import { getDashboardData, getReviewsData } from '@/services';
+import DataContext from '@/contexts/DataContext';
+const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL;
 
 const TabsContainerWrapper = styled(Box)(
   ({ theme }) => `
@@ -111,10 +113,18 @@ const TabsContainerWrapper = styled(Box)(
 function DashboardTasks() {
   const router = useRouter();
   const theme = useTheme();
-  const [data, setData] = useState(null);
-  const [pdfUrl, setPdfUrl] = useState<string>(" ");
+  const { 
+    data, 
+    setData, 
+    selectedSources, 
+    selectedRatings,
+    page,
+    limit, 
+    reviewsData, 
+    setReviewsData } = useContext(DataContext);
 
   const { client } = router.query;
+  const clientString = typeof client === 'string' ? client : '';
 
   const [currentTab, setCurrentTab] = useState<string>('overview');
 
@@ -128,9 +138,24 @@ function DashboardTasks() {
     setCurrentTab(value);
   };
 
+  const params = {
+    client: clientString, 
+    per_page: limit, 
+    page: page + 1, 
+    sources: JSON.stringify(selectedSources), 
+    ratings: JSON.stringify(selectedRatings)
+  }
+
+  const getData = async () => {
+    await getReviewsData(params)
+      .then(response => setReviewsData(response))
+      .catch(error => console.log(error));
+  }
+
   useEffect(() => {
     console.log(data);
-  }, [data])
+    console.log(reviewsData)
+  }, [data]);
 
   useEffect(() => {
     if (typeof client === 'string') {
@@ -142,7 +167,13 @@ function DashboardTasks() {
           console.log(error);
         });
     }
-  }, [client])
+  }, [client]);
+
+    useEffect(() => {
+      if (typeof client === 'string') {
+        getData();
+      }      
+  }, [page, limit, selectedSources, selectedRatings, client]);
 
   return (
     <>
@@ -150,7 +181,7 @@ function DashboardTasks() {
         <title>Maxxmedia Dashboard</title>
       </Head>
       <PageTitleWrapper>
-        <PageHeader clientName={data?.clientName || ""} data={data} pdfUrl={pdfUrl} setPdfUrl={setPdfUrl}/>
+        <PageHeader clientName={data?.clientName || ""} params={params} />
       </PageTitleWrapper>
       <Container maxWidth="lg">
         <TabsContainerWrapper>
@@ -197,7 +228,6 @@ function DashboardTasks() {
                     >
                       <ReviewGrowth
                         data={data?.reviewGrowth}
-                        setPdfUrl={setPdfUrl}
                       />
                     </Box>
                   </Grid>
@@ -215,9 +245,7 @@ function DashboardTasks() {
               )}
               {currentTab === 'reviews' && (
                 <Grid item xs={12}>
-                  <ReviewsTable
-                    client={client}
-                  />
+                  <ReviewsTable />
                 </Grid>
               )}
               {currentTab === 'sources' && (

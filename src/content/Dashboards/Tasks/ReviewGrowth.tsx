@@ -12,7 +12,7 @@ import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
 import { Chart } from 'src/components/Chart';
 import type { ApexOptions } from 'apexcharts';
 
-function ReviewGrowth({ data, setPdfUrl }) {
+function ReviewGrowth({ data }) {
   const theme = useTheme();
 
   const initOptions: ApexOptions = {
