@@ -45,12 +45,13 @@ export const styles = StyleSheet.create({
     color: '#FFFFFF',
     borderBottomRightRadius: 50,
     borderTopRightRadius: 50,
-  },
-  textReviews: {
-    paddingRight: 5
+    columnGap: 5,
   },
   valueReviews: {
     fontSize: 16,
+  },
+  colorOrange: {
+    color: '#ff7f44',
   },
   sectionReviews: {
     flexDirection: 'row',
@@ -64,8 +65,6 @@ export const styles = StyleSheet.create({
     width: '100%',
     paddingLeft: 15,
     paddingTop: 20,
-    marginBottom: -8,
-    flexDirection: 'row'
   },
   subSectionAverage: {
     width: '100%',
@@ -179,6 +178,18 @@ export const styles = StyleSheet.create({
     paddingLeft: 7
   },
   paddingTop: {
-    paddingTop: 20
+    paddingTop: 30
+  },
+  rowStar: {
+    flexDirection: 'row',
+    paddingLeft: 5
+  },
+  star: {
+    width: 10,
+    height: 10,
+  },
+  emoji: {
+    width: 17.5,
+    height: 17.5
   }
 });

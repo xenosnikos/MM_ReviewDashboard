@@ -41,9 +41,11 @@ const AvatarPageTitle = styled(Avatar)(
 function PageHeader({ clientName, params }) {
   const { limit, reviewsData, setReviewsData, data } = useContext(DataContext);
   const [refresh, setRefresh] = useState(false);
+  const [disabledButton, setDisabledButton] = useState(false);
   const totalReviews = reviewsData?.total
 
   const handlePDF = async () => {
+    setDisabledButton(true);
     await getReviewsData({...params, per_page: totalReviews })
       .then(response => setReviewsData(response))
       .catch(error => console.log(error));
@@ -59,8 +61,14 @@ function PageHeader({ clientName, params }) {
       const blob = await asPdf.toBlob();
       saveAs(blob, `${clientName}.pdf`);
       await getReviewsData(params)
-      .then(response => setReviewsData(response))
-      .catch(error => console.log(error));
+      .then(response => {
+        setReviewsData(response);
+        setDisabledButton(false);
+      })
+      .catch(error => {
+        console.log(error);
+        setDisabledButton(false);
+      });
     }
 
     if(refresh) {
@@ -105,7 +113,12 @@ function PageHeader({ clientName, params }) {
         </Box>
       </Box>
       <Box mt={{ xs: 3, md: 0 }}>
-        <Button variant="contained" startIcon={<DocumentScannerTwoToneIcon />} onClick={handlePDF}>
+        <Button 
+        variant="contained" 
+        startIcon={<DocumentScannerTwoToneIcon />} 
+        onClick={handlePDF}
+        disabled={disabledButton}
+        >
           Export
         </Button>
       </Box>

@@ -1,26 +1,61 @@
 import { Document, Page, Text, View, Image } from '@react-pdf/renderer';
 import { styles } from './styles';
+import { 
+  googleLogo,
+  yelpLogo,
+  yellowPagesLogo,
+  star,
+  positiveIcon,
+  neutralIcon,
+  negativeIcon,
+  reviewIcon
+} from './icons';
 
 function ExportPDF({ data, reviewsData }) {
-  const googleLogo = 'http://localhost:3000/static/images/reviewslogo/google-logo.png';
-  const yelpLogo = 'http://localhost:3000/static/images/reviewslogo/yelp-logo.png';
-  const yellowPagesLogo = 'http://localhost:3000/static/images/reviewslogo/yellow-pages-logo.png';
+  const reviewsReverse = reviewsData?.data?.reverse();
+    
+  const { positive, neutral, negative } = (data?.sourcesGraphData?.series || []).reduce(
+    (acc, value) => {
+      switch (value.name) {
+        case '4 Stars':
+        case '5 Stars':
+          acc.positive += value.data.reduce((prev, curr) => prev + curr, 0);
+          break;
+        case '3 Stars':
+          acc.neutral += value.data.reduce((prev, curr) => prev + curr, 0);
+          break;
+        case '2 Stars':
+        case '1 Stars':
+          acc.negative += value.data.reduce((prev, curr) => prev + curr, 0);
+          break;
+        default:
+          break;
+      }
+      return acc;
+    },
+    { positive: 0, neutral: 0, negative: 0 }
+  ); 
 
-  const positive = data?.sourcesGraphData?.series
-    ?.filter(value => value.name === '4 Stars' || value.name === '5 Stars')
-    .reduce((prev, curr) => prev.concat(curr.data), [])
-    .reduce((prev, curr) => prev + curr, 0);
+  const logo = (type: string) => {
+    if (type === 'Google') return googleLogo;
+    if (type === 'Yelp') return yelpLogo;
+    if (type === 'Yellow Page') return yellowPagesLogo;
+  };
 
-  const neutral = data?.sourcesGraphData?.series
-    ?.find(value => value.name === '3 Stars')
-    .data.reduce((prev, curr) => prev + curr, 0);
+  const backStyle = (index: number) => {
+    if (index % 2 === 0) return styles.backColor;
+  };
 
-  const negative = data?.sourcesGraphData?.series
-    ?.filter(value => value.name === '2 Stars' || value.name === '1 Stars')
-    .reduce((prev, curr) => prev.concat(curr.data), [])
-    .reduce((prev, curr) => prev + curr, 0);
-
-  const reviewsReverse = reviewsData?.data?.reverse();  
+  const rating = (value: number) => {
+    const stars = Array(value).fill(star);
+    return (
+      <View style={styles.rowStar}>
+        {stars.map((star, index) => (
+          <Image key={index} src={star} style={styles.star} />
+        ))}
+      </View>
+    );
+  };  
 
   return (
     <Document>
@@ -31,20 +66,24 @@ function ExportPDF({ data, reviewsData }) {
         </View>
         <View style={[styles.reviews, styles.borderTop, styles.borderBottom]}>
           <View style={styles.totalReviews}>
-            <Text style={styles.textReviews}>Total Reviews:</Text>
+            <Image src={reviewIcon} style={styles.emoji}/>
+            <Text>Reviews</Text>
             <Text style={styles.valueReviews}>{data?.totalReviews}</Text>
           </View>
           <View style={[styles.sectionReviews, styles.borderRight]}>
-            <Text style={styles.textReviews}>Positive:</Text>
-            <Text style={styles.valueReviews}>{positive}</Text>
+            <Image src={positiveIcon} style={styles.emoji}/>
+            <Text>Positive</Text>
+            <Text style={[styles.valueReviews, styles.colorOrange]}>{positive}</Text>
           </View>
           <View style={[styles.sectionReviews, styles.borderRight]}>
-            <Text style={styles.textReviews}>Neutral:</Text>
-            <Text style={styles.valueReviews}>{neutral}</Text>
+            <Image src={neutralIcon} style={styles.emoji}/>
+            <Text>Neutral</Text>
+            <Text style={[styles.valueReviews, styles.colorOrange]}>{neutral}</Text>
           </View>
           <View style={styles.sectionReviews}>
-            <Text style={styles.textReviews}>Negative:</Text>
-            <Text style={styles.valueReviews}>{negative}</Text>
+            <Image src={negativeIcon} style={styles.emoji}/>
+            <Text>Negative</Text>
+            <Text style={[styles.valueReviews, styles.colorOrange]}>{negative}</Text>
           </View>
         </View>
         <View style={styles.sectionAverage}>
@@ -83,20 +122,21 @@ function ExportPDF({ data, reviewsData }) {
             </View>
           </View>
         ))}
-        <View style={[styles.sectionAverage, styles.borderTop, styles.paddingTop]}>
+        <View style={[styles.sectionAverage, styles.borderTop, styles.borderBottom, styles.paddingTop]}>
           <Text style={styles.title}>Reviews</Text>
         </View>
         {reviewsReverse.map((value: any, index: number) => (
-          <View key={index} style={[styles.reviewBox, styles.borderTop]} >
+          <View key={index} wrap={false} style={[styles.reviewBox, styles.borderBottom, backStyle(index)]} >
             <View style={styles.sectionReview}>
-              <Image src={googleLogo} style={styles.logo}/>
+              <Image src={logo(value.type)} style={styles.logo}/>
               <Text style={styles.textDate}>{value.date}</Text>
             </View>
             <View style={styles.sectionReview}>
-              <Text style={styles.textReviewer}>Review by {value.author}: {value.rating} stars</Text>              
+              <Text style={styles.textReviewer}>Review by {value.author}:</Text>
+              {rating(value.rating)}              
             </View>
             <View style={styles.sectionReview}>
-              <Text style={styles.textComment}>{value.review}</Text>              
+              <Text style={styles.textComment}>{value.review ? value.review : '(No comments)'}</Text>              
             </View>
           </View>
         ))}

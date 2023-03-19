@@ -3,8 +3,8 @@ const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL;
 const urlData = `${BACKEND_API_URL}/getDashboardData`;
 const urlReviews = `${BACKEND_API_URL}/getReviewsData`;
 
-const getDashboardData = (client: string) => {  
-  return new Promise(
+const getDashboardData = async (client: string) => {  
+  return await new Promise(
     (resolve, reject) => {
       axios
         .get(urlData, {
@@ -26,8 +26,8 @@ const getDashboardData = (client: string) => {
   );
 }
 
-const getReviewsData = (params: {client: string, per_page: number, page: number, sources: string, ratings: string}) => {
-  return new Promise(
+const getReviewsData = async (params: {client: string, per_page: number, page: number, sources: string, ratings: string}) => {
+  return await new Promise(
     (resolve, reject) => {
       axios
         .get(urlReviews, {
