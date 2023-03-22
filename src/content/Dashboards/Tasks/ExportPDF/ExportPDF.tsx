@@ -66,7 +66,7 @@ function ExportPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
         </View>
         <View style={[styles.reviews, styles.borderTop, styles.borderBottom]}>
           <View style={styles.totalReviews}>
-            <Image src={reviewIcon} style={styles.emoji} />
+            <Image src={reviewIcon} style={styles.reviewIcon} />
             <Text>Reviews</Text>
             <Text style={styles.valueReviews}>{data?.totalReviews}</Text>
           </View>

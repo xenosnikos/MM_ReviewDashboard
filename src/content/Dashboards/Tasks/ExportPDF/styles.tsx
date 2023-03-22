@@ -197,6 +197,9 @@ export const styles = StyleSheet.create({
     width: 10,
     height: 10,
   },
+  reviewIcon: {
+    width: 25
+  },
   emoji: {
     width: 17.5,
     height: 17.5    
