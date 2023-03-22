@@ -180,8 +180,14 @@ export const styles = StyleSheet.create({
     fontSize: 11,
     paddingLeft: 7
   },
+  paddingTopChart: {
+    paddingTop: 50
+  },
   paddingTop: {
     paddingTop: 30
+  },
+  paddingBottom: {
+    paddingBottom: 20
   },
   rowStar: {
     flexDirection: 'row',
@@ -204,5 +210,9 @@ export const styles = StyleSheet.create({
   chartImage: {
     width: 500,
   },
-  
+  donutsCharts: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },  
 });

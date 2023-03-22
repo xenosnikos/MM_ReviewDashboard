@@ -82,6 +82,7 @@ function StarRatingBreakDown({ data }) {
       </Typography>
       <Divider />
       <Chart
+        id="chart-donut"
         type="donut"
         width={500}
         options={options}

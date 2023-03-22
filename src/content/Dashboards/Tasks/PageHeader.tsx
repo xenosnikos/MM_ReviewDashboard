@@ -40,23 +40,48 @@ const AvatarPageTitle = styled(Avatar)(
 );
 
 function PageHeader({ clientName, params }) {
-  const { reviewsData, setReviewsData, data, chartURI, setChartURI } = useContext(DataContext);
+  const { 
+    reviewsData, 
+    setReviewsData, 
+    data, 
+    chartURI, 
+    setChartURI, 
+    donutURI,
+    setDonutURI,
+    donut2URI, 
+    setDonut2URI } = useContext(DataContext);
   const [refresh, setRefresh] = useState(false);
   const [disabledButton, setDisabledButton] = useState(false);
   const totalReviews = reviewsData?.total
 
   const handlePDF = async () => {
-    const chartElement = document.querySelector('#chart') as HTMLElement;        
-    if (chartElement) {
+    const chartElement = document.querySelector('#chart') as HTMLElement;
+    const donutElement = document.querySelector('#chart-donut') as HTMLElement;
+    const donutElement2 = document.querySelector('#chart-donut2') as HTMLElement;
+
+    if (chartElement && donutElement && donutElement2) {
+      setDisabledButton(true);
+
       await html2canvas(chartElement).then(canvas => {
         const base64Image = canvas.toDataURL();
         setChartURI(base64Image);
       });
+      await html2canvas(donutElement).then(canvas => {
+        const base64Image = canvas.toDataURL();
+        setDonutURI(base64Image);
+      });
+      await html2canvas(donutElement2).then(canvas => {
+        const base64Image = canvas.toDataURL();
+        setDonut2URI(base64Image);
+      });
     }
-    setDisabledButton(true);
+    
     await getReviewsData({...params, per_page: totalReviews })
       .then(response => setReviewsData(response))
-      .catch(error => console.log(error));
+      .catch(error => {
+        console.log(error)
+        setDisabledButton(false);
+      });
     setRefresh(!refresh);
   }
 
@@ -89,7 +114,9 @@ function PageHeader({ clientName, params }) {
     return {
       data,
       reviewsData,
-      chartURI
+      chartURI,
+      donutURI,
+      donut2URI
     }
   }
 

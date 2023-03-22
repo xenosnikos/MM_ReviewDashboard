@@ -16,7 +16,10 @@ interface DataContext {
   setData: (value: any) => void;
   chartURI: any;
   setChartURI: (value: any) => void;
-  chartRef: any;
+  donutURI: any;
+  setDonutURI: (value: any) => void;
+  donut2URI: any;
+  setDonut2URI: (value: any) => void;
 }
 
 type Props = {
@@ -34,7 +37,8 @@ export const DataProvider = ({ children }: Props) => {
   const [reviewsData, setReviewsData] = useState(null);
   const [data, setData] = useState(null);
   const [chartURI, setChartURI] = useState(null);
-  const chartRef = useRef(null);
+  const [donutURI, setDonutURI] = useState(null);
+  const [donut2URI, setDonut2URI] = useState(null);
   
   return (
     <DataContext.Provider 
@@ -53,7 +57,10 @@ export const DataProvider = ({ children }: Props) => {
         setData,
         chartURI, 
         setChartURI,
-        chartRef }}>
+        donutURI,
+        setDonutURI,
+        donut2URI, 
+        setDonut2URI }}>
       {children}
     </DataContext.Provider>
   );

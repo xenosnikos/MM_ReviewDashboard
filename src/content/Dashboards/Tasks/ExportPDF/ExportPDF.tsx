@@ -11,7 +11,7 @@ import {
   reviewIcon
 } from './icons';
 
-function ExportPDF({ data, reviewsData, chartURI }) {
+function ExportPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
   const reviewsReverse = reviewsData?.data?.reverse();
 
   const { positive, neutral, negative } = (data?.sourcesGraphData?.series || []).reduce(
@@ -100,34 +100,50 @@ function ExportPDF({ data, reviewsData, chartURI }) {
             ))}
           </View>
         </View>
-        <View style={styles.sectionAverage}>
-          <Text style={styles.title}>Source Table Data</Text>
-        </View>
-        <View style={[styles.subSectionMonth, styles.borderTop]}>
-          <Text style={styles.title}>This Month</Text>
-          <Text style={styles.title}>Last 30 Days</Text>
-          <Text style={styles.title}>Last Month</Text>
-          <Text style={styles.title}>This Year</Text>
-          <Text style={styles.title}>Total Count</Text>
-        </View>
-        {data?.sourceTableData.map((value: any, index: number) => (
-          <View key={index} style={[styles.tableData, styles.borderTop]}>
-            <Text style={[styles.title, styles.box]}>{value.type}:</Text>
-            <View style={styles.subSectionValues}>
-              <Text>{value.thisMonth || "0"}</Text>
-              <Text>{value.lastThirtyDaysCount || "0"}</Text>
-              <Text>{value.lastMonth || "0"}</Text>
-              <Text>{value.thisYear || "0"}</Text>
-              <Text>{value.totalCount || "0"}</Text>
-            </View>
-          </View>
-        ))}
-        <View style={[styles.sectionAverage, styles.borderTop, ]}>
+        <View style={[styles.sectionAverage, styles.paddingTopChart]}>
           <Text style={styles.title}>Review Growth</Text>
         </View>
         <View style={[styles.center, styles.borderTop]}>
-          <Image src={chartURI} style={styles.chartImage}/>
+          <Image src={chartURI} style={styles.chartImage} />
         </View>
+        <View style={[styles.sectionAverage, styles.donutsCharts, styles.paddingTopChart, styles.borderTop]}>
+          <Text style={styles.title}>Star Rating Breakdown</Text>
+          <Text style={styles.title}>Review Source Breakdown</Text>
+        </View>
+        <View style={[styles.donutsCharts, styles.paddingBottom, styles.borderBottom]}>
+          <View style={styles.borderRight}>
+            <Image src={donutURI} />
+          </View>
+          <View>
+            <Image src={donut2URI} />
+          </View>
+        </View>
+        <View wrap={false}>
+          <View style={styles.sectionAverage}>
+            <Text style={styles.title}>Source Table Data</Text>
+          </View>
+          <View style={[styles.subSectionMonth, styles.borderTop]}>
+            <Text style={styles.title}>This Month</Text>
+            <Text style={styles.title}>Last 30 Days</Text>
+            <Text style={styles.title}>Last Month</Text>
+            <Text style={styles.title}>This Year</Text>
+            <Text style={styles.title}>Total Count</Text>
+          </View>
+          {data?.sourceTableData.map((value: any, index: number) => (
+            <View key={index} style={[styles.tableData, styles.borderTop]}>
+              <Text style={[styles.title, styles.box]}>{value.type}:</Text>
+              <View style={styles.subSectionValues}>
+                <Text>{value.thisMonth || "0"}</Text>
+                <Text>{value.lastThirtyDaysCount || "0"}</Text>
+                <Text>{value.lastMonth || "0"}</Text>
+                <Text>{value.thisYear || "0"}</Text>
+                <Text>{value.totalCount || "0"}</Text>
+              </View>
+            </View>
+          ))}
+
+        </View>
+
         <View style={[styles.sectionAverage, styles.borderTop, styles.borderBottom, styles.paddingTop]}>
           <Text style={styles.title}>Reviews</Text>
         </View>
