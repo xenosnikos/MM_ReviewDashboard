@@ -53,6 +53,9 @@ export const styles = StyleSheet.create({
   colorOrange: {
     color: '#ff7f44',
   },
+  colorPurple: {
+    color: '#8D7CF1',
+  },
   sectionReviews: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -190,6 +193,16 @@ export const styles = StyleSheet.create({
   },
   emoji: {
     width: 17.5,
-    height: 17.5
-  }
+    height: 17.5    
+  },
+  center: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  chartImage: {
+    width: 500,
+  },
+  
 });

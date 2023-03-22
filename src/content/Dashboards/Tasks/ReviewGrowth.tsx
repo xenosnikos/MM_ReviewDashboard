@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import {
   Button,
   Box,
@@ -19,6 +19,7 @@ function ReviewGrowth({ data }) {
     chart: {
       background: 'transparent',
       type: 'bar',
+      id: 'review-chart',
       toolbar: {
         show: false
       },
@@ -143,29 +144,33 @@ function ReviewGrowth({ data }) {
   const [options, setOptions] = useState<ApexOptions>(initOptions);
 
   useEffect(() => {
-      if (!data)
-        return;
+    if (!data)
+      return;
 
-      const newSeriesData = [];
+    const newSeriesData = [];
 
-      for (let i = 1; i <= 12; i++) {
-        const index = data.findIndex(item => item.month === i);
-        if (index > -1 && data[index].count)
-          newSeriesData.push(data[index].count);
-        else
-          newSeriesData.push(0);
-      }
+    for (let i = 1; i <= 12; i++) {
+      const index = data.findIndex(item => item.month === i);
+      if (index > -1 && data[index].count)
+        newSeriesData.push(data[index].count);
+      else
+        newSeriesData.push(0);
+    }
 
-      setOptions({
-        ...options,
-        series: [
-          {
-            name: 'Reviews',
-            data: newSeriesData
-          }
-        ]
-      });
+    setOptions({
+      ...options,
+      series: [
+        {
+          name: 'Reviews',
+          data: newSeriesData
+        }
+      ]
+    });
   }, [data]);
+
+  useEffect(() => {
+    
+  }, [options]);
 
   return (
     <Box>
@@ -214,7 +219,7 @@ function ReviewGrowth({ data }) {
         </Menu>
       </Box>
       <Chart
-        id="review-chart"
+        id="chart"
         options={options}
         series={options.series}
         type="bar"

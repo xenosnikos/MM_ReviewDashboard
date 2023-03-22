@@ -1,5 +1,5 @@
 import { providers, ratings } from "@/helpers/constant";
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useRef, useState } from "react";
 
 interface DataContext {
   selectedSources: any[];
@@ -14,6 +14,9 @@ interface DataContext {
   setReviewsData: (value: any) => void;
   data: any;
   setData: (value: any) => void;
+  chartURI: any;
+  setChartURI: (value: any) => void;
+  chartRef: any;
 }
 
 type Props = {
@@ -30,6 +33,8 @@ export const DataProvider = ({ children }: Props) => {
   const [limit, setLimit] = useState<number>(5);
   const [reviewsData, setReviewsData] = useState(null);
   const [data, setData] = useState(null);
+  const [chartURI, setChartURI] = useState(null);
+  const chartRef = useRef(null);
   
   return (
     <DataContext.Provider 
@@ -45,7 +50,10 @@ export const DataProvider = ({ children }: Props) => {
         reviewsData, 
         setReviewsData,
         data, 
-        setData }}>
+        setData,
+        chartURI, 
+        setChartURI,
+        chartRef }}>
       {children}
     </DataContext.Provider>
   );

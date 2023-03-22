@@ -11,10 +11,12 @@ const getDashboardData = async (client: string) => {
           params: {client}
         })
         .then(response => {
-          if (response?.data?.status === 'success' && response?.data?.data)
-            resolve(response.data.data);
+         const removeD = response.data.substring(1);
+         const res = JSON.parse(removeD);
+          if (res?.status === 'success' && res.data)
+            resolve(res.data);
           else
-            reject('Something went wrong');
+            reject("Something went wrong");
         })
         .catch(error => {
           if (error?.message)
@@ -34,17 +36,19 @@ const getReviewsData = async (params: {client: string, per_page: number, page: n
           params,
         })
         .then(response => {
-          if (response?.data?.status === 'success' && response?.data?.data)
-            resolve(response.data.data);
-          else
-            reject('Something went wrong');
-        })
-        .catch(error => {
-          if (error?.message)
-            reject(error.message);
-          else
-            reject("Something went wrong");
-        });
+          const removeD = response.data.substring(1);
+          const res = JSON.parse(removeD);
+           if (res?.status === 'success' && res.data)
+             resolve(res.data);
+           else
+             reject("Something went wrong");
+         })
+         .catch(error => {
+           if (error?.message)
+             reject(error.message);
+           else
+             reject("Something went wrong");
+         });
     }
   );
 }

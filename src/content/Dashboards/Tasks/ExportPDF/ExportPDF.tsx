@@ -1,6 +1,6 @@
 import { Document, Page, Text, View, Image } from '@react-pdf/renderer';
 import { styles } from './styles';
-import { 
+import {
   googleLogo,
   yelpLogo,
   yellowPagesLogo,
@@ -11,9 +11,9 @@ import {
   reviewIcon
 } from './icons';
 
-function ExportPDF({ data, reviewsData }) {
+function ExportPDF({ data, reviewsData, chartURI }) {
   const reviewsReverse = reviewsData?.data?.reverse();
-    
+
   const { positive, neutral, negative } = (data?.sourcesGraphData?.series || []).reduce(
     (acc, value) => {
       switch (value.name) {
@@ -34,7 +34,7 @@ function ExportPDF({ data, reviewsData }) {
       return acc;
     },
     { positive: 0, neutral: 0, negative: 0 }
-  ); 
+  );
 
   const logo = (type: string) => {
     if (type === 'Google') return googleLogo;
@@ -55,7 +55,7 @@ function ExportPDF({ data, reviewsData }) {
         ))}
       </View>
     );
-  };  
+  };
 
   return (
     <Document>
@@ -66,24 +66,24 @@ function ExportPDF({ data, reviewsData }) {
         </View>
         <View style={[styles.reviews, styles.borderTop, styles.borderBottom]}>
           <View style={styles.totalReviews}>
-            <Image src={reviewIcon} style={styles.emoji}/>
+            <Image src={reviewIcon} style={styles.emoji} />
             <Text>Reviews</Text>
             <Text style={styles.valueReviews}>{data?.totalReviews}</Text>
           </View>
           <View style={[styles.sectionReviews, styles.borderRight]}>
-            <Image src={positiveIcon} style={styles.emoji}/>
+            <Image src={positiveIcon} style={styles.emoji} />
             <Text>Positive</Text>
-            <Text style={[styles.valueReviews, styles.colorOrange]}>{positive}</Text>
+            <Text style={[styles.valueReviews, styles.colorPurple]}>{positive}</Text>
           </View>
           <View style={[styles.sectionReviews, styles.borderRight]}>
-            <Image src={neutralIcon} style={styles.emoji}/>
+            <Image src={neutralIcon} style={styles.emoji} />
             <Text>Neutral</Text>
-            <Text style={[styles.valueReviews, styles.colorOrange]}>{neutral}</Text>
+            <Text style={[styles.valueReviews, styles.colorPurple]}>{neutral}</Text>
           </View>
           <View style={styles.sectionReviews}>
-            <Image src={negativeIcon} style={styles.emoji}/>
+            <Image src={negativeIcon} style={styles.emoji} />
             <Text>Negative</Text>
-            <Text style={[styles.valueReviews, styles.colorOrange]}>{negative}</Text>
+            <Text style={[styles.valueReviews, styles.colorPurple]}>{negative}</Text>
           </View>
         </View>
         <View style={styles.sectionAverage}>
@@ -122,21 +122,27 @@ function ExportPDF({ data, reviewsData }) {
             </View>
           </View>
         ))}
+        <View style={[styles.sectionAverage, styles.borderTop, ]}>
+          <Text style={styles.title}>Review Growth</Text>
+        </View>
+        <View style={[styles.center, styles.borderTop]}>
+          <Image src={chartURI} style={styles.chartImage}/>
+        </View>
         <View style={[styles.sectionAverage, styles.borderTop, styles.borderBottom, styles.paddingTop]}>
           <Text style={styles.title}>Reviews</Text>
         </View>
         {reviewsReverse.map((value: any, index: number) => (
           <View key={index} wrap={false} style={[styles.reviewBox, styles.borderBottom, backStyle(index)]} >
             <View style={styles.sectionReview}>
-              <Image src={logo(value.type)} style={styles.logo}/>
-              <Text style={styles.textDate}>{value.date}</Text>
+              <Image src={logo(value.type)} style={styles.logo} />
+              <Text style={styles.textDate}>{value.date} - {data.clientName}</Text>
             </View>
             <View style={styles.sectionReview}>
               <Text style={styles.textReviewer}>Review by {value.author}:</Text>
-              {rating(value.rating)}              
+              {rating(value.rating)}
             </View>
             <View style={styles.sectionReview}>
-              <Text style={styles.textComment}>{value.review ? value.review : '(No comments)'}</Text>              
+              <Text style={styles.textComment}>{value.review ? value.review : '(No comments)'}</Text>
             </View>
           </View>
         ))}

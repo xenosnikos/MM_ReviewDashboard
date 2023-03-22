@@ -15,6 +15,7 @@ import { pdf } from '@react-pdf/renderer';
 import DataContext from '@/contexts/DataContext';
 import { saveAs } from 'file-saver';
 import { getReviewsData } from '@/services';
+import html2canvas from 'html2canvas';
 
 const AvatarPageTitle = styled(Avatar)(
   ({ theme }) => `
@@ -39,12 +40,19 @@ const AvatarPageTitle = styled(Avatar)(
 );
 
 function PageHeader({ clientName, params }) {
-  const { limit, reviewsData, setReviewsData, data } = useContext(DataContext);
+  const { reviewsData, setReviewsData, data, chartURI, setChartURI } = useContext(DataContext);
   const [refresh, setRefresh] = useState(false);
   const [disabledButton, setDisabledButton] = useState(false);
   const totalReviews = reviewsData?.total
 
   const handlePDF = async () => {
+    const chartElement = document.querySelector('#chart') as HTMLElement;        
+    if (chartElement) {
+      await html2canvas(chartElement).then(canvas => {
+        const base64Image = canvas.toDataURL();
+        setChartURI(base64Image);
+      });
+    }
     setDisabledButton(true);
     await getReviewsData({...params, per_page: totalReviews })
       .then(response => setReviewsData(response))
@@ -80,8 +88,8 @@ function PageHeader({ clientName, params }) {
   const getProps = () => {
     return {
       data,
-      limit,
-      reviewsData
+      reviewsData,
+      chartURI
     }
   }
 
@@ -117,8 +125,7 @@ function PageHeader({ clientName, params }) {
         variant="contained" 
         startIcon={<DocumentScannerTwoToneIcon />} 
         onClick={handlePDF}
-        disabled={disabledButton}
-        >
+        disabled={disabledButton} >
           Export
         </Button>
       </Box>
