@@ -131,27 +131,48 @@ function ExportPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
             <Text style={styles.title}>Source Table Data</Text>
           </View>
           <View style={[styles.subSectionMonth, styles.borderTop]}>
-            <Text style={styles.title}>This Month</Text>
-            <Text style={styles.title}>Last 30 Days</Text>
-            <Text style={styles.title}>Last Month</Text>
-            <Text style={styles.title}>This Year</Text>
-            <Text style={styles.title}>Total Count</Text>
+            <View style={styles.section20}>
+              <Text style={styles.title}>Source</Text>
+            </View>
+            <View style={styles.section16}>
+              <Text style={styles.title}>This Month</Text>
+            </View>
+            <View style={styles.section16}>
+              <Text style={styles.title}>Last 30 Days</Text>
+            </View>
+            <View style={styles.section16}>
+              <Text style={styles.title}>Last Month</Text>
+            </View>
+            <View style={styles.section16}>
+              <Text style={styles.title}>This Year</Text>
+            </View>
+            <View style={styles.section16}>
+              <Text style={styles.title}>Total Count</Text>
+            </View>
           </View>
           {data?.sourceTableData.map((value: any, index: number) => (
             <View key={index} style={[styles.tableData, styles.borderTop]}>
-              <Text style={[styles.title, styles.box]}>{value.type}:</Text>
-              <View style={styles.subSectionValues}>
+              <View style={styles.section20}>
+                <Text style={styles.title}>{value.type}:</Text>
+              </View>
+              <View style={styles.section16}>
                 <Text>{value.thisMonth || "0"}</Text>
+              </View>
+              <View style={styles.section16}>
                 <Text>{value.lastThirtyDaysCount || "0"}</Text>
+              </View>
+              <View style={styles.section16}>
                 <Text>{value.lastMonth || "0"}</Text>
+              </View>
+              <View style={styles.section16}>
                 <Text>{value.thisYear || "0"}</Text>
+              </View>
+              <View style={styles.section16}>
                 <Text>{value.totalCount || "0"}</Text>
               </View>
             </View>
           ))}
-
         </View>
-
         <View style={[styles.sectionAverage, styles.borderTop, styles.borderBottom, styles.paddingTop]}>
           <Text style={styles.title}>Reviews</Text>
         </View>
@@ -160,7 +181,7 @@ function ExportPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
             <View style={styles.sectionReview}>
               <View style={styles.sectionLogo}>
                 <Image src={logo(value.type)} style={styles.logo} />
-              </View>              
+              </View>
               <Text style={styles.textDate}>{value.date} - {data.clientName}</Text>
             </View>
             <View style={styles.sectionReview}>

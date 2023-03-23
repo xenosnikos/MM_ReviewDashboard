@@ -144,7 +144,7 @@ function DashboardTasks() {
     sources: JSON.stringify(selectedSources), 
     ratings: JSON.stringify(selectedRatings)
   }
-
+  
   const getData = async () => {
     await getReviewsData(params)
       .then(response => setReviewsData(response))

@@ -1,5 +1,5 @@
 import { providers, ratings } from "@/helpers/constant";
-import { createContext, ReactNode, useRef, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 
 interface DataContext {
   selectedSources: any[];

@@ -103,18 +103,15 @@ export const styles = StyleSheet.create({
   subSectionMonth: {
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingLeft: 80,
-    paddingRight: 20,
-    columnGap: 30,
     paddingTop: 10,
     backgroundColor: '#efefef'
   },
-  subSectionValues: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
+  section20: {
+    width: '20%',
+    paddingLeft: 20
+  },
+  section16: {
+    width: '16%',
   },
   title: {
     marginRight: 5,
@@ -127,9 +124,8 @@ export const styles = StyleSheet.create({
     textAlign: 'center'
   },
   tableData: {
+    width: '100%',
     paddingTop: 10,
-    paddingRight: 50,
-    paddingLeft: 10,
     flexDirection: 'row'
   },
   borderTop: {
@@ -143,9 +139,6 @@ export const styles = StyleSheet.create({
   },
   borderLeft: {
     borderLeft: '1px solid #aaaaaa'
-  },
-  box: {
-    width: 75,
   },
   reviewBox: {
     width: '100%',

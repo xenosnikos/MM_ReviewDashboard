@@ -5,7 +5,8 @@ import {
   alpha,
   lighten,
   Avatar,
-  styled
+  styled,
+  CircularProgress
 } from '@mui/material';
 import DocumentScannerTwoToneIcon from '@mui/icons-material/DocumentScannerTwoTone';
 import AddAlertTwoToneIcon from '@mui/icons-material/AddAlertTwoTone';
@@ -40,28 +41,27 @@ const AvatarPageTitle = styled(Avatar)(
 );
 
 function PageHeader({ clientName, params }) {
-  const { 
-    reviewsData, 
-    setReviewsData, 
-    data, 
-    chartURI, 
-    setChartURI, 
+  const {
+    reviewsData,
+    setReviewsData,
+    data,
+    chartURI,
+    setChartURI,
     donutURI,
     setDonutURI,
-    donut2URI, 
+    donut2URI,
     setDonut2URI } = useContext(DataContext);
   const [refresh, setRefresh] = useState(false);
   const [disabledButton, setDisabledButton] = useState(false);
-  const totalReviews = reviewsData?.total
+  const totalReviews = reviewsData?.total;
 
   const handlePDF = async () => {
+    setDisabledButton(true);
     const chartElement = document.querySelector('#chart') as HTMLElement;
     const donutElement = document.querySelector('#chart-donut') as HTMLElement;
     const donutElement2 = document.querySelector('#chart-donut2') as HTMLElement;
 
     if (chartElement && donutElement && donutElement2) {
-      setDisabledButton(true);
-
       await html2canvas(chartElement).then(canvas => {
         const base64Image = canvas.toDataURL();
         setChartURI(base64Image);
@@ -75,8 +75,8 @@ function PageHeader({ clientName, params }) {
         setDonut2URI(base64Image);
       });
     }
-    
-    await getReviewsData({...params, per_page: totalReviews })
+
+    await getReviewsData({ ...params, per_page: totalReviews })
       .then(response => setReviewsData(response))
       .catch(error => {
         console.log(error)
@@ -94,17 +94,17 @@ function PageHeader({ clientName, params }) {
       const blob = await asPdf.toBlob();
       saveAs(blob, `${clientName}.pdf`);
       await getReviewsData(params)
-      .then(response => {
-        setReviewsData(response);
-        setDisabledButton(false);
-      })
-      .catch(error => {
-        console.log(error);
-        setDisabledButton(false);
-      });
+        .then(response => {
+          setReviewsData(response);
+          setDisabledButton(false);
+        })
+        .catch(error => {
+          console.log(error);
+          setDisabledButton(false);
+        });
     }
 
-    if(refresh) {
+    if (refresh) {
       setRefresh(!refresh);
       getPDF();
     }
@@ -148,12 +148,21 @@ function PageHeader({ clientName, params }) {
         </Box>
       </Box>
       <Box mt={{ xs: 3, md: 0 }}>
-        <Button 
-        variant="contained" 
-        startIcon={<DocumentScannerTwoToneIcon />} 
-        onClick={handlePDF}
-        disabled={disabledButton} >
-          Export
+        <Button
+          variant="contained"
+          startIcon={<DocumentScannerTwoToneIcon />}
+          onClick={handlePDF}
+          disabled={disabledButton} >
+          {disabledButton ? (
+            <div style={{
+              paddingTop: "3px",
+              paddingBottom: "-3px",
+              paddingLeft: "13px",
+              paddingRight: "13px"
+            }}>
+              <CircularProgress size={17.5} />
+            </div>) :
+            ("Export")}
         </Button>
       </Box>
     </Box>

@@ -100,6 +100,7 @@ function ReviewsTable() {
             notched={true}
             onChange={handleChangeSelectSources}
             autoWidth
+            style={{ marginTop: '8px'}}
           >
             <MenuItem value="all">
               <ListItemIcon>
@@ -130,6 +131,7 @@ function ReviewsTable() {
             value={selectedRatings}
             renderValue={() => "Select Ratings"}
             onChange={handleChangeSelectRatings}
+            style={{ marginTop: '8px'}}
           >
             <MenuItem
               value="all"
