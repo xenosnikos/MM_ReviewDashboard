@@ -4,6 +4,10 @@ import {
   googleLogo,
   yelpLogo,
   yellowPagesLogo,
+  carGurusLogo,
+  carsLogo,
+  dealerLogo,
+  facebookLogo,
   star,
   positiveIcon,
   neutralIcon,
@@ -39,7 +43,11 @@ function ExportPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
   const logo = (type: string) => {
     if (type === 'Google') return googleLogo;
     if (type === 'Yelp') return yelpLogo;
-    if (type === 'Yellow Page') return yellowPagesLogo;
+    if (type === 'Yellow Pages') return yellowPagesLogo;
+    if (type === 'CarGurus') return carGurusLogo;
+    if (type === 'Cars') return carsLogo;
+    if (type === 'Dealer') return dealerLogo;
+    if (type === 'Facebook') return facebookLogo;
   };
 
   const backStyle = (index: number) => {
@@ -150,7 +158,9 @@ function ExportPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
         {reviewsReverse.map((value: any, index: number) => (
           <View key={index} wrap={false} style={[styles.reviewBox, styles.borderBottom, backStyle(index)]} >
             <View style={styles.sectionReview}>
-              <Image src={logo(value.type)} style={styles.logo} />
+              <View style={styles.sectionLogo}>
+                <Image src={logo(value.type)} style={styles.logo} />
+              </View>              
               <Text style={styles.textDate}>{value.date} - {data.clientName}</Text>
             </View>
             <View style={styles.sectionReview}>

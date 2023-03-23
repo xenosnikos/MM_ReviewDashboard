@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Button,
   Box,
@@ -167,10 +167,6 @@ function ReviewGrowth({ data }) {
       ]
     });
   }, [data]);
-
-  useEffect(() => {
-    
-  }, [options]);
 
   return (
     <Box>

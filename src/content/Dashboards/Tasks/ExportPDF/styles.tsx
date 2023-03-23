@@ -162,9 +162,13 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
+  sectionLogo: {
+    width:  50,
+    display: 'flex',
+    alignItems: 'center'
+  },
   logo: {
-    width: 60,
-    height: 60
+    width: 40,
   },
   textDate: {
     marginRight: 5,
