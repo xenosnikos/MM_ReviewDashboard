@@ -6,8 +6,10 @@ import {
 } from '@mui/material';
 import { ApexOptions } from "apexcharts";
 import { Chart } from '@/components/Chart';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { providers } from '@/helpers/constant';
+import DataContext from '@/contexts/DataContext';
+import html2canvas from 'html2canvas';
 
 const initOptions: ApexOptions = {
   chart: {
@@ -49,6 +51,7 @@ const initOptions: ApexOptions = {
 function ReviewSourceBreakDown({ data }) {
   const theme = useTheme();
   const [options, setOptions] = useState<ApexOptions>(initOptions);
+  const { setDonut2URI } = useContext(DataContext);
 
   useEffect(() => {
     if (!data)
@@ -64,7 +67,22 @@ function ReviewSourceBreakDown({ data }) {
     });
 
     setOptions({...options, series: newSeries});
-  }, [data])
+  }, [data]);
+
+  useEffect(() => {
+    const getChart = async () => {
+      const chartElement = document.querySelector('#chart-donut2') as HTMLElement;
+
+      if (chartElement) {
+        await html2canvas(chartElement).then(canvas => {
+          const base64Image = canvas.toDataURL();
+          setDonut2URI(base64Image);
+        });
+      }
+    }
+
+    getChart()
+  }, [options]);
 
   return (
     <Box>
@@ -84,7 +102,7 @@ function ReviewSourceBreakDown({ data }) {
       <Chart
         id="chart-donut2"
         type="donut"
-        width={500}
+        width={532}
         options={options}
         series={options.series}
       />

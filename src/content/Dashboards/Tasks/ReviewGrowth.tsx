@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import {
   Button,
   Box,
@@ -11,6 +11,8 @@ import {
 import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
 import { Chart } from 'src/components/Chart';
 import type { ApexOptions } from 'apexcharts';
+import DataContext from '@/contexts/DataContext';
+import html2canvas from 'html2canvas';
 
 function ReviewGrowth({ data }) {
   const theme = useTheme();
@@ -25,7 +27,10 @@ function ReviewGrowth({ data }) {
       },
       zoom: {
         enabled: false
-      }
+      },
+      animations: {
+        enabled: false
+      },
     },
     plotOptions: {
       bar: {
@@ -142,6 +147,7 @@ function ReviewGrowth({ data }) {
   const [openPeriod, setOpenMenuPeriod] = useState<boolean>(false);
   const [period, setPeriod] = useState<string>(periods[3].text);
   const [options, setOptions] = useState<ApexOptions>(initOptions);
+  const { setChartURI } = useContext(DataContext);
 
   useEffect(() => {
     if (!data)
@@ -167,6 +173,24 @@ function ReviewGrowth({ data }) {
       ]
     });
   }, [data]);
+
+  useEffect(() => {
+    const getChart = async () => {
+      const chartElement = document.querySelector('#chart') as HTMLElement;
+
+      if (chartElement) {
+        await html2canvas(chartElement).then(canvas => {
+          const base64Image = canvas.toDataURL();
+          setChartURI(base64Image);
+        });
+      }
+    }
+
+    getChart()
+  }, [options]);
+
+
+
 
   return (
     <Box>

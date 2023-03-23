@@ -20,6 +20,8 @@ interface DataContext {
   setDonutURI: (value: any) => void;
   donut2URI: any;
   setDonut2URI: (value: any) => void;
+  disabledButton: any;
+  setDisabledButton: (value: any) => void;
 }
 
 type Props = {
@@ -39,6 +41,7 @@ export const DataProvider = ({ children }: Props) => {
   const [chartURI, setChartURI] = useState(null);
   const [donutURI, setDonutURI] = useState(null);
   const [donut2URI, setDonut2URI] = useState(null);
+  const [disabledButton, setDisabledButton] = useState(true);
   
   return (
     <DataContext.Provider 
@@ -60,7 +63,9 @@ export const DataProvider = ({ children }: Props) => {
         donutURI,
         setDonutURI,
         donut2URI, 
-        setDonut2URI }}>
+        setDonut2URI,
+        disabledButton, 
+        setDisabledButton }}>
       {children}
     </DataContext.Provider>
   );

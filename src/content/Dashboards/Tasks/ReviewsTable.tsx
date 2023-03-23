@@ -25,15 +25,15 @@ import DataContext from '@/contexts/DataContext';
 
 function ReviewsTable() {
   const theme = useTheme();
-  const { 
-    selectedSources, 
-    setSelectedSources, 
-    selectedRatings, 
-    setSelectedRatings, 
-    page, 
-    setPage, 
-    limit, 
-    setLimit, 
+  const {
+    selectedSources,
+    setSelectedSources,
+    selectedRatings,
+    setSelectedRatings,
+    page,
+    setPage,
+    limit,
+    setLimit,
     reviewsData } = useContext(DataContext);
 
   console.log(reviewsData);
@@ -86,7 +86,7 @@ function ReviewsTable() {
         >
           Showing {reviewsData?.from || 0} to {reviewsData?.to || 0} of {reviewsData?.total || 0} Results
         </Typography>
-        <FormControl style={{minWidth: 150}}>
+        <FormControl style={{ minWidth: 150 }}>
           <InputLabel htmlFor="sourcesSelect">Select Sources</InputLabel>
           <Select
             multiple
@@ -100,7 +100,7 @@ function ReviewsTable() {
             notched={true}
             onChange={handleChangeSelectSources}
             autoWidth
-            style={{ marginTop: '8px'}}
+            style={{ marginTop: '8px' }}
           >
             <MenuItem value="all">
               <ListItemIcon>
@@ -109,19 +109,19 @@ function ReviewsTable() {
                   indeterminate={selectedSources.length > 0 && selectedSources.length < providers.length}
                 />
               </ListItemIcon>
-              <ListItemText primary="Select All"/>
+              <ListItemText primary="Select All" />
             </MenuItem>
             {providers.map((option) => (
               <MenuItem key={option} value={option}>
                 <ListItemIcon>
-                  <Checkbox checked={selectedSources.indexOf(option) > -1}/>
+                  <Checkbox checked={selectedSources.indexOf(option) > -1} />
                 </ListItemIcon>
                 <ListItemText primary={option} />
               </MenuItem>
             ))}
           </Select>
         </FormControl>
-        <FormControl style={{minWidth: 150}}>
+        <FormControl style={{ minWidth: 150 }}>
           <InputLabel htmlFor="ratingsSelect">Select Ratings</InputLabel>
           <Select
             multiple
@@ -131,7 +131,7 @@ function ReviewsTable() {
             value={selectedRatings}
             renderValue={() => "Select Ratings"}
             onChange={handleChangeSelectRatings}
-            style={{ marginTop: '8px'}}
+            style={{ marginTop: '8px' }}
           >
             <MenuItem
               value="all"

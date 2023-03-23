@@ -120,7 +120,8 @@ function DashboardTasks() {
     page,
     limit, 
     reviewsData, 
-    setReviewsData } = useContext(DataContext);
+    setReviewsData,
+    setDisabledButton } = useContext(DataContext);
 
   const { client } = router.query;
   const clientString = typeof client === 'string' ? client : '';
@@ -152,27 +153,29 @@ function DashboardTasks() {
   }
 
   useEffect(() => {
-    console.log(data);
-    console.log(reviewsData)
-  }, [data]);
+    if (typeof client === 'string') {
+      getData();
+    }      
+}, [page, limit, selectedSources, selectedRatings, client]);
 
   useEffect(() => {
     if (typeof client === 'string') {
       getDashboardData(client)
         .then(data => {
           setData(data);
+          setDisabledButton(false);
         })
         .catch(error => {
           console.log(error);
+          setDisabledButton(false);
         });
     }
   }, [client]);
 
-    useEffect(() => {
-      if (typeof client === 'string') {
-        getData();
-      }      
-  }, [page, limit, selectedSources, selectedRatings, client]);
+  useEffect(() => {
+    console.log(data);
+    console.log(reviewsData)
+  }, [data]);
 
   return (
     <>

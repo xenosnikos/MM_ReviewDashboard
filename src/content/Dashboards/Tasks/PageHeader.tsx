@@ -16,7 +16,6 @@ import { pdf } from '@react-pdf/renderer';
 import DataContext from '@/contexts/DataContext';
 import { saveAs } from 'file-saver';
 import { getReviewsData } from '@/services';
-import html2canvas from 'html2canvas';
 
 const AvatarPageTitle = styled(Avatar)(
   ({ theme }) => `
@@ -46,43 +45,24 @@ function PageHeader({ clientName, params }) {
     setReviewsData,
     data,
     chartURI,
-    setChartURI,
     donutURI,
-    setDonutURI,
     donut2URI,
-    setDonut2URI } = useContext(DataContext);
+    disabledButton,
+    setDisabledButton } = useContext(DataContext);
   const [refresh, setRefresh] = useState(false);
-  const [disabledButton, setDisabledButton] = useState(false);
+
   const totalReviews = reviewsData?.total;
 
   const handlePDF = async () => {
     setDisabledButton(true);
-    const chartElement = document.querySelector('#chart') as HTMLElement;
-    const donutElement = document.querySelector('#chart-donut') as HTMLElement;
-    const donutElement2 = document.querySelector('#chart-donut2') as HTMLElement;
-
-    if (chartElement && donutElement && donutElement2) {
-      await html2canvas(chartElement).then(canvas => {
-        const base64Image = canvas.toDataURL();
-        setChartURI(base64Image);
-      });
-      await html2canvas(donutElement).then(canvas => {
-        const base64Image = canvas.toDataURL();
-        setDonutURI(base64Image);
-      });
-      await html2canvas(donutElement2).then(canvas => {
-        const base64Image = canvas.toDataURL();
-        setDonut2URI(base64Image);
-      });
-    }
 
     await getReviewsData({ ...params, per_page: totalReviews })
       .then(response => setReviewsData(response))
       .catch(error => {
         console.log(error)
-        setDisabledButton(false);
+        return setDisabledButton(false);
       });
-    setRefresh(!refresh);
+    setRefresh(true);
   }
 
   useEffect(() => {
@@ -105,7 +85,7 @@ function PageHeader({ clientName, params }) {
     }
 
     if (refresh) {
-      setRefresh(!refresh);
+      setRefresh(false);
       getPDF();
     }
   }, [refresh])
