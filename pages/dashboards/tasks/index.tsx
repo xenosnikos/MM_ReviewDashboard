@@ -112,14 +112,14 @@ const TabsContainerWrapper = styled(Box)(
 function DashboardTasks() {
   const router = useRouter();
   const theme = useTheme();
-  const { 
-    data, 
-    setData, 
-    selectedSources, 
+  const {
+    data,
+    setData,
+    selectedSources,
     selectedRatings,
     page,
-    limit, 
-    reviewsData, 
+    limit,
+    reviewsData,
     setReviewsData,
     setDisabledButton } = useContext(DataContext);
 
@@ -139,13 +139,13 @@ function DashboardTasks() {
   };
 
   const params = {
-    client: clientString, 
-    per_page: limit, 
-    page: page + 1, 
-    sources: JSON.stringify(selectedSources), 
+    client: clientString,
+    per_page: limit,
+    page: page + 1,
+    sources: JSON.stringify(selectedSources),
     ratings: JSON.stringify(selectedRatings)
   }
-  
+
   const getData = async () => {
     await getReviewsData(params)
       .then(response => setReviewsData(response))
@@ -155,8 +155,8 @@ function DashboardTasks() {
   useEffect(() => {
     if (typeof client === 'string') {
       getData();
-    }      
-}, [page, limit, selectedSources, selectedRatings, client]);
+    }
+  }, [page, limit, selectedSources, selectedRatings, client]);
 
   useEffect(() => {
     if (typeof client === 'string') {

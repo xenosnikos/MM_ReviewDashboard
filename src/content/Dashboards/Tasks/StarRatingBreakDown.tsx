@@ -7,8 +7,9 @@ import {
 import { Chart } from '@/components/Chart';
 import type { ApexOptions } from 'apexcharts';
 import { useContext, useEffect, useState } from 'react';
-import html2canvas from 'html2canvas';
+import * as htmlToImage from 'html-to-image';
 import DataContext from '@/contexts/DataContext';
+
 
 const initOptions: ApexOptions = {
   chart: {
@@ -74,9 +75,8 @@ function StarRatingBreakDown({ data }) {
       const chartElement = document.querySelector('#chart-donut') as HTMLElement;
 
       if (chartElement) {
-        await html2canvas(chartElement).then(canvas => {
-          const base64Image = canvas.toDataURL();
-          setDonutURI(base64Image);
+        await htmlToImage.toPng(chartElement).then((dataUrl) => {
+          setDonutURI(dataUrl);
         });
       }
     }

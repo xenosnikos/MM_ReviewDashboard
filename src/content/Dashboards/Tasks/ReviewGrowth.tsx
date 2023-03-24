@@ -12,7 +12,7 @@ import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
 import { Chart } from 'src/components/Chart';
 import type { ApexOptions } from 'apexcharts';
 import DataContext from '@/contexts/DataContext';
-import html2canvas from 'html2canvas';
+import * as htmlToImage from 'html-to-image';
 
 function ReviewGrowth({ data }) {
   const theme = useTheme();
@@ -84,7 +84,7 @@ function ReviewGrowth({ data }) {
       },
       labels: {
         style: {
-          colors: theme.palette.text.secondary
+          colors: '#373C3F'
         }
       }
     },
@@ -98,7 +98,7 @@ function ReviewGrowth({ data }) {
       },
       labels: {
         style: {
-          colors: theme.palette.text.secondary
+          colors: '#373C3F'
         }
       }
     },
@@ -179,18 +179,14 @@ function ReviewGrowth({ data }) {
       const chartElement = document.querySelector('#chart') as HTMLElement;
 
       if (chartElement) {
-        await html2canvas(chartElement).then(canvas => {
-          const base64Image = canvas.toDataURL();
-          setChartURI(base64Image);
+        await htmlToImage.toPng(chartElement).then((dataUrl) => {
+          setChartURI(dataUrl);
         });
       }
     }
 
     getChart()
   }, [options]);
-
-
-
 
   return (
     <Box>
