@@ -21,8 +21,8 @@ function ExportPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
   const { positive, neutral, negative } = (data?.sourcesGraphData?.series || []).reduce(
     (acc, value) => {
       switch (value.name) {
-        case '4 Stars':
         case '5 Stars':
+        case '4 Stars':
           acc.positive += value.data.reduce((prev, curr) => prev + curr, 0);
           break;
         case '3 Stars':

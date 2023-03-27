@@ -77,10 +77,6 @@ function ReviewSourceBreakDown({ data }) {
         await htmlToImage.toPng(chartElement).then((dataUrl) => {
           setDonut2URI(dataUrl);
         });
-        /*    await html2canvas(chartElement).then(canvas => {
-             const base64Image = canvas.toDataURL();
-             setDonut2URI(base64Image);
-           }); */
       }
     }
 

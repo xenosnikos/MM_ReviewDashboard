@@ -13,6 +13,7 @@ export default class MyDocument extends Document {
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400&display=swap"
+            crossOrigin="anonymous"
           />
         </Head>
         <body>
