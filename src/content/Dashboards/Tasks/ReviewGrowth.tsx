@@ -164,54 +164,126 @@ function ReviewGrowth({ params }) {
   }, [reviewsData]);
 
   useEffect(() => {
-    const reviewCountByMonth = {};
+    if (period === 'Last month') {
+      const commentsPerDay = {};
 
-    revData?.data?.forEach(review => {
-      const [day, month, year] = review.date.split(" ");
-      const monthIndex = new Date(Date.parse(`${month}, ${year}`)).getMonth() + 1;
-      const reviewDate = new Date(year, monthIndex - 1);
+      const today = new Date();
+      const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1);
 
-      if (isNaN(monthIndex)) {
-        return;
-      }
+      const filteredReviews = revData?.data?.filter(review => {
+        const [day, month, year] = review.date.split(" ");
+        const monthIndex = new Date(Date.parse(`${month}, ${year}`)).getMonth() + 1;
+        const reviewDate = new Date(year, monthIndex - 1);
 
-      if (reviewDate >= new Date(new Date().setMonth(new Date().getMonth() - 11))) {
-        if (reviewCountByMonth[monthIndex]) {
-          reviewCountByMonth[monthIndex].count += 1;
-        } else {
-          reviewCountByMonth[monthIndex] = { month: monthIndex, count: 1 };
+        return reviewDate.getMonth() === lastMonth.getMonth() && reviewDate.getFullYear() === lastMonth.getFullYear();
+      });
+
+      filteredReviews.forEach(review => {
+        const [day, month, year] = review.date.split(" ");
+        commentsPerDay[day] = (commentsPerDay[day] || 0) + 1;
+      });
+
+      const reviewCountArray = Object.entries(commentsPerDay).map(([day, count]) => ({ day: day, count }));
+
+      setData(reviewCountArray);
+
+      
+      console.log(data);
+    }
+
+    if (period === 'Last year') {
+      const reviewCountByMonth = {};
+
+      revData?.data?.forEach(review => {
+        const [day, month, year] = review.date.split(" ");
+        const monthIndex = new Date(Date.parse(`${month}, ${year}`)).getMonth() + 1;
+        const reviewDate = new Date(year, monthIndex - 1);
+
+        if (isNaN(monthIndex)) {
+          return;
         }
-      }
-    });
 
-    const reviewCountArray = Object.values(reviewCountByMonth);
+        if (reviewDate >= new Date(new Date().setMonth(new Date().getMonth() - 11))) {
+          if (reviewCountByMonth[monthIndex]) {
+            reviewCountByMonth[monthIndex].count += 1;
+          } else {
+            reviewCountByMonth[monthIndex] = { month: monthIndex, count: 1 };
+          }
+        }
+      });
 
-    setData(reviewCountArray);
-  }, [revData]);
+      const reviewCountArray = Object.values(reviewCountByMonth);
+
+      setData(reviewCountArray);
+      console.log(data);
+    }
+
+
+  }, [revData, period]);
 
   useEffect(() => {
     if (!data)
       return;
 
-    const newSeriesData = [];
+    if (period === 'Last month') {
+      const today = new Date();
+      const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1);
+      const daysInLastMonth = new Date(lastMonth.getFullYear(), lastMonth.getMonth() + 1, 0).getDate();
 
-    for (let i = 1; i <= 12; i++) {
-      const index = data.findIndex(item => item.month === i);
-      if (index > -1 && data[index].count)
-        newSeriesData.push(data[index].count);
-      else
-        newSeriesData.push(0);
+      const lastMonthDays = [];
+
+      for (let i = 1; i <= daysInLastMonth; i++) {
+        let suffix = "th";
+        if (i === 1 || i === 21 || i === 31) suffix = "st";
+        else if (i === 2 || i === 22) suffix = "nd";
+        else if (i === 3 || i === 23) suffix = "rd";
+        lastMonthDays.push(`${i}${suffix}`);
+      }
+
+      const newSeriesData = [];
+
+      for (let i = 1; i <= lastMonthDays.length; i++) {
+        const index = data.findIndex(item => item.day.slice(0, -2) == i);        
+        if (index > -1 && data[index].count)
+          newSeriesData.push(data[index].count);
+        else
+          newSeriesData.push(0);
+      }
+      console.log(newSeriesData);
+
+      setOptions({
+        ...options,
+        labels: lastMonthDays,
+        series: [
+          {
+            name: 'Reviews',
+            data: newSeriesData
+          }
+        ]
+      });
     }
 
-    setOptions({
-      ...options,
-      series: [
-        {
-          name: 'Reviews',
-          data: newSeriesData
-        }
-      ]
-    });
+    if (period === 'Last year') {
+      const newSeriesData = [];
+
+      for (let i = 1; i <= 12; i++) {
+        const index = data.findIndex(item => item.month === i);
+        if (index > -1 && data[index].count)
+          newSeriesData.push(data[index].count);
+        else
+          newSeriesData.push(0);
+      }
+
+      setOptions({
+        ...options,
+        series: [
+          {
+            name: 'Reviews',
+            data: newSeriesData
+          }
+        ]
+      });
+    }
   }, [data]);
 
   useEffect(() => {
