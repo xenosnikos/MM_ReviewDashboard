@@ -13,8 +13,9 @@ import { Chart } from 'src/components/Chart';
 import type { ApexOptions } from 'apexcharts';
 import DataContext from '@/contexts/DataContext';
 import * as htmlToImage from 'html-to-image';
+import { getReviewsData } from '@/services';
 
-function ReviewGrowth({ data }) {
+function ReviewGrowth({ params }) {
   const theme = useTheme();
 
   const initOptions: ApexOptions = {
@@ -147,7 +148,46 @@ function ReviewGrowth({ data }) {
   const [openPeriod, setOpenMenuPeriod] = useState<boolean>(false);
   const [period, setPeriod] = useState<string>(periods[3].text);
   const [options, setOptions] = useState<ApexOptions>(initOptions);
-  const { setChartURI } = useContext(DataContext);
+  const { setChartURI, reviewsData } = useContext(DataContext);
+  const [revData, setRevData] = useState(null);
+  const [data, setData] = useState(null);
+  const totalReviews = reviewsData?.total;
+
+  useEffect(() => {
+    const getData = async () => {
+      await getReviewsData({ ...params, per_page: totalReviews })
+        .then(response => setRevData(response))
+        .catch(error => console.log(error));
+    }
+
+    getData();
+  }, [reviewsData]);
+
+  useEffect(() => {
+    const reviewCountByMonth = {};
+
+    revData?.data?.forEach(review => {
+      const [day, month, year] = review.date.split(" ");
+      const monthIndex = new Date(Date.parse(`${month}, ${year}`)).getMonth() + 1;
+      const reviewDate = new Date(year, monthIndex - 1);
+
+      if (isNaN(monthIndex)) {
+        return;
+      }
+
+      if (reviewDate >= new Date(new Date().setMonth(new Date().getMonth() - 11))) {
+        if (reviewCountByMonth[monthIndex]) {
+          reviewCountByMonth[monthIndex].count += 1;
+        } else {
+          reviewCountByMonth[monthIndex] = { month: monthIndex, count: 1 };
+        }
+      }
+    });
+
+    const reviewCountArray = Object.values(reviewCountByMonth);
+
+    setData(reviewCountArray);
+  }, [revData]);
 
   useEffect(() => {
     if (!data)

@@ -144,31 +144,34 @@ function DashboardTasks() {
     page: page + 1,
     sources: JSON.stringify(selectedSources),
     ratings: JSON.stringify(selectedRatings)
-  }
-
-  const getData = async () => {
-    await getReviewsData(params)
-      .then(response => setReviewsData(response))
-      .catch(error => console.log(error));
-  }
+  }  
 
   useEffect(() => {
+    const getData = async () => {
+      await getReviewsData(params)
+        .then(response => setReviewsData(response))
+        .catch(error => console.log(error));
+    }
+
     if (typeof client === 'string') {
       getData();
     }
   }, [page, limit, selectedSources, selectedRatings, client]);
 
   useEffect(() => {
+    const getData = async () => {
+      await getDashboardData(clientString)
+      .then(response => {
+        setData(response);
+        setDisabledButton(false);
+      })
+      .catch(error => {
+        console.log(error);
+        setDisabledButton(false);
+      });
+    }
     if (typeof client === 'string') {
-      getDashboardData(client)
-        .then(data => {
-          setData(data);
-          setDisabledButton(false);
-        })
-        .catch(error => {
-          console.log(error);
-          setDisabledButton(false);
-        });
+      getData();
     }
   }, [client]);
 
@@ -229,7 +232,8 @@ function DashboardTasks() {
                       }}
                     >
                       <ReviewGrowth
-                        data={data?.reviewGrowth}
+                        /* data={data?.reviewGrowth} */
+                        params={params}                        
                       />
                     </Box>
                   </Grid>
