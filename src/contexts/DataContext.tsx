@@ -34,7 +34,7 @@ export default DataContext;
 export const DataProvider = ({ children }: Props) => {
   const [selectedSources, setSelectedSources] = useState(providers);
   const [selectedRatings, setSelectedRatings] = useState(ratings);
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(5);
   const [reviewsData, setReviewsData] = useState(null);
   const [data, setData] = useState(null);

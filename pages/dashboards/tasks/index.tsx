@@ -118,6 +118,7 @@ function DashboardTasks() {
     selectedSources,
     selectedRatings,
     page,
+    setPage,
     limit,
     reviewsData,
     setReviewsData,
@@ -136,12 +137,13 @@ function DashboardTasks() {
 
   const handleTabsChange = (_event: ChangeEvent<{}>, value: string): void => {
     setCurrentTab(value);
+    setPage(1);
   };
 
   const params = {
     client: clientString,
     per_page: limit,
-    page: page + 1,
+    page: page,
     sources: JSON.stringify(selectedSources),
     ratings: JSON.stringify(selectedRatings)
   }  
