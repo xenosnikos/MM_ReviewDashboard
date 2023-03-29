@@ -166,6 +166,24 @@ function ReviewGrowth({ params }) {
   }, [reviewsData]);
 
   useEffect(() => {
+    if (period === 'Today') {
+      const reviewsTodayArray = [];
+      const today = new Date();
+
+      const reviewsToday = revData?.data?.filter(review => {
+        const [day, month, year] = review.date.split(" ");
+        const monthIndex = new Date(Date.parse(`${month}, ${year}`)).getMonth();
+        const reviewDate = new Date(year, monthIndex, day.slice(0, -2));
+
+        return reviewDate.getDate() === today.getDate() &&
+          reviewDate.getMonth() === today.getMonth() &&
+          reviewDate.getFullYear() === today.getFullYear();
+      });
+
+      reviewsTodayArray.push(reviewsToday.length);
+      setData(reviewsTodayArray);
+    }
+
     if (period === 'Yesterday') {
       const reviewsYesterdayArray = [];
       const today = new Date();
@@ -240,11 +258,24 @@ function ReviewGrowth({ params }) {
   useEffect(() => {
     if (!data)
       return;
-
-    if (period === 'Yesterday') { 
+      
+    if (period === 'Today') {
       setOptions({
         ...options,
-        labels: [ 'Yesterday' ],
+        labels: ['Today'],
+        series: [
+          {
+            name: 'Reviews',
+            data: data
+          }
+        ]
+      });
+    }
+
+    if (period === 'Yesterday') {
+      setOptions({
+        ...options,
+        labels: ['Yesterday'],
         series: [
           {
             name: 'Reviews',
