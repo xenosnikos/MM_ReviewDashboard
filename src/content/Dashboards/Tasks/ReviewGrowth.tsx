@@ -18,6 +18,21 @@ import { getReviewsData } from '@/services';
 function ReviewGrowth({ params }) {
   const theme = useTheme();
 
+  const labels = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
+  ];
+
   const initOptions: ApexOptions = {
     chart: {
       background: 'transparent',
@@ -37,7 +52,7 @@ function ReviewGrowth({ params }) {
       bar: {
         horizontal: false,
         borderRadius: 6,
-        columnWidth: '35%'
+        columnWidth: '40%'
       }
     },
     colors: [theme.colors.primary.main, alpha(theme.colors.primary.main, 0.5)],
@@ -58,20 +73,7 @@ function ReviewGrowth({ params }) {
     legend: {
       show: false
     },
-    labels: [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
-    ],
+    labels: labels,
     grid: {
       strokeDashArray: 5,
       borderColor: theme.palette.divider
@@ -164,31 +166,48 @@ function ReviewGrowth({ params }) {
   }, [reviewsData]);
 
   useEffect(() => {
+    if (period === 'Yesterday') {
+      const reviewsYesterdayArray = [];
+      const today = new Date();
+      const yesterday = new Date();
+      yesterday.setDate(today.getDate() - 1);
+
+      const reviewsYesterday = revData?.data?.filter(review => {
+        const [day, month, year] = review.date.split(" ");
+        const monthIndex = new Date(Date.parse(`${month}, ${year}`)).getMonth();
+        const reviewDate = new Date(year, monthIndex, day.slice(0, -2));
+
+        return reviewDate.getDate() === yesterday.getDate() &&
+          reviewDate.getMonth() === yesterday.getMonth() &&
+          reviewDate.getFullYear() === yesterday.getFullYear();
+      });
+
+      reviewsYesterdayArray.push(reviewsYesterday.length);
+      setData(reviewsYesterdayArray);
+    }
+
     if (period === 'Last month') {
-      const commentsPerDay = {};
+      const reviewsPerDay = {};
 
       const today = new Date();
       const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1);
 
       const filteredReviews = revData?.data?.filter(review => {
         const [day, month, year] = review.date.split(" ");
-        const monthIndex = new Date(Date.parse(`${month}, ${year}`)).getMonth() + 1;
-        const reviewDate = new Date(year, monthIndex - 1);
+        const monthIndex = new Date(Date.parse(`${month}, ${year}`)).getMonth();
+        const reviewDate = new Date(year, monthIndex);
 
         return reviewDate.getMonth() === lastMonth.getMonth() && reviewDate.getFullYear() === lastMonth.getFullYear();
       });
 
       filteredReviews.forEach(review => {
         const [day, month, year] = review.date.split(" ");
-        commentsPerDay[day] = (commentsPerDay[day] || 0) + 1;
+        reviewsPerDay[day] = (reviewsPerDay[day] || 0) + 1;
       });
 
-      const reviewCountArray = Object.entries(commentsPerDay).map(([day, count]) => ({ day: day, count }));
+      const reviewGrowth = Object.entries(reviewsPerDay).map(([day, count]) => ({ day: day, count }));
 
-      setData(reviewCountArray);
-
-      
-      console.log(data);
+      setData(reviewGrowth);
     }
 
     if (period === 'Last year') {
@@ -212,18 +231,28 @@ function ReviewGrowth({ params }) {
         }
       });
 
-      const reviewCountArray = Object.values(reviewCountByMonth);
+      const reviewGrowth = Object.values(reviewCountByMonth);
 
-      setData(reviewCountArray);
-      console.log(data);
+      setData(reviewGrowth);
     }
-
-
   }, [revData, period]);
 
   useEffect(() => {
     if (!data)
       return;
+
+    if (period === 'Yesterday') { 
+      setOptions({
+        ...options,
+        labels: [ 'Yesterday' ],
+        series: [
+          {
+            name: 'Reviews',
+            data: data
+          }
+        ]
+      });
+    }
 
     if (period === 'Last month') {
       const today = new Date();
@@ -243,13 +272,12 @@ function ReviewGrowth({ params }) {
       const newSeriesData = [];
 
       for (let i = 1; i <= lastMonthDays.length; i++) {
-        const index = data.findIndex(item => item.day.slice(0, -2) == i);        
+        const index = data.findIndex(item => item.day.slice(0, -2) == i);
         if (index > -1 && data[index].count)
           newSeriesData.push(data[index].count);
         else
           newSeriesData.push(0);
       }
-      console.log(newSeriesData);
 
       setOptions({
         ...options,
@@ -276,6 +304,7 @@ function ReviewGrowth({ params }) {
 
       setOptions({
         ...options,
+        labels: labels,
         series: [
           {
             name: 'Reviews',
