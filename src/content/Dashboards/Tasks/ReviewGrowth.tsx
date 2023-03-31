@@ -211,16 +211,16 @@ function ReviewGrowth({ params }) {
       const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1);
 
       const filteredReviews = revData?.data?.filter(review => {
-        const [day, month, year] = review.date.split(" ");
-        const monthIndex = new Date(Date.parse(`${month}, ${year}`)).getMonth();
-        const reviewDate = new Date(year, monthIndex);
+        const dateArray = review.date.split(" ");
+        const monthIndex = new Date(Date.parse(`${dateArray[1]}, ${dateArray[2]}`)).getMonth();
+        const reviewDate = new Date(dateArray[2], monthIndex);
 
         return reviewDate.getMonth() === lastMonth.getMonth() && reviewDate.getFullYear() === lastMonth.getFullYear();
       });
 
       filteredReviews.forEach(review => {
-        const [day, month, year] = review.date.split(" ");
-        reviewsPerDay[day] = (reviewsPerDay[day] || 0) + 1;
+        const dateArray = review.date.split(" ");
+        reviewsPerDay[dateArray[0]] = (reviewsPerDay[dateArray[0]] || 0) + 1;
       });
 
       const reviewGrowth = Object.entries(reviewsPerDay).map(([day, count]) => ({ day: day, count }));
@@ -232,9 +232,9 @@ function ReviewGrowth({ params }) {
       const reviewCountByMonth = {};
 
       revData?.data?.forEach(review => {
-        const [day, month, year] = review.date.split(" ");
-        const monthIndex = new Date(Date.parse(`${month}, ${year}`)).getMonth() + 1;
-        const reviewDate = new Date(year, monthIndex - 1);
+        const dateArray = review.date.split(" ");
+        const monthIndex = new Date(Date.parse(`${dateArray[1]}, ${dateArray[2]}`)).getMonth() + 1;
+        const reviewDate = new Date(dateArray[2], monthIndex - 1);
 
         if (isNaN(monthIndex)) {
           return;
