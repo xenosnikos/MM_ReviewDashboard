@@ -15,6 +15,8 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { DataProvider } from '@/contexts/DataContext';
 
+import '../assets/global.css';
+
 const clientSideEmotionCache = createEmotionCache();
 
 type NextPageWithLayout = NextPage & {
@@ -35,14 +37,14 @@ function TokyoApp(props: TokyoAppProps) {
   Router.events.on('routeChangeComplete', nProgress.done);
 
   return (
-    <CacheProvider value={emotionCache}>
+    <CacheProvider value={emotionCache}>      
       <Head>
         <title>Tokyo Free Black NextJS Typescript Admin Dashboard</title>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
-      </Head>
+      </Head>      
       <SidebarProvider>
         <ThemeProvider>
           <DataProvider>          
