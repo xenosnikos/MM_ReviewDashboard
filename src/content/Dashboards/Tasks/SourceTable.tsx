@@ -26,11 +26,11 @@ function SourceTable({ data }) {
             return (
               <TableRow key={index}>
                 <TableCell>{item.type}</TableCell>
-                <TableCell>{item.totalCount}</TableCell>
-                <TableCell>{item.lastThirtyDaysCount}</TableCell>
-                <TableCell>{item.thisMonth}</TableCell>
-                <TableCell>{item.lastMonth}</TableCell>
-                <TableCell>{item.thisYear}</TableCell>
+                <TableCell>{item.totalCount || 0}</TableCell>
+                <TableCell>{item.lastThirtyDaysCount || 0}</TableCell>
+                <TableCell>{item.thisMonth || 0}</TableCell>
+                <TableCell>{item.lastMonth || 0}</TableCell>
+                <TableCell>{item.thisYear || 0}</TableCell>
               </TableRow>
             )
           })}

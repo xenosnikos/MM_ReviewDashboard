@@ -8,12 +8,13 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" />
+{/*           <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous"/>
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous"/>
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400&display=swap"
-          />
+            crossOrigin="anonymous"
+          /> */}
         </Head>
         <body>
           <Main />

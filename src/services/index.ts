@@ -1,19 +1,20 @@
 import axios from 'axios';
 const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL;
+const urlData = `${BACKEND_API_URL}/getDashboardData`;
+const urlReviews = `${BACKEND_API_URL}/getReviewsData`;
 
-const getDashboardData = (client: string) => {
-  const url = `${BACKEND_API_URL}/getDashboardData`;
-  return new Promise(
+const getDashboardData = async (client: string) => {
+  return await new Promise(
     (resolve, reject) => {
       axios
-        .get(url, {
-          params: {client}
+        .get(urlData, {
+          params: { client }
         })
         .then(response => {
           if (response?.data?.status === 'success' && response?.data?.data)
             resolve(response.data.data);
           else
-            reject('Something went wrong');
+            reject("Something went wrong");
         })
         .catch(error => {
           if (error?.message)
@@ -25,18 +26,18 @@ const getDashboardData = (client: string) => {
   );
 }
 
-const getReviewsData = (url: string, params: {client: string, per_page: number, page: number, sources: string, ratings: string}) => {
-  return new Promise(
+const getReviewsData = async (params: { client: string, per_page: number, page: number, sources: string, ratings: string }) => {
+  return await new Promise(
     (resolve, reject) => {
       axios
-        .get(url, {
+        .get(urlReviews, {
           params,
         })
         .then(response => {
           if (response?.data?.status === 'success' && response?.data?.data)
             resolve(response.data.data);
           else
-            reject('Something went wrong');
+            reject("Something went wrong");
         })
         .catch(error => {
           if (error?.message)

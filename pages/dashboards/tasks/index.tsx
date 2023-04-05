@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import PageHeader from '@/content/Dashboards/Tasks/PageHeader';
 import Footer from '@/components/Footer';
@@ -24,7 +24,8 @@ import ReviewsTable from '@/content/Dashboards/Tasks/ReviewsTable';
 import SourceGraph from '@/content/Dashboards/Tasks/SourceGraph';
 import SourceTable from '@/content/Dashboards/Tasks/SourceTable';
 
-import { getDashboardData } from '@/services';
+import { getDashboardData, getReviewsData } from '@/services';
+import DataContext from '@/contexts/DataContext';
 
 const TabsContainerWrapper = styled(Box)(
   ({ theme }) => `
@@ -111,9 +112,20 @@ const TabsContainerWrapper = styled(Box)(
 function DashboardTasks() {
   const router = useRouter();
   const theme = useTheme();
-  const [data, setData] = useState(null);
+  const {
+    data,
+    setData,
+    selectedSources,
+    selectedRatings,
+    page,
+    setPage,
+    limit,
+    reviewsData,
+    setReviewsData,
+    setDisabledButton } = useContext(DataContext);
 
   const { client } = router.query;
+  const clientString = typeof client === 'string' ? client : '';
 
   const [currentTab, setCurrentTab] = useState<string>('overview');
 
@@ -125,23 +137,50 @@ function DashboardTasks() {
 
   const handleTabsChange = (_event: ChangeEvent<{}>, value: string): void => {
     setCurrentTab(value);
+    setPage(1);
   };
+
+  const params = {
+    client: clientString,
+    per_page: limit,
+    page: page,
+    sources: JSON.stringify(selectedSources),
+    ratings: JSON.stringify(selectedRatings)
+  }  
+
+  useEffect(() => {
+    const getData = async () => {
+      await getReviewsData(params)
+        .then(response => setReviewsData(response))
+        .catch(error => console.log(error));
+    }
+
+    if (typeof client === 'string') {
+      getData();
+    }
+  }, [page, limit, selectedSources, selectedRatings, client]);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getDashboardData(clientString)
+      .then(response => {
+        setData(response);
+        setDisabledButton(false);
+      })
+      .catch(error => {
+        console.log(error);
+        setDisabledButton(false);
+      });
+    }
+    if (typeof client === 'string') {
+      getData();
+    }
+  }, [client]);
 
   useEffect(() => {
     console.log(data);
-  }, [data])
-
-  useEffect(() => {
-    if (typeof client === 'string') {
-      getDashboardData(client)
-        .then(data => {
-          setData(data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
-  }, [client])
+    console.log(reviewsData)
+  }, [data]);
 
   return (
     <>
@@ -149,7 +188,7 @@ function DashboardTasks() {
         <title>Maxxmedia Dashboard</title>
       </Head>
       <PageTitleWrapper>
-        <PageHeader clientName={data?.clientName || ""} />
+        <PageHeader clientName={data?.clientName || ""} params={params} />
       </PageTitleWrapper>
       <Container maxWidth="lg">
         <TabsContainerWrapper>
@@ -195,7 +234,8 @@ function DashboardTasks() {
                       }}
                     >
                       <ReviewGrowth
-                        data={data?.reviewGrowth}
+                        /* data={data?.reviewGrowth} */
+                        params={params}                        
                       />
                     </Box>
                   </Grid>
@@ -213,9 +253,7 @@ function DashboardTasks() {
               )}
               {currentTab === 'reviews' && (
                 <Grid item xs={12}>
-                  <ReviewsTable
-                    client={client}
-                  />
+                  <ReviewsTable />
                 </Grid>
               )}
               {currentTab === 'sources' && (
