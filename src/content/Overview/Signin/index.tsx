@@ -4,17 +4,18 @@ import {
   Button,
   Card,
   CardHeader,
+  Checkbox,
   Container,
   Divider,
   FormControl,
+  FormControlLabel,
   Grid,
   IconButton,
   InputAdornment,
   InputLabel,
   OutlinedInput,
   TextField,
-  Typography,
-  styled,
+  /*  styled, */
   useTheme
 } from '@mui/material';
 import Head from 'next/head';
@@ -22,7 +23,6 @@ import { useState } from 'react';
 
 function Signin() {
   const theme = useTheme();
-
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -36,7 +36,7 @@ function Signin() {
       <Head>
         <title>Sign in</title>
       </Head>
-      <Container maxWidth="sm" sx={{ textAlign: 'left', marginBottom: '150px' }}>
+      <Container maxWidth="sm" sx={{ marginBottom: '100px' }}>
         <Grid sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Card
             variant="outlined"
@@ -49,16 +49,16 @@ function Signin() {
               p={5}
               component="form"
               noValidate
-              autoComplete="off"
+              autoComplete="on"
             >
               <TextField
                 required
                 sx={{ marginBottom: '30px', width: '100%' }}
-                id="outlined-email"
-                label="E-mail"
-                type="email"
+                id="outlined-text"
+                label="Username"
+                type="text"
               />
-              <FormControl required sx={{ marginBottom: '60px', width: '100%' }} variant="outlined">
+              <FormControl required sx={{ width: '100%' }} variant="outlined">
                 <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-password"
@@ -78,8 +78,11 @@ function Signin() {
                   label="Password"
                 />
               </FormControl>
+              <Box display="flex" justifyContent="flex-start" sx={{ width: "100%" }}>
+                <FormControlLabel control={<Checkbox />} label="Remember me" />
+              </Box>
               <Box >
-                <Button variant="contained" sx={{ width: '100%' }}>SIGN IN</Button>
+                <Button variant="contained" sx={{ marginTop: "60px", width: "100%" }}>SIGN IN</Button>
               </Box>
             </Box>
           </Card>

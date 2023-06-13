@@ -396,7 +396,7 @@ function Forms() {
               <CardHeader title="Checkboxes &amp; Radios" />
               <Divider />
               <CardContent>
-                <Checkbox {...label} defaultChecked />
+                <Checkbox {...label} />
                 <Checkbox {...label} defaultChecked color="secondary" />
                 <Checkbox {...label} defaultChecked color="success" />
                 <Checkbox {...label} defaultChecked color="default" />
