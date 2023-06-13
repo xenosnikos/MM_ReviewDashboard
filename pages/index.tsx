@@ -13,7 +13,9 @@ import Link from 'src/components/Link';
 import Head from 'next/head';
 
 import Logo from 'src/components/LogoSign';
-import Hero from 'src/content/Overview/Hero';
+import Signin from '@/content/Overview/Signin';
+
+import Footer from 'src/components/Footer';
 
 const HeaderWrapper = styled(Card)(
   ({ theme }) => `
@@ -65,8 +67,10 @@ function Overview() {
           </Box>
         </Container>
       </HeaderWrapper>
-      <Hero />
-      <Container maxWidth="lg" sx={{ mt: 8 }}>
+      <Signin />
+      <Footer />
+
+      {/* <Container maxWidth="lg" sx={{ mt: 8 }}>
         <Typography textAlign="center" variant="subtitle1">
           Crafted by{' '}
           <Link
@@ -77,7 +81,7 @@ function Overview() {
             BloomUI.com
           </Link>
         </Typography>
-      </Container>
+      </Container> */}
     </OverviewWrapper>
   );
 }
