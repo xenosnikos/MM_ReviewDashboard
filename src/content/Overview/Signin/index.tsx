@@ -1,4 +1,4 @@
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { VPassField, VTextField } from '@/forms';
 import {
   Box,
   Button,
@@ -7,28 +7,27 @@ import {
   Checkbox,
   Container,
   Divider,
-  FormControl,
   FormControlLabel,
   Grid,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  TextField,
-  /*  styled, */
   useTheme
 } from '@mui/material';
+import { FormHandles } from '@unform/core';
+import { Form } from '@unform/web';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useRef } from 'react';
+
+interface IFormData {
+  username: string,
+  password: string
+}
 
 function Signin() {
   const theme = useTheme();
-  const [showPassword, setShowPassword] = useState(false);
+  const formRef = useRef<FormHandles>(null);
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
+  const handleSubmit = (data: IFormData) => {
+    // user authentication logic
+    return console.log(data);
   };
 
   return (
@@ -45,45 +44,34 @@ function Signin() {
             }}>
             <CardHeader title="Sign in" subheader="Enter your account details below" />
             <Divider />
-            <Box
-              p={5}
-              component="form"
-              noValidate
-              autoComplete="on"
-            >
-              <TextField
-                required
-                sx={{ marginBottom: '30px', width: '100%' }}
-                id="outlined-text"
-                label="Username"
-                type="text"
-              />
-              <FormControl required sx={{ width: '100%' }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                <OutlinedInput
-                  id="outlined-adornment-password"
-                  type={showPassword ? 'text' : 'password'}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  label="Password"
+
+            <Box p={5}>
+              <Form ref={formRef} onSubmit={handleSubmit}>
+                <VTextField
+                  name="username"
+                  required
+                  fullWidth
+                  margin="normal"
+                  id="outlined-text"
+                  label="Username"
+                  type="text"
                 />
-              </FormControl>
-              <Box display="flex" justifyContent="flex-start" sx={{ width: "100%" }}>
-                <FormControlLabel control={<Checkbox />} label="Remember me" />
-              </Box>
-              <Box >
-                <Button variant="contained" sx={{ marginTop: "60px", width: "100%" }}>SIGN IN</Button>
-              </Box>
+                <VPassField
+                  name="password"
+                  required
+                  fullWidth
+                  margin="normal"
+                  id="outlined-pass"
+
+                />
+                <Box display="flex" justifyContent="flex-start" sx={{ width: "100%" }}>
+                  <FormControlLabel control={<Checkbox />} label="Remember me" />
+                </Box>
+              </Form>
+              <Button
+                variant="contained"
+                sx={{ marginTop: "60px", width: "100%" }}
+                onClick={() => formRef.current?.submitForm()}>SIGN IN</Button>
             </Box>
           </Card>
         </Grid>
