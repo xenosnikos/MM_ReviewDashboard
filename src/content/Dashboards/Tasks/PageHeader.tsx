@@ -16,6 +16,7 @@ import { pdf } from '@react-pdf/renderer';
 import DataContext from '@/contexts/DataContext';
 import { saveAs } from 'file-saver';
 import { getReviewsData } from '@/services';
+import SelectClient from './SelectClient';
 
 const AvatarPageTitle = styled(Avatar)(
   ({ theme }) => `
@@ -112,15 +113,11 @@ function PageHeader({ clientName, params }) {
           <AddAlertTwoToneIcon fontSize="large" />
         </AvatarPageTitle>
         <Box>
-          <Box display="flex">
+          <Box display="flex" alignItems="center" sx={{ marginBottom:"5px" }}>
             <Typography variant="h3" component="h3" gutterBottom>
-              Welcome
+              Welcome,
             </Typography>
-            {clientName &&
-              <Typography variant="h3" component="h3" gutterBottom>
-                , {clientName}!
-              </Typography>
-            }
+            <SelectClient />
           </Box>
           <Typography variant="subtitle2">
             Monitor all your reviews in your new personal dashboard.
