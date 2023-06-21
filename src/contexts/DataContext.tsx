@@ -22,6 +22,10 @@ interface DataContext {
   setDonut2URI: (value: any) => void;
   disabledButton: any;
   setDisabledButton: (value: any) => void;
+  requiredTextError: any;
+  setRequiredTextError: (value: any) => void;
+  requiredPassError: any; 
+  setRequiredPassError: (value: any) => void;
 }
 
 type Props = {
@@ -42,6 +46,8 @@ export const DataProvider = ({ children }: Props) => {
   const [donutURI, setDonutURI] = useState(null);
   const [donut2URI, setDonut2URI] = useState(null);
   const [disabledButton, setDisabledButton] = useState(true);
+  const [requiredTextError, setRequiredTextError] = useState(false);
+  const [requiredPassError, setRequiredPassError] = useState(false);
   
   return (
     <DataContext.Provider 
@@ -65,7 +71,11 @@ export const DataProvider = ({ children }: Props) => {
         donut2URI, 
         setDonut2URI,
         disabledButton, 
-        setDisabledButton }}>
+        setDisabledButton,
+        requiredTextError, 
+        setRequiredTextError,
+        requiredPassError, 
+        setRequiredPassError,}}>
       {children}
     </DataContext.Provider>
   );

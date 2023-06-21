@@ -1,7 +1,8 @@
-import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextFieldProps } from "@mui/material";
+import { TextField, IconButton, InputAdornment, TextFieldProps } from "@mui/material";
 import { useField } from "@unform/core";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import DataContext from "@/contexts/DataContext";
 
 type TVPassFieldProps = TextFieldProps & {
   name: string;
@@ -12,6 +13,8 @@ export function VPassField({ name, ...rest }: TVPassFieldProps): JSX.Element {
 
   const [value, setValue] = useState(defaultValue || "");
   const [showPassword, setShowPassword] = useState(false);
+
+  const { requiredPassError } = useContext(DataContext);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -34,15 +37,16 @@ export function VPassField({ name, ...rest }: TVPassFieldProps): JSX.Element {
   };
 
   return (
-    <FormControl error={!!error} required sx={{ width: '100%' }} variant="outlined" margin="normal">
-      <InputLabel htmlFor={fieldName}>Password</InputLabel>
-      <OutlinedInput
-        id={fieldName}
-        type={showPassword ? 'text' : 'password'}
-        value={value}
-        onChange={e => setValue(e.target.value)}
-        onKeyDown={handleKeyDown}
-        endAdornment={
+    <TextField
+      id={fieldName}
+      type={showPassword ? "text" : "password"}
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+      onKeyDown={handleKeyDown}
+      error={!!(requiredPassError && !value)}
+      helperText={requiredPassError && !value ? "Required field" : ""}
+      InputProps={{
+        endAdornment: (
           <InputAdornment position="end">
             <IconButton
               aria-label="toggle password visibility"
@@ -53,12 +57,9 @@ export function VPassField({ name, ...rest }: TVPassFieldProps): JSX.Element {
               {showPassword ? <VisibilityOff /> : <Visibility />}
             </IconButton>
           </InputAdornment>
-        }
-        label="Password"
-        fullWidth={rest.fullWidth}
-        required={rest.required}
-      />
-      {error && <p>{error}</p>}
-    </FormControl>
+        ),
+      }}
+      {...rest}
+    />
   );
 }

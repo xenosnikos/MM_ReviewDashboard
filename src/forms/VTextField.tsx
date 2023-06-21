@@ -1,34 +1,33 @@
+import DataContext from "@/contexts/DataContext";
 import { TextField, TextFieldProps } from "@mui/material";
 import { useField } from "@unform/core";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 type TVTextFieldProps = TextFieldProps & {
   name: string;
 }
 export function VTextField({ name, ...rest }: TVTextFieldProps): JSX.Element {
-  const { fieldName, registerField, defaultValue , error, clearError } = useField(name);
+  const { fieldName, registerField, defaultValue } = useField(name);
 
   const [value, setValue] = useState(defaultValue || "");
+
+  const { requiredTextError } = useContext(DataContext);
 
   useEffect(() => {
     registerField({
       name: fieldName,
       getValue: () => value,
       setValue: (_, newValue) => setValue(newValue),
-    })
+    });
   }, [registerField, fieldName, value]);
 
   return (
     <TextField
       {...rest}
-
-      error={!!error}
-      helperText={error}
-      defaultValue={defaultValue}      
       value={value}
-      onChange={e => setValue(e.target.value)}
-
-      onKeyDown={() => error? clearError() : undefined}
+      onChange={(e) => setValue(e.target.value)}
+      error={!!(requiredTextError && !value)}
+      helperText={requiredTextError && !value ? "Required field" : ""}
     />
   );
 }
