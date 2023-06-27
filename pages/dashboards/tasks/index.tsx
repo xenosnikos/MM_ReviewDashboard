@@ -26,6 +26,7 @@ import SourceTable from '@/content/Dashboards/Tasks/SourceTable';
 
 import { getDashboardData, getReviewsData } from '@/services';
 import DataContext from '@/contexts/DataContext';
+import SocialPages from '@/content/Dashboards/Tasks/SocialPages';
 
 const TabsContainerWrapper = styled(Box)(
   ({ theme }) => `
@@ -132,7 +133,8 @@ function DashboardTasks() {
   const tabs = [
     { value: 'overview', label: 'Overview' },
     { value: 'reviews', label: 'Reviews' },
-    { value: 'sources', label: 'Sources' }
+    { value: 'sources', label: 'Sources' },
+    { value: 'social_pages', label: 'Social Pages' }
   ];
 
   const handleTabsChange = (_event: ChangeEvent<{}>, value: string): void => {
@@ -146,7 +148,7 @@ function DashboardTasks() {
     page: page,
     sources: JSON.stringify(selectedSources),
     ratings: JSON.stringify(selectedRatings)
-  }  
+  }
 
   useEffect(() => {
     const getData = async () => {
@@ -163,14 +165,14 @@ function DashboardTasks() {
   useEffect(() => {
     const getData = async () => {
       await getDashboardData(clientString)
-      .then(response => {
-        setData(response);
-        setDisabledButton(false);
-      })
-      .catch(error => {
-        console.log(error);
-        setDisabledButton(false);
-      });
+        .then(response => {
+          setData(response);
+          setDisabledButton(false);
+        })
+        .catch(error => {
+          console.log(error);
+          setDisabledButton(false);
+        });
     }
     if (typeof client === 'string') {
       getData();
@@ -234,7 +236,7 @@ function DashboardTasks() {
                       }}
                     >
                       <ReviewGrowth
-                        params={params}                        
+                        params={params}
                       />
                     </Box>
                   </Grid>
@@ -268,6 +270,11 @@ function DashboardTasks() {
                     />
                   </Grid>
                 </>
+              )}
+              {currentTab === 'social_pages' && (
+                <Grid item xs={12}>
+                  <SocialPages />
+                </Grid>
               )}
             </Grid>
           </Box>
