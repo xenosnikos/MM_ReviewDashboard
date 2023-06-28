@@ -6,12 +6,12 @@ import {
   Box,
   Divider,
   Button
-} from '@mui/material';
+} from "@mui/material";
 
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
-import DoneTwoToneIcon from '@mui/icons-material/DoneTwoTone';
-import Text from '@/components/Text';
-import Label from '@/components/Label';
+import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
+import DoneTwoToneIcon from "@mui/icons-material/DoneTwoTone";
+import Text from "@/components/Text";
+import Label from "@/components/Label";
 
 function EditProfileTab() {
   return (
@@ -40,7 +40,7 @@ function EditProfileTab() {
           <CardContent sx={{ p: 4 }}>
             <Typography variant="subtitle2">
               <Grid container spacing={0}>
-                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: "right" }}>
                   <Box pr={3} pb={2}>
                     Name:
                   </Box>
@@ -50,7 +50,7 @@ function EditProfileTab() {
                     <b>Craig Donin</b>
                   </Text>
                 </Grid>
-                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: "right" }}>
                   <Box pr={3} pb={2}>
                     Date of birth:
                   </Box>
@@ -60,13 +60,13 @@ function EditProfileTab() {
                     <b>15 March 1977</b>
                   </Text>
                 </Grid>
-                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: "right" }}>
                   <Box pr={3} pb={2}>
                     Address:
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={8} md={9}>
-                  <Box sx={{ maxWidth: { xs: 'auto', sm: 300 } }}>
+                  <Box sx={{ maxWidth: { xs: "auto", sm: 300 } }}>
                     <Text color="black">
                       1749 High Meadow Lane, SEQUOIA NATIONAL PARK, California,
                       93262
@@ -102,7 +102,7 @@ function EditProfileTab() {
           <CardContent sx={{ p: 4 }}>
             <Typography variant="subtitle2">
               <Grid container spacing={0}>
-                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: "right" }}>
                   <Box pr={3} pb={2}>
                     Language:
                   </Box>
@@ -112,7 +112,7 @@ function EditProfileTab() {
                     <b>English (US)</b>
                   </Text>
                 </Grid>
-                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: "right" }}>
                   <Box pr={3} pb={2}>
                     Timezone:
                   </Box>
@@ -122,7 +122,7 @@ function EditProfileTab() {
                     <b>GMT +2</b>
                   </Text>
                 </Grid>
-                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: "right" }}>
                   <Box pr={3} pb={2}>
                     Account status:
                   </Box>
@@ -162,7 +162,7 @@ function EditProfileTab() {
           <CardContent sx={{ p: 4 }}>
             <Typography variant="subtitle2">
               <Grid container spacing={0}>
-                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: "right" }}>
                   <Box pr={3} pb={2}>
                     Email ID:
                   </Box>
@@ -175,7 +175,7 @@ function EditProfileTab() {
                     <Label color="success">Primary</Label>
                   </Box>
                 </Grid>
-                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: "right" }}>
                   <Box pr={3} pb={2}>
                     Email ID:
                   </Box>

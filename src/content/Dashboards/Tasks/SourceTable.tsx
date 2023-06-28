@@ -5,7 +5,7 @@ import {
   TableRow,
   TableCell,
   TableBody
-} from '@mui/material';
+} from "@mui/material";
 
 function SourceTable({ data }) {
   return (
@@ -32,12 +32,12 @@ function SourceTable({ data }) {
                 <TableCell>{item.lastMonth || 0}</TableCell>
                 <TableCell>{item.thisYear || 0}</TableCell>
               </TableRow>
-            )
+            );
           })}
         </TableBody>
       </Table>
     </TableContainer>
-  )
+  );
 }
 
 export default SourceTable;

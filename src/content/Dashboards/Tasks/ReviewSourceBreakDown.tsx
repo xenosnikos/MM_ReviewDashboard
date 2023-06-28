@@ -1,20 +1,15 @@
-import {
-  Box,
-  Divider,
-  Typography,
-  useTheme
-} from '@mui/material';
+import { Box, Divider, Typography, useTheme } from "@mui/material";
 import { ApexOptions } from "apexcharts";
-import { Chart } from '@/components/Chart';
-import { useContext, useEffect, useState } from 'react';
-import { providers } from '@/helpers/constant';
-import DataContext from '@/contexts/DataContext';
-import * as htmlToImage from 'html-to-image';
+import { Chart } from "@/components/Chart";
+import { useContext, useEffect, useState } from "react";
+import { providers } from "@/helpers/constant";
+import DataContext from "@/contexts/DataContext";
+import * as htmlToImage from "html-to-image";
 
 const initOptions: ApexOptions = {
   chart: {
     width: 380,
-    type: 'donut'
+    type: "donut"
   },
   plotOptions: {
     pie: {
@@ -27,24 +22,26 @@ const initOptions: ApexOptions = {
   },
   labels: providers,
   fill: {
-    type: 'gradient',
+    type: "gradient"
   },
   legend: {
     formatter: function (val, opts) {
-      return opts.w.globals.series[opts.seriesIndex] + '% ' + val
+      return opts.w.globals.series[opts.seriesIndex] + "% " + val;
     }
   },
-  responsive: [{
-    breakpoint: 480,
-    options: {
-      chart: {
-        width: 200
-      },
-      legend: {
-        position: 'bottom'
+  responsive: [
+    {
+      breakpoint: 480,
+      options: {
+        chart: {
+          width: 200
+        },
+        legend: {
+          position: "bottom"
+        }
       }
     }
-  }],
+  ],
   series: [0, 0, 0]
 };
 
@@ -54,16 +51,14 @@ function ReviewSourceBreakDown({ data }) {
   const { setDonut2URI } = useContext(DataContext);
 
   useEffect(() => {
-    if (!data)
-      return;
+    if (!data) return;
 
     const newSeries = [];
-    providers.forEach(provider => {
-      const index = data.findIndex(item => item.type === provider);
+    providers.forEach((provider) => {
+      const index = data.findIndex((item) => item.type === provider);
       if (index > -1 && data[index].count)
         newSeries.push(parseFloat(data[index].count));
-      else
-        newSeries.push(0);
+      else newSeries.push(0);
     });
 
     setOptions({ ...options, series: newSeries });
@@ -71,16 +66,18 @@ function ReviewSourceBreakDown({ data }) {
 
   useEffect(() => {
     const getChart = async () => {
-      const chartElement = document.querySelector('#chart-donut2') as HTMLElement;
+      const chartElement = document.querySelector(
+        "#chart-donut2"
+      ) as HTMLElement;
 
       if (chartElement) {
         await htmlToImage.toPng(chartElement).then((dataUrl) => {
           setDonut2URI(dataUrl);
         });
       }
-    }
+    };
 
-    getChart()
+    getChart();
   }, [options]);
 
   return (
@@ -106,7 +103,7 @@ function ReviewSourceBreakDown({ data }) {
         series={options.series}
       />
     </Box>
-  )
+  );
 }
 
 export default ReviewSourceBreakDown;

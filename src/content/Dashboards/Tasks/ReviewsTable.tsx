@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext } from 'react';
+import { ChangeEvent, useContext } from "react";
 import {
   Box,
   Typography,
@@ -19,9 +19,9 @@ import {
   TablePagination,
   Rating,
   InputLabel
-} from '@mui/material';
-import { providers, ratings } from '@/helpers/constant';
-import DataContext from '@/contexts/DataContext';
+} from "@mui/material";
+import { providers, ratings } from "@/helpers/constant";
+import DataContext from "@/contexts/DataContext";
 
 function ReviewsTable() {
   const theme = useTheme();
@@ -34,17 +34,22 @@ function ReviewsTable() {
     setPage,
     limit,
     setLimit,
-    reviewsData } = useContext(DataContext);
+    reviewsData
+  } = useContext(DataContext);
 
   console.log(reviewsData);
 
-  const isAllSelectedSources = providers.length > 0 && selectedSources.length === providers.length;
-  const isAllSelectedRatings = ratings.length > 0 && selectedRatings.length === ratings.length;
+  const isAllSelectedSources =
+    providers.length > 0 && selectedSources.length === providers.length;
+  const isAllSelectedRatings =
+    ratings.length > 0 && selectedRatings.length === ratings.length;
 
   const handleChangeSelectSources = (event) => {
     const value = event.target.value;
     if (value[value.length - 1] === "all") {
-      setSelectedSources(selectedSources.length === providers.length ? [] : providers);
+      setSelectedSources(
+        selectedSources.length === providers.length ? [] : providers
+      );
       return;
     }
     setSelectedSources(value);
@@ -53,15 +58,17 @@ function ReviewsTable() {
   const handleChangeSelectRatings = (event) => {
     const value = event.target.value;
     if (value[value.length - 1] === "all") {
-      setSelectedRatings(selectedRatings.length === ratings.length ? [] : ratings);
+      setSelectedRatings(
+        selectedRatings.length === ratings.length ? [] : ratings
+      );
       return;
     }
     setSelectedRatings(value);
-  }
+  };
 
   const handlePageChange = (_event: any, newPage: number): void => {
     setPage(newPage);
-  }
+  };
 
   return (
     <Box>
@@ -84,7 +91,8 @@ function ReviewsTable() {
             marginRight: 3
           }}
         >
-          Showing {reviewsData?.from || 0} to {reviewsData?.to || 0} of {reviewsData?.total || 0} Results
+          Showing {reviewsData?.from || 0} to {reviewsData?.to || 0} of{" "}
+          {reviewsData?.total || 0} Results
         </Typography>
         <FormControl style={{ minWidth: 150 }}>
           <InputLabel htmlFor="sourcesSelect">Select Sources</InputLabel>
@@ -100,13 +108,16 @@ function ReviewsTable() {
             notched={true}
             onChange={handleChangeSelectSources}
             autoWidth
-            style={{ marginTop: '8px' }}
+            style={{ marginTop: "8px" }}
           >
             <MenuItem value="all">
               <ListItemIcon>
                 <Checkbox
                   checked={isAllSelectedSources}
-                  indeterminate={selectedSources.length > 0 && selectedSources.length < providers.length}
+                  indeterminate={
+                    selectedSources.length > 0 &&
+                    selectedSources.length < providers.length
+                  }
                 />
               </ListItemIcon>
               <ListItemText primary="Select All" />
@@ -131,29 +142,24 @@ function ReviewsTable() {
             value={selectedRatings}
             renderValue={() => "Select Ratings"}
             onChange={handleChangeSelectRatings}
-            style={{ marginTop: '8px' }}
+            style={{ marginTop: "8px" }}
           >
-            <MenuItem
-              value="all"
-            >
+            <MenuItem value="all">
               <ListItemIcon>
                 <Checkbox
                   checked={isAllSelectedRatings}
                   indeterminate={
-                    selectedRatings.length > 0 && selectedRatings.length < ratings.length
+                    selectedRatings.length > 0 &&
+                    selectedRatings.length < ratings.length
                   }
                 />
               </ListItemIcon>
-              <ListItemText
-                primary="Select All"
-              />
+              <ListItemText primary="Select All" />
             </MenuItem>
             {ratings.map((option) => (
               <MenuItem key={option} value={option}>
                 <ListItemIcon>
-                  <Checkbox
-                    checked={selectedRatings.indexOf(option) > -1}
-                  />
+                  <Checkbox checked={selectedRatings.indexOf(option) > -1} />
                 </ListItemIcon>
                 <ListItemText primary={option + " Stars"} />
               </MenuItem>
@@ -216,39 +222,31 @@ function ReviewsTable() {
           <TableBody>
             {reviewsData?.data?.map((review, index) => {
               return (
-                <TableRow
-                  hover
-                  key={index}
-                >
-                  <TableCell >
-                    {review.date}
-                  </TableCell>
-                  <TableCell>
-                    {review.type}
-                  </TableCell>
+                <TableRow hover key={index}>
+                  <TableCell>{review.date}</TableCell>
+                  <TableCell>{review.type}</TableCell>
                   <TableCell>
                     <Box display="flex" alignItems="center" gap={1}>
-                      <Rating value={review.rating} defaultValue={5} precision={0.1} readOnly />
+                      <Rating
+                        value={review.rating}
+                        defaultValue={5}
+                        precision={0.1}
+                        readOnly
+                      />
                       {review.rating}
                     </Box>
                   </TableCell>
                   <TableCell>
                     <Box display="flex" flexDirection="column" gap={1}>
-                      <Typography>
-                        {review.review}
-                      </Typography>
-                      <Typography>
-                        Reviewer: {review.author}
-                      </Typography>
+                      <Typography>{review.review}</Typography>
+                      <Typography>Reviewer: {review.author}</Typography>
                     </Box>
                   </TableCell>
                   <TableCell>
-                    <Button variant="outlined">
-                      View
-                    </Button>
+                    <Button variant="outlined">View</Button>
                   </TableCell>
                 </TableRow>
-              )
+              );
             })}
           </TableBody>
         </Table>
@@ -260,7 +258,7 @@ function ReviewsTable() {
           onPageChange={handlePageChange}
           onRowsPerPageChange={(event: ChangeEvent<HTMLInputElement>) => {
             setPage(0);
-            setLimit(parseInt(event.target.value))
+            setLimit(parseInt(event.target.value));
           }}
           page={page}
           rowsPerPage={limit}
@@ -268,7 +266,7 @@ function ReviewsTable() {
         />
       </Box>
     </Box>
-  )
+  );
 }
 
 export default ReviewsTable;

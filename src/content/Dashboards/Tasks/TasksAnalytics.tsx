@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState } from "react";
 import {
   Button,
   Box,
@@ -8,12 +8,12 @@ import {
   Typography,
   styled,
   useTheme
-} from '@mui/material';
-import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
-import { Chart } from 'src/components/Chart';
-import type { ApexOptions } from 'apexcharts';
+} from "@mui/material";
+import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
+import { Chart } from "src/components/Chart";
+import type { ApexOptions } from "apexcharts";
 
-const DotPrimaryLight = styled('span')(
+const DotPrimaryLight = styled("span")(
   ({ theme }) => `
     border-radius: 22px;
     background: ${theme.colors.primary.lighter};
@@ -24,7 +24,7 @@ const DotPrimaryLight = styled('span')(
 `
 );
 
-const DotPrimary = styled('span')(
+const DotPrimary = styled("span")(
   ({ theme }) => `
     border-radius: 22px;
     background: ${theme.colors.primary.main};
@@ -40,8 +40,8 @@ function TasksAnalytics() {
 
   const chartOptions: ApexOptions = {
     chart: {
-      background: 'transparent',
-      type: 'bar',
+      background: "transparent",
+      type: "bar",
       toolbar: {
         show: false
       },
@@ -53,7 +53,7 @@ function TasksAnalytics() {
       bar: {
         horizontal: false,
         borderRadius: 6,
-        columnWidth: '35%'
+        columnWidth: "35%"
       }
     },
     colors: [theme.colors.primary.main, alpha(theme.colors.primary.main, 0.5)],
@@ -69,24 +69,24 @@ function TasksAnalytics() {
     stroke: {
       show: true,
       width: 3,
-      colors: ['transparent']
+      colors: ["transparent"]
     },
     legend: {
       show: false
     },
     labels: [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
     ],
     grid: {
       strokeDashArray: 5,
@@ -128,40 +128,40 @@ function TasksAnalytics() {
       },
       y: {
         formatter: function (val) {
-          return '$ ' + val + 'k';
+          return "$ " + val + "k";
         }
       },
-      theme: 'dark'
+      theme: "dark"
     }
   };
 
   const chartData = [
     {
-      name: 'Income',
+      name: "Income",
       data: [28, 47, 41, 34, 69, 91, 49, 82, 52, 72, 32, 99]
     },
     {
-      name: 'Expenses',
+      name: "Expenses",
       data: [38, 85, 64, 40, 97, 82, 58, 42, 55, 46, 57, 70]
     }
   ];
 
   const periods = [
     {
-      value: 'today',
-      text: 'Today'
+      value: "today",
+      text: "Today"
     },
     {
-      value: 'yesterday',
-      text: 'Yesterday'
+      value: "yesterday",
+      text: "Yesterday"
     },
     {
-      value: 'last_month',
-      text: 'Last month'
+      value: "last_month",
+      text: "Last month"
     },
     {
-      value: 'last_year',
-      text: 'Last year'
+      value: "last_year",
+      text: "Last year"
     }
   ];
 
@@ -194,12 +194,12 @@ function TasksAnalytics() {
           onClose={() => setOpenMenuPeriod(false)}
           open={openPeriod}
           anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right'
+            vertical: "bottom",
+            horizontal: "right"
           }}
           transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right'
+            vertical: "top",
+            horizontal: "right"
           }}
         >
           {periods.map((_period) => (
@@ -220,8 +220,8 @@ function TasksAnalytics() {
           variant="body2"
           color="text.secondary"
           sx={{
-            display: 'flex',
-            alignItems: 'center',
+            display: "flex",
+            alignItems: "center",
             mr: 2
           }}
         >
@@ -232,8 +232,8 @@ function TasksAnalytics() {
           variant="body2"
           color="text.secondary"
           sx={{
-            display: 'flex',
-            alignItems: 'center'
+            display: "flex",
+            alignItems: "center"
           }}
         >
           <DotPrimaryLight />

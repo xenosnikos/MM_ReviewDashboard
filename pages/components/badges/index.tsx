@@ -1,7 +1,7 @@
-import Head from 'next/head';
-import SidebarLayout from '@/layouts/SidebarLayout';
-import PageTitle from '@/components/PageTitle';
-import PageTitleWrapper from '@/components/PageTitleWrapper';
+import Head from "next/head";
+import SidebarLayout from "@/layouts/SidebarLayout";
+import PageTitle from "@/components/PageTitle";
+import PageTitleWrapper from "@/components/PageTitleWrapper";
 import {
   Container,
   Grid,
@@ -9,24 +9,24 @@ import {
   CardHeader,
   CardContent,
   Divider
-} from '@mui/material';
-import { useState } from 'react';
-import Footer from 'src/components/Footer';
+} from "@mui/material";
+import { useState } from "react";
+import Footer from "src/components/Footer";
 
-import ButtonGroup from '@mui/material/ButtonGroup';
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import MailIcon from '@mui/icons-material/Mail';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import MailIcon from "@mui/icons-material/Mail";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Badge from '@mui/material/Badge';
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Badge from "@mui/material/Badge";
 
-const shapeStyles = { bgcolor: 'primary.main', width: 40, height: 40 };
-const shapeCircleStyles = { borderRadius: '50%' };
+const shapeStyles = { bgcolor: "primary.main", width: 40, height: 40 };
+const shapeCircleStyles = { borderRadius: "50%" };
 const rectangle = <Box component="span" sx={shapeStyles} />;
 const circle = (
   <Box component="span" sx={{ ...shapeStyles, ...shapeCircleStyles }} />
@@ -94,13 +94,13 @@ function Badges() {
               <CardContent>
                 <Box
                   sx={{
-                    color: 'action.active',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    '& > *': {
+                    color: "action.active",
+                    display: "flex",
+                    flexDirection: "column",
+                    "& > *": {
                       marginBottom: 2
                     },
-                    '& .MuiBadge-root': {
+                    "& .MuiBadge-root": {
                       marginRight: 4
                     }
                   }}
@@ -137,7 +137,7 @@ function Badges() {
                       <MailIcon />
                     </Badge>
                     <FormControlLabel
-                      sx={{ color: 'text.primary' }}
+                      sx={{ color: "text.primary" }}
                       control={
                         <Switch
                           checked={!invisible}

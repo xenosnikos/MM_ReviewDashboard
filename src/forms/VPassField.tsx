@@ -1,4 +1,9 @@
-import { TextField, IconButton, InputAdornment, TextFieldProps } from "@mui/material";
+import {
+  TextField,
+  IconButton,
+  InputAdornment,
+  TextFieldProps
+} from "@mui/material";
 import { useField } from "@unform/core";
 import { useContext, useEffect, useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -9,7 +14,8 @@ type TVPassFieldProps = TextFieldProps & {
 };
 
 export function VPassField({ name, ...rest }: TVPassFieldProps): JSX.Element {
-  const { fieldName, registerField, defaultValue, error, clearError } = useField(name);
+  const { fieldName, registerField, defaultValue, error, clearError } =
+    useField(name);
 
   const [value, setValue] = useState(defaultValue || "");
   const [showPassword, setShowPassword] = useState(false);
@@ -18,7 +24,9 @@ export function VPassField({ name, ...rest }: TVPassFieldProps): JSX.Element {
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault();
   };
 
@@ -26,7 +34,7 @@ export function VPassField({ name, ...rest }: TVPassFieldProps): JSX.Element {
     registerField({
       name: fieldName,
       getValue: () => value,
-      setValue: (_, newValue) => setValue(newValue),
+      setValue: (_, newValue) => setValue(newValue)
     });
   }, [registerField, fieldName, value]);
 
@@ -57,7 +65,7 @@ export function VPassField({ name, ...rest }: TVPassFieldProps): JSX.Element {
               {showPassword ? <VisibilityOff /> : <Visibility />}
             </IconButton>
           </InputAdornment>
-        ),
+        )
       }}
       {...rest}
     />

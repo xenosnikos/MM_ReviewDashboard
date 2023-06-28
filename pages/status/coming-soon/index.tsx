@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -12,17 +12,17 @@ import {
   Button,
   styled,
   FormHelperText
-} from '@mui/material';
-import type { ReactElement } from 'react';
-import BaseLayout from '@/layouts/BaseLayout';
+} from "@mui/material";
+import type { ReactElement } from "react";
+import BaseLayout from "@/layouts/BaseLayout";
 
-import Head from 'next/head';
-import Logo from '@/components/LogoSign';
+import Head from "next/head";
+import Logo from "@/components/LogoSign";
 
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import MailTwoToneIcon from '@mui/icons-material/MailTwoTone';
+import FacebookIcon from "@mui/icons-material/Facebook";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import MailTwoToneIcon from "@mui/icons-material/MailTwoTone";
 
 const MainContent = styled(Box)(
   () => `
@@ -70,7 +70,7 @@ const ButtonNotify = styled(Button)(
 
 function StatusComingSoon() {
   const calculateTimeLeft = () => {
-    const difference = +new Date(`2023`) - +new Date();
+    const difference = +new Date("2023") - +new Date();
     let timeLeft = {};
 
     if (difference > 0) {
@@ -144,7 +144,7 @@ function StatusComingSoon() {
             </Box>
 
             <Container maxWidth="sm">
-              <Box sx={{ textAlign: 'center', p: 4 }}>
+              <Box sx={{ textAlign: "center", p: 4 }}>
                 <FormControl variant="outlined" fullWidth>
                   <OutlinedInputWrapper
                     type="text"
@@ -167,7 +167,7 @@ function StatusComingSoon() {
                   </FormHelperText>
                 </FormControl>
                 <Divider sx={{ my: 4 }} />
-                <Box sx={{ textAlign: 'center' }}>
+                <Box sx={{ textAlign: "center" }}>
                   <Tooltip arrow placement="top" title="Facebook">
                     <IconButton color="primary">
                       <FacebookIcon />

@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 
 type TVTextFieldProps = TextFieldProps & {
   name: string;
-}
+};
 export function VTextField({ name, ...rest }: TVTextFieldProps): JSX.Element {
   const { fieldName, registerField, defaultValue } = useField(name);
 
@@ -17,7 +17,7 @@ export function VTextField({ name, ...rest }: TVTextFieldProps): JSX.Element {
     registerField({
       name: fieldName,
       getValue: () => value,
-      setValue: (_, newValue) => setValue(newValue),
+      setValue: (_, newValue) => setValue(newValue)
     });
   }, [registerField, fieldName, value]);
 

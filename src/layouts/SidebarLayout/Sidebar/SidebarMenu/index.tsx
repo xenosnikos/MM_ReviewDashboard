@@ -1,5 +1,5 @@
-import { useContext } from 'react';
-import { useRouter } from 'next/router';
+import { useContext } from "react";
+import { useRouter } from "next/router";
 
 import {
   ListSubheader,
@@ -9,29 +9,29 @@ import {
   styled,
   Button,
   ListItem
-} from '@mui/material';
-import NextLink from 'next/link';
-import { SidebarContext } from 'src/contexts/SidebarContext';
+} from "@mui/material";
+import NextLink from "next/link";
+import { SidebarContext } from "src/contexts/SidebarContext";
 
-import DesignServicesTwoToneIcon from '@mui/icons-material/DesignServicesTwoTone';
-import BrightnessLowTwoToneIcon from '@mui/icons-material/BrightnessLowTwoTone';
-import MmsTwoToneIcon from '@mui/icons-material/MmsTwoTone';
-import TableChartTwoToneIcon from '@mui/icons-material/TableChartTwoTone';
-import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
-import BallotTwoToneIcon from '@mui/icons-material/BallotTwoTone';
-import BeachAccessTwoToneIcon from '@mui/icons-material/BeachAccessTwoTone';
-import EmojiEventsTwoToneIcon from '@mui/icons-material/EmojiEventsTwoTone';
-import FilterVintageTwoToneIcon from '@mui/icons-material/FilterVintageTwoTone';
-import HowToVoteTwoToneIcon from '@mui/icons-material/HowToVoteTwoTone';
-import LocalPharmacyTwoToneIcon from '@mui/icons-material/LocalPharmacyTwoTone';
-import RedeemTwoToneIcon from '@mui/icons-material/RedeemTwoTone';
-import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
-import TrafficTwoToneIcon from '@mui/icons-material/TrafficTwoTone';
-import CheckBoxTwoToneIcon from '@mui/icons-material/CheckBoxTwoTone';
-import ChromeReaderModeTwoToneIcon from '@mui/icons-material/ChromeReaderModeTwoTone';
-import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
-import CameraFrontTwoToneIcon from '@mui/icons-material/CameraFrontTwoTone';
-import DisplaySettingsTwoToneIcon from '@mui/icons-material/DisplaySettingsTwoTone';
+import DesignServicesTwoToneIcon from "@mui/icons-material/DesignServicesTwoTone";
+import BrightnessLowTwoToneIcon from "@mui/icons-material/BrightnessLowTwoTone";
+import MmsTwoToneIcon from "@mui/icons-material/MmsTwoTone";
+import TableChartTwoToneIcon from "@mui/icons-material/TableChartTwoTone";
+import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
+import BallotTwoToneIcon from "@mui/icons-material/BallotTwoTone";
+import BeachAccessTwoToneIcon from "@mui/icons-material/BeachAccessTwoTone";
+import EmojiEventsTwoToneIcon from "@mui/icons-material/EmojiEventsTwoTone";
+import FilterVintageTwoToneIcon from "@mui/icons-material/FilterVintageTwoTone";
+import HowToVoteTwoToneIcon from "@mui/icons-material/HowToVoteTwoTone";
+import LocalPharmacyTwoToneIcon from "@mui/icons-material/LocalPharmacyTwoTone";
+import RedeemTwoToneIcon from "@mui/icons-material/RedeemTwoTone";
+import SettingsTwoToneIcon from "@mui/icons-material/SettingsTwoTone";
+import TrafficTwoToneIcon from "@mui/icons-material/TrafficTwoTone";
+import CheckBoxTwoToneIcon from "@mui/icons-material/CheckBoxTwoTone";
+import ChromeReaderModeTwoToneIcon from "@mui/icons-material/ChromeReaderModeTwoTone";
+import WorkspacePremiumTwoToneIcon from "@mui/icons-material/WorkspacePremiumTwoTone";
+import CameraFrontTwoToneIcon from "@mui/icons-material/CameraFrontTwoTone";
+import DisplaySettingsTwoToneIcon from "@mui/icons-material/DisplaySettingsTwoTone";
 
 const MenuWrapper = styled(Box)(
   ({ theme }) => `
@@ -84,7 +84,7 @@ const SubMenuWrapper = styled(Box)(
 
           .MuiButton-startIcon,
           .MuiButton-endIcon {
-            transition: ${theme.transitions.create(['color'])};
+            transition: ${theme.transitions.create(["color"])};
 
             .MuiSvgIcon-root {
               font-size: inherit;
@@ -148,8 +148,8 @@ const SubMenuWrapper = styled(Box)(
                 background: ${theme.colors.alpha.trueWhite[100]};
                 opacity: 0;
                 transition: ${theme.transitions.create([
-                  'transform',
-                  'opacity'
+                  "transform",
+                  "opacity"
                 ])};
                 width: 6px;
                 height: 6px;
@@ -189,7 +189,7 @@ function SidebarMenu() {
               <ListItem component="div">
                 <NextLink href="/" passHref>
                   <Button
-                    className={currentRoute === '="/' ? 'active' : ''}
+                    className={currentRoute === '="/' ? "active" : ""}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -216,7 +216,7 @@ function SidebarMenu() {
                 <NextLink href="/dashboards/tasks" passHref>
                   <Button
                     className={
-                      currentRoute === '/dashboards/tasks' ? 'active' : ''
+                      currentRoute === "/dashboards/tasks" ? "active" : ""
                     }
                     disableRipple
                     component="a"
@@ -231,7 +231,7 @@ function SidebarMenu() {
                 <NextLink href="/applications/messenger" passHref>
                   <Button
                     className={
-                      currentRoute === '/applications/messenger' ? 'active' : ''
+                      currentRoute === "/applications/messenger" ? "active" : ""
                     }
                     disableRipple
                     component="a"
@@ -259,9 +259,9 @@ function SidebarMenu() {
                 <NextLink href="/management/transactions" passHref>
                   <Button
                     className={
-                      currentRoute === '/management/transactions'
-                        ? 'active'
-                        : ''
+                      currentRoute === "/management/transactions"
+                        ? "active"
+                        : ""
                     }
                     disableRipple
                     component="a"
@@ -289,7 +289,7 @@ function SidebarMenu() {
                 <NextLink href="/management/profile" passHref>
                   <Button
                     className={
-                      currentRoute === '/management/profile' ? 'active' : ''
+                      currentRoute === "/management/profile" ? "active" : ""
                     }
                     disableRipple
                     component="a"
@@ -304,9 +304,9 @@ function SidebarMenu() {
                 <NextLink href="/management/profile/settings" passHref>
                   <Button
                     className={
-                      currentRoute === '/management/profile/settings'
-                        ? 'active'
-                        : ''
+                      currentRoute === "/management/profile/settings"
+                        ? "active"
+                        : ""
                     }
                     disableRipple
                     component="a"
@@ -334,7 +334,7 @@ function SidebarMenu() {
                 <NextLink href="/components/buttons" passHref>
                   <Button
                     className={
-                      currentRoute === '/components/buttons' ? 'active' : ''
+                      currentRoute === "/components/buttons" ? "active" : ""
                     }
                     disableRipple
                     component="a"
@@ -349,7 +349,7 @@ function SidebarMenu() {
                 <NextLink href="/components/modals" passHref>
                   <Button
                     className={
-                      currentRoute === '/components/modals' ? 'active' : ''
+                      currentRoute === "/components/modals" ? "active" : ""
                     }
                     disableRipple
                     component="a"
@@ -364,7 +364,7 @@ function SidebarMenu() {
                 <NextLink href="/components/accordions" passHref>
                   <Button
                     className={
-                      currentRoute === '/components/accordions' ? 'active' : ''
+                      currentRoute === "/components/accordions" ? "active" : ""
                     }
                     disableRipple
                     component="a"
@@ -379,7 +379,7 @@ function SidebarMenu() {
                 <NextLink href="/components/tabs" passHref>
                   <Button
                     className={
-                      currentRoute === '/components/tabs' ? 'active' : ''
+                      currentRoute === "/components/tabs" ? "active" : ""
                     }
                     disableRipple
                     component="a"
@@ -394,7 +394,7 @@ function SidebarMenu() {
                 <NextLink href="/components/badges" passHref>
                   <Button
                     className={
-                      currentRoute === '/components/badges' ? 'active' : ''
+                      currentRoute === "/components/badges" ? "active" : ""
                     }
                     disableRipple
                     component="a"
@@ -409,7 +409,7 @@ function SidebarMenu() {
                 <NextLink href="/components/tooltips" passHref>
                   <Button
                     className={
-                      currentRoute === '/components/tooltips' ? 'active' : ''
+                      currentRoute === "/components/tooltips" ? "active" : ""
                     }
                     disableRipple
                     component="a"
@@ -424,7 +424,7 @@ function SidebarMenu() {
                 <NextLink href="/components/avatars" passHref>
                   <Button
                     className={
-                      currentRoute === '/components/avatars' ? 'active' : ''
+                      currentRoute === "/components/avatars" ? "active" : ""
                     }
                     disableRipple
                     component="a"
@@ -439,7 +439,7 @@ function SidebarMenu() {
                 <NextLink href="/components/cards" passHref>
                   <Button
                     className={
-                      currentRoute === '/components/cards' ? 'active' : ''
+                      currentRoute === "/components/cards" ? "active" : ""
                     }
                     disableRipple
                     component="a"
@@ -454,7 +454,7 @@ function SidebarMenu() {
                 <NextLink href="/components/forms" passHref>
                   <Button
                     className={
-                      currentRoute === '/components/forms' ? 'active' : ''
+                      currentRoute === "/components/forms" ? "active" : ""
                     }
                     disableRipple
                     component="a"
@@ -481,7 +481,7 @@ function SidebarMenu() {
               <ListItem component="div">
                 <NextLink href="/status/404" passHref>
                   <Button
-                    className={currentRoute === '/status/404' ? 'active' : ''}
+                    className={currentRoute === "/status/404" ? "active" : ""}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -494,7 +494,7 @@ function SidebarMenu() {
               <ListItem component="div">
                 <NextLink href="/status/500" passHref>
                   <Button
-                    className={currentRoute === '/status/500' ? 'active' : ''}
+                    className={currentRoute === "/status/500" ? "active" : ""}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -508,7 +508,7 @@ function SidebarMenu() {
                 <NextLink href="/status/coming-soon" passHref>
                   <Button
                     className={
-                      currentRoute === '/status/coming-soon' ? 'active' : ''
+                      currentRoute === "/status/coming-soon" ? "active" : ""
                     }
                     disableRipple
                     component="a"
@@ -523,7 +523,7 @@ function SidebarMenu() {
                 <NextLink href="/status/maintenance" passHref>
                   <Button
                     className={
-                      currentRoute === '/status/maintenance' ? 'active' : ''
+                      currentRoute === "/status/maintenance" ? "active" : ""
                     }
                     disableRipple
                     component="a"

@@ -5,15 +5,15 @@ import {
   styled,
   Typography,
   useTheme
-} from '@mui/material';
-import type { ReactElement } from 'react';
-import BaseLayout from 'src/layouts/BaseLayout';
+} from "@mui/material";
+import type { ReactElement } from "react";
+import BaseLayout from "src/layouts/BaseLayout";
 
-import Head from 'next/head';
+import Head from "next/head";
 
-import Signin from '@/content/Overview/Signin';
+import Signin from "@/content/Overview/Signin";
 
-import Footer from 'src/components/Footer';
+import Footer from "src/components/Footer";
 
 const HeaderWrapper = styled(Card)(
   ({ theme }) => `
@@ -49,7 +49,7 @@ function Overview() {
             <Typography
               variant="h1"
               sx={{
-                textAlign: "center",              
+                textAlign: "center",
                 fontSize: `${theme.typography.pxToRem(30)}`,
                 color: `${theme.colors.alpha.black[100]}`
               }}

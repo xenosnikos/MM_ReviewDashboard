@@ -1,4 +1,4 @@
-import { Box, Avatar, Typography, Card, styled, Divider } from '@mui/material';
+import { Box, Avatar, Typography, Card, styled, Divider } from "@mui/material";
 
 import {
   formatDistance,
@@ -6,8 +6,8 @@ import {
   subDays,
   subHours,
   subMinutes
-} from 'date-fns';
-import ScheduleTwoToneIcon from '@mui/icons-material/ScheduleTwoTone';
+} from "date-fns";
+import ScheduleTwoToneIcon from "@mui/icons-material/ScheduleTwoTone";
 
 const DividerWrapper = styled(Divider)(
   ({ theme }) => `
@@ -47,14 +47,14 @@ const CardWrapperSecondary = styled(Card)(
 
 function ChatContent() {
   const user = {
-    name: 'Catherine Pike',
-    avatar: '/static/images/avatars/1.jpg'
+    name: "Catherine Pike",
+    avatar: "/static/images/avatars/1.jpg"
   };
 
   return (
     <Box p={3}>
       <DividerWrapper>
-        {format(subDays(new Date(), 3), 'MMMM dd yyyy')}
+        {format(subDays(new Date(), 3), "MMMM dd yyyy")}
       </DividerWrapper>
 
       <Box
@@ -86,8 +86,8 @@ function ChatContent() {
             variant="subtitle1"
             sx={{
               pt: 1,
-              display: 'flex',
-              alignItems: 'center'
+              display: "flex",
+              alignItems: "center"
             }}
           >
             <ScheduleTwoToneIcon
@@ -124,8 +124,8 @@ function ChatContent() {
             variant="subtitle1"
             sx={{
               pt: 1,
-              display: 'flex',
-              alignItems: 'center'
+              display: "flex",
+              alignItems: "center"
             }}
           >
             <ScheduleTwoToneIcon
@@ -150,7 +150,7 @@ function ChatContent() {
         />
       </Box>
       <DividerWrapper>
-        {format(subDays(new Date(), 5), 'MMMM dd yyyy')}
+        {format(subDays(new Date(), 5), "MMMM dd yyyy")}
       </DividerWrapper>
 
       <Box
@@ -178,8 +178,8 @@ function ChatContent() {
             variant="subtitle1"
             sx={{
               pt: 1,
-              display: 'flex',
-              alignItems: 'center'
+              display: "flex",
+              alignItems: "center"
             }}
           >
             <ScheduleTwoToneIcon
@@ -238,8 +238,8 @@ function ChatContent() {
             variant="subtitle1"
             sx={{
               pt: 1,
-              display: 'flex',
-              alignItems: 'center'
+              display: "flex",
+              alignItems: "center"
             }}
           >
             <ScheduleTwoToneIcon
@@ -282,8 +282,8 @@ function ChatContent() {
             variant="subtitle1"
             sx={{
               pt: 1,
-              display: 'flex',
-              alignItems: 'center'
+              display: "flex",
+              alignItems: "center"
             }}
           >
             <ScheduleTwoToneIcon

@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from "react";
 import {
   Box,
   Typography,
@@ -20,14 +20,14 @@ import {
   ListItemText,
   lighten,
   styled
-} from '@mui/material';
-import { formatDistance, subMinutes, subHours } from 'date-fns';
-import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
-import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
-import Label from 'src/components/Label';
-import CheckTwoToneIcon from '@mui/icons-material/CheckTwoTone';
-import AlarmTwoToneIcon from '@mui/icons-material/AlarmTwoTone';
-import Link from 'src/components/Link';
+} from "@mui/material";
+import { formatDistance, subMinutes, subHours } from "date-fns";
+import SettingsTwoToneIcon from "@mui/icons-material/SettingsTwoTone";
+import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
+import Label from "src/components/Label";
+import CheckTwoToneIcon from "@mui/icons-material/CheckTwoTone";
+import AlarmTwoToneIcon from "@mui/icons-material/AlarmTwoTone";
+import Link from "src/components/Link";
 
 const AvatarSuccess = styled(Avatar)(
   ({ theme }) => `
@@ -94,9 +94,9 @@ const TabsContainerWrapper = styled(Box)(
 
 function SidebarContent() {
   const user = {
-    name: 'Catherine Pike',
-    avatar: '/static/images/avatars/1.jpg',
-    jobtitle: 'Software Developer'
+    name: "Catherine Pike",
+    avatar: "/static/images/avatars/1.jpg",
+    jobtitle: "Software Developer"
   };
 
   const [state, setState] = useState({
@@ -110,12 +110,12 @@ function SidebarContent() {
     });
   };
 
-  const [currentTab, setCurrentTab] = useState<string>('all');
+  const [currentTab, setCurrentTab] = useState<string>("all");
 
   const tabs = [
-    { value: 'all', label: 'All' },
-    { value: 'unread', label: 'Unread' },
-    { value: 'archived', label: 'Archived' }
+    { value: "all", label: "All" },
+    { value: "unread", label: "Unread" },
+    { value: "archived", label: "Archived" }
   ];
 
   const handleTabsChange = (_event: ChangeEvent<{}>, value: string): void => {
@@ -213,7 +213,7 @@ function SidebarContent() {
       </TabsContainerWrapper>
 
       <Box mt={2}>
-        {currentTab === 'all' && (
+        {currentTab === "all" && (
           <List disablePadding component="div">
             <ListItemWrapper selected>
               <ListItemAvatar>
@@ -224,12 +224,12 @@ function SidebarContent() {
                   mr: 1
                 }}
                 primaryTypographyProps={{
-                  color: 'textPrimary',
-                  variant: 'h5',
+                  color: "textPrimary",
+                  variant: "h5",
                   noWrap: true
                 }}
                 secondaryTypographyProps={{
-                  color: 'textSecondary',
+                  color: "textSecondary",
                   noWrap: true
                 }}
                 primary="Zain Baptista"
@@ -248,12 +248,12 @@ function SidebarContent() {
                   mr: 1
                 }}
                 primaryTypographyProps={{
-                  color: 'textPrimary',
-                  variant: 'h5',
+                  color: "textPrimary",
+                  variant: "h5",
                   noWrap: true
                 }}
                 secondaryTypographyProps={{
-                  color: 'textSecondary',
+                  color: "textSecondary",
                   noWrap: true
                 }}
                 primary="Kierra Herwitz"
@@ -269,12 +269,12 @@ function SidebarContent() {
                   mr: 1
                 }}
                 primaryTypographyProps={{
-                  color: 'textPrimary',
-                  variant: 'h5',
+                  color: "textPrimary",
+                  variant: "h5",
                   noWrap: true
                 }}
                 secondaryTypographyProps={{
-                  color: 'textSecondary',
+                  color: "textSecondary",
                   noWrap: true
                 }}
                 primary="Craig Vaccaro"
@@ -290,12 +290,12 @@ function SidebarContent() {
                   mr: 1
                 }}
                 primaryTypographyProps={{
-                  color: 'textPrimary',
-                  variant: 'h5',
+                  color: "textPrimary",
+                  variant: "h5",
                   noWrap: true
                 }}
                 secondaryTypographyProps={{
-                  color: 'textSecondary',
+                  color: "textSecondary",
                   noWrap: true
                 }}
                 primary="Adison Press"
@@ -307,7 +307,7 @@ function SidebarContent() {
             </ListItemWrapper>
           </List>
         )}
-        {currentTab === 'unread' && (
+        {currentTab === "unread" && (
           <List disablePadding component="div">
             <ListItemWrapper>
               <ListItemAvatar>
@@ -318,12 +318,12 @@ function SidebarContent() {
                   mr: 1
                 }}
                 primaryTypographyProps={{
-                  color: 'textPrimary',
-                  variant: 'h5',
+                  color: "textPrimary",
+                  variant: "h5",
                   noWrap: true
                 }}
                 secondaryTypographyProps={{
-                  color: 'textSecondary',
+                  color: "textSecondary",
                   noWrap: true
                 }}
                 primary="Zain Baptista"
@@ -342,12 +342,12 @@ function SidebarContent() {
                   mr: 1
                 }}
                 primaryTypographyProps={{
-                  color: 'textPrimary',
-                  variant: 'h5',
+                  color: "textPrimary",
+                  variant: "h5",
                   noWrap: true
                 }}
                 secondaryTypographyProps={{
-                  color: 'textSecondary',
+                  color: "textSecondary",
                   noWrap: true
                 }}
                 primary="Adison Press"
@@ -359,7 +359,7 @@ function SidebarContent() {
             </ListItemWrapper>
           </List>
         )}
-        {currentTab === 'archived' && (
+        {currentTab === "archived" && (
           <Box pb={3}>
             <Divider
               sx={{
@@ -372,7 +372,7 @@ function SidebarContent() {
             <Typography
               sx={{
                 mt: 2,
-                textAlign: 'center'
+                textAlign: "center"
               }}
               variant="subtitle2"
             >

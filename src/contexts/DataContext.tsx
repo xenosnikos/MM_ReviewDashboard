@@ -24,7 +24,7 @@ interface DataContext {
   setDisabledButton: (value: any) => void;
   requiredTextError: any;
   setRequiredTextError: (value: any) => void;
-  requiredPassError: any; 
+  requiredPassError: any;
   setRequiredPassError: (value: any) => void;
 }
 
@@ -48,34 +48,36 @@ export const DataProvider = ({ children }: Props) => {
   const [disabledButton, setDisabledButton] = useState(true);
   const [requiredTextError, setRequiredTextError] = useState(false);
   const [requiredPassError, setRequiredPassError] = useState(false);
-  
+
   return (
-    <DataContext.Provider 
-      value={{ 
-        selectedSources, 
-        setSelectedSources, 
-        selectedRatings, 
-        setSelectedRatings, 
-        page, 
-        setPage, 
-        limit, 
-        setLimit, 
-        reviewsData, 
+    <DataContext.Provider
+      value={{
+        selectedSources,
+        setSelectedSources,
+        selectedRatings,
+        setSelectedRatings,
+        page,
+        setPage,
+        limit,
+        setLimit,
+        reviewsData,
         setReviewsData,
-        data, 
+        data,
         setData,
-        chartURI, 
+        chartURI,
         setChartURI,
         donutURI,
         setDonutURI,
-        donut2URI, 
+        donut2URI,
         setDonut2URI,
-        disabledButton, 
+        disabledButton,
         setDisabledButton,
-        requiredTextError, 
+        requiredTextError,
         setRequiredTextError,
-        requiredPassError, 
-        setRequiredPassError,}}>
+        requiredPassError,
+        setRequiredPassError
+      }}
+    >
       {children}
     </DataContext.Provider>
   );

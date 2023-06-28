@@ -1,4 +1,4 @@
-import { Box, Container, Link, Typography, styled } from '@mui/material';
+import { Box, Container, Link, Typography, styled } from "@mui/material";
 
 const FooterWrapper = styled(Container)(
   ({ theme }) => `
@@ -11,9 +11,9 @@ function Footer() {
     <FooterWrapper className="footer-wrapper">
       <Box
         pb={4}
-        display={{ xs: 'block', md: 'flex' }}
+        display={{ xs: "block", md: "flex" }}
         alignItems="center"
-        textAlign={{ xs: 'center', md: 'left' }}
+        textAlign={{ xs: "center", md: "left" }}
         justifyContent="space-between"
       >
         <Box>
@@ -34,7 +34,7 @@ function Footer() {
           }}
           variant="subtitle1"
         >
-          Powered by{' '}
+          Powered by{" "}
           <Link
             href="http://maxxmedia.ca/"
             target="_blank"

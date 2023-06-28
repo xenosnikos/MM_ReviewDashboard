@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Box,
   Typography,
@@ -7,13 +7,13 @@ import {
   Button,
   Grid,
   styled
-} from '@mui/material';
-import type { ReactElement } from 'react';
-import BaseLayout from 'src/layouts/BaseLayout';
+} from "@mui/material";
+import type { ReactElement } from "react";
+import BaseLayout from "src/layouts/BaseLayout";
 
-import Head from 'next/head';
-import RefreshTwoToneIcon from '@mui/icons-material/RefreshTwoTone';
-import LoadingButton from '@mui/lab/LoadingButton';
+import Head from "next/head";
+import RefreshTwoToneIcon from "@mui/icons-material/RefreshTwoTone";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const GridWrapper = styled(Grid)(
   ({ theme }) => `
@@ -59,7 +59,7 @@ function Status500() {
       <MainContent>
         <Grid
           container
-          sx={{ height: '100%' }}
+          sx={{ height: "100%" }}
           alignItems="stretch"
           spacing={0}
         >

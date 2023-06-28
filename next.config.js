@@ -1,14 +1,13 @@
-const withImages = require('next-images');
-
+const withImages = require("next-images");
 
 const redirects = {
   async redirects() {
     return [
       {
-        source: '/dashboards',
-        destination: '/dashboards/tasks',
-        permanent: true,
-      }    
+        source: "/dashboards",
+        destination: "/dashboards/tasks",
+        permanent: true
+      }
     ];
   }
 };

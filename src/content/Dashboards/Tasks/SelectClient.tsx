@@ -1,7 +1,7 @@
-import { useRouter } from 'next/router';
-import { Box, MenuItem, TextField } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { getClient } from '@/services';
+import { useRouter } from "next/router";
+import { Box, MenuItem, TextField } from "@mui/material";
+import { useEffect, useState } from "react";
+import { getClient } from "@/services";
 
 export interface Client {
   id: number;
@@ -14,12 +14,10 @@ const SelectClient = () => {
   const router = useRouter();
   const { client } = router.query;
   const [currency, setCurrency] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      return (
-        client as string || localStorage.getItem('selectedClient') || ''
-      );
+    if (typeof window !== "undefined") {
+      return (client as string) || localStorage.getItem("selectedClient") || "";
     }
-    return '';
+    return "";
   });
   const [clients, setClients] = useState<Client[]>([]);
 
@@ -35,11 +33,11 @@ const SelectClient = () => {
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>): void => {
     const selectedClient = event.target.value as string;
     setCurrency(selectedClient);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('selectedClient', selectedClient);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("selectedClient", selectedClient);
       const currentUrl = new URL(window.location.href);
-      currentUrl.searchParams.set('client', selectedClient);
-      window.history.replaceState(null, '', currentUrl);
+      currentUrl.searchParams.set("client", selectedClient);
+      window.history.replaceState(null, "", currentUrl);
       router.reload();
     }
   };
@@ -55,7 +53,7 @@ const SelectClient = () => {
   }, [clients]);
 
   return (
-    <Box sx={{ marginLeft: '10px', marginTop: '23px'}}>
+    <Box sx={{ marginLeft: "10px", marginTop: "23px" }}>
       <TextField
         id="standard-select-currency"
         select
@@ -64,11 +62,11 @@ const SelectClient = () => {
         helperText="Please select the client"
         variant="standard"
         sx={{
-          '& .MuiInputBase-root': {
-            fontSize: '20px',
-            height: '36px',
-            fontWeight: 'bold'
-          },
+          "& .MuiInputBase-root": {
+            fontSize: "20px",
+            height: "36px",
+            fontWeight: "bold"
+          }
         }}
       >
         {clients

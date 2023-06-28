@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from "react";
 import {
   Button,
   Box,
@@ -7,37 +7,37 @@ import {
   MenuItem,
   Typography,
   useTheme
-} from '@mui/material';
-import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
-import { Chart } from 'src/components/Chart';
-import type { ApexOptions } from 'apexcharts';
-import DataContext from '@/contexts/DataContext';
-import * as htmlToImage from 'html-to-image';
-import { getReviewsData } from '@/services';
+} from "@mui/material";
+import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
+import { Chart } from "src/components/Chart";
+import type { ApexOptions } from "apexcharts";
+import DataContext from "@/contexts/DataContext";
+import * as htmlToImage from "html-to-image";
+import { getReviewsData } from "@/services";
 
 function ReviewGrowth({ params }) {
   const theme = useTheme();
 
   const labels = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec'
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
   ];
 
   const initOptions: ApexOptions = {
     chart: {
-      background: 'transparent',
-      type: 'bar',
-      id: 'review-chart',
+      background: "transparent",
+      type: "bar",
+      id: "review-chart",
       toolbar: {
         show: false
       },
@@ -46,13 +46,13 @@ function ReviewGrowth({ params }) {
       },
       animations: {
         enabled: false
-      },
+      }
     },
     plotOptions: {
       bar: {
         horizontal: false,
         borderRadius: 6,
-        columnWidth: '40%'
+        columnWidth: "40%"
       }
     },
     colors: [theme.colors.primary.main, alpha(theme.colors.primary.main, 0.5)],
@@ -68,7 +68,7 @@ function ReviewGrowth({ params }) {
     stroke: {
       show: true,
       width: 3,
-      colors: ['transparent']
+      colors: ["transparent"]
     },
     legend: {
       show: false
@@ -87,7 +87,7 @@ function ReviewGrowth({ params }) {
       },
       labels: {
         style: {
-          colors: '#373C3F'
+          colors: "#373C3F"
         }
       }
     },
@@ -101,7 +101,7 @@ function ReviewGrowth({ params }) {
       },
       labels: {
         style: {
-          colors: '#373C3F'
+          colors: "#373C3F"
         }
       }
     },
@@ -117,11 +117,11 @@ function ReviewGrowth({ params }) {
           return val.toString();
         }
       },
-      theme: 'dark'
+      theme: "dark"
     },
     series: [
       {
-        name: 'Reviews',
+        name: "Reviews",
         data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       }
     ]
@@ -129,20 +129,20 @@ function ReviewGrowth({ params }) {
 
   const periods = [
     {
-      value: 'today',
-      text: 'Today'
+      value: "today",
+      text: "Today"
     },
     {
-      value: 'yesterday',
-      text: 'Yesterday'
+      value: "yesterday",
+      text: "Yesterday"
     },
     {
-      value: 'last_month',
-      text: 'Last month'
+      value: "last_month",
+      text: "Last month"
     },
     {
-      value: 'last_year',
-      text: 'Last year'
+      value: "last_year",
+      text: "Last year"
     }
   ];
 
@@ -158,89 +158,105 @@ function ReviewGrowth({ params }) {
   useEffect(() => {
     const getData = async () => {
       await getReviewsData({ ...params, per_page: totalReviews })
-        .then(response => setRevData(response))
-        .catch(error => console.log(error));
-    }
+        .then((response) => setRevData(response))
+        .catch((error) => console.log(error));
+    };
 
     getData();
   }, [reviewsData]);
 
   useEffect(() => {
-    if (period === 'Today') {
+    if (period === "Today") {
       const reviewsTodayArray = [];
       const today = new Date();
 
-      const reviewsToday = revData?.data?.filter(review => {
+      const reviewsToday = revData?.data?.filter((review) => {
         const [day, month, year] = review.date.split(" ");
         const monthIndex = new Date(Date.parse(`${month}, ${year}`)).getMonth();
         const reviewDate = new Date(year, monthIndex, day.slice(0, -2));
 
-        return reviewDate.getDate() === today.getDate() &&
+        return (
+          reviewDate.getDate() === today.getDate() &&
           reviewDate.getMonth() === today.getMonth() &&
-          reviewDate.getFullYear() === today.getFullYear();
+          reviewDate.getFullYear() === today.getFullYear()
+        );
       });
 
       reviewsTodayArray.push(reviewsToday.length);
       setData(reviewsTodayArray);
     }
 
-    if (period === 'Yesterday') {
+    if (period === "Yesterday") {
       const reviewsYesterdayArray = [];
       const today = new Date();
       const yesterday = new Date();
       yesterday.setDate(today.getDate() - 1);
 
-      const reviewsYesterday = revData?.data?.filter(review => {
+      const reviewsYesterday = revData?.data?.filter((review) => {
         const [day, month, year] = review.date.split(" ");
         const monthIndex = new Date(Date.parse(`${month}, ${year}`)).getMonth();
         const reviewDate = new Date(year, monthIndex, day.slice(0, -2));
 
-        return reviewDate.getDate() === yesterday.getDate() &&
+        return (
+          reviewDate.getDate() === yesterday.getDate() &&
           reviewDate.getMonth() === yesterday.getMonth() &&
-          reviewDate.getFullYear() === yesterday.getFullYear();
+          reviewDate.getFullYear() === yesterday.getFullYear()
+        );
       });
 
       reviewsYesterdayArray.push(reviewsYesterday.length);
       setData(reviewsYesterdayArray);
     }
 
-    if (period === 'Last month') {
+    if (period === "Last month") {
       const reviewsPerDay = {};
 
       const today = new Date();
       const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1);
 
-      const filteredReviews = revData?.data?.filter(review => {
+      const filteredReviews = revData?.data?.filter((review) => {
         const dateArray = review.date.split(" ");
-        const monthIndex = new Date(Date.parse(`${dateArray[1]}, ${dateArray[2]}`)).getMonth();
+        const monthIndex = new Date(
+          Date.parse(`${dateArray[1]}, ${dateArray[2]}`)
+        ).getMonth();
         const reviewDate = new Date(dateArray[2], monthIndex);
 
-        return reviewDate.getMonth() === lastMonth.getMonth() && reviewDate.getFullYear() === lastMonth.getFullYear();
+        return (
+          reviewDate.getMonth() === lastMonth.getMonth() &&
+          reviewDate.getFullYear() === lastMonth.getFullYear()
+        );
       });
 
-      filteredReviews.forEach(review => {
+      filteredReviews.forEach((review) => {
         const dateArray = review.date.split(" ");
         reviewsPerDay[dateArray[0]] = (reviewsPerDay[dateArray[0]] || 0) + 1;
       });
 
-      const reviewGrowth = Object.entries(reviewsPerDay).map(([day, count]) => ({ day: day, count }));
+      const reviewGrowth = Object.entries(reviewsPerDay).map(
+        ([day, count]) => ({ day: day, count })
+      );
 
       setData(reviewGrowth);
     }
 
-    if (period === 'Last year') {
+    if (period === "Last year") {
       const reviewCountByMonth = {};
 
-      revData?.data?.forEach(review => {
+      revData?.data?.forEach((review) => {
         const dateArray = review.date.split(" ");
-        const monthIndex = new Date(Date.parse(`${dateArray[1]}, ${dateArray[2]}`)).getMonth() + 1;
+        const monthIndex =
+          new Date(Date.parse(`${dateArray[1]}, ${dateArray[2]}`)).getMonth() +
+          1;
         const reviewDate = new Date(dateArray[2], monthIndex - 1);
 
         if (isNaN(monthIndex)) {
           return;
         }
 
-        if (reviewDate >= new Date(new Date().setMonth(new Date().getMonth() - 11))) {
+        if (
+          reviewDate >=
+          new Date(new Date().setMonth(new Date().getMonth() - 11))
+        ) {
           if (reviewCountByMonth[monthIndex]) {
             reviewCountByMonth[monthIndex].count += 1;
           } else {
@@ -256,39 +272,42 @@ function ReviewGrowth({ params }) {
   }, [revData, period]);
 
   useEffect(() => {
-    if (!data)
-      return;
-      
-    if (period === 'Today') {
+    if (!data) return;
+
+    if (period === "Today") {
       setOptions({
         ...options,
-        labels: ['Today'],
+        labels: ["Today"],
         series: [
           {
-            name: 'Reviews',
+            name: "Reviews",
             data: data
           }
         ]
       });
     }
 
-    if (period === 'Yesterday') {
+    if (period === "Yesterday") {
       setOptions({
         ...options,
-        labels: ['Yesterday'],
+        labels: ["Yesterday"],
         series: [
           {
-            name: 'Reviews',
+            name: "Reviews",
             data: data
           }
         ]
       });
     }
 
-    if (period === 'Last month') {
+    if (period === "Last month") {
       const today = new Date();
       const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1);
-      const daysInLastMonth = new Date(lastMonth.getFullYear(), lastMonth.getMonth() + 1, 0).getDate();
+      const daysInLastMonth = new Date(
+        lastMonth.getFullYear(),
+        lastMonth.getMonth() + 1,
+        0
+      ).getDate();
 
       const lastMonthDays = [];
 
@@ -303,11 +322,10 @@ function ReviewGrowth({ params }) {
       const newSeriesData = [];
 
       for (let i = 1; i <= lastMonthDays.length; i++) {
-        const index = data.findIndex(item => item.day.slice(0, -2) == i);
+        const index = data.findIndex((item) => item.day.slice(0, -2) == i);
         if (index > -1 && data[index].count)
           newSeriesData.push(data[index].count);
-        else
-          newSeriesData.push(0);
+        else newSeriesData.push(0);
       }
 
       setOptions({
@@ -315,22 +333,21 @@ function ReviewGrowth({ params }) {
         labels: lastMonthDays,
         series: [
           {
-            name: 'Reviews',
+            name: "Reviews",
             data: newSeriesData
           }
         ]
       });
     }
 
-    if (period === 'Last year') {
+    if (period === "Last year") {
       const newSeriesData = [];
 
       for (let i = 1; i <= 12; i++) {
-        const index = data.findIndex(item => item.month === i);
+        const index = data.findIndex((item) => item.month === i);
         if (index > -1 && data[index].count)
           newSeriesData.push(data[index].count);
-        else
-          newSeriesData.push(0);
+        else newSeriesData.push(0);
       }
 
       setOptions({
@@ -338,7 +355,7 @@ function ReviewGrowth({ params }) {
         labels: labels,
         series: [
           {
-            name: 'Reviews',
+            name: "Reviews",
             data: newSeriesData
           }
         ]
@@ -348,16 +365,16 @@ function ReviewGrowth({ params }) {
 
   useEffect(() => {
     const getChart = async () => {
-      const chartElement = document.querySelector('#chart') as HTMLElement;
+      const chartElement = document.querySelector("#chart") as HTMLElement;
 
       if (chartElement) {
         await htmlToImage.toPng(chartElement).then((dataUrl) => {
           setChartURI(dataUrl);
         });
       }
-    }
+    };
 
-    getChart()
+    getChart();
   }, [options]);
 
   return (
@@ -385,12 +402,12 @@ function ReviewGrowth({ params }) {
           onClose={() => setOpenMenuPeriod(false)}
           open={openPeriod}
           anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right'
+            vertical: "bottom",
+            horizontal: "right"
           }}
           transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right'
+            vertical: "top",
+            horizontal: "right"
           }}
         >
           {periods.map((_period) => (

@@ -1,9 +1,4 @@
-import {
-  Card,
-  Typography,
-  useTheme,
-  styled
-} from '@mui/material';
+import { Card, Typography, useTheme, styled } from "@mui/material";
 
 const RootWrapper = styled(Card)(
   ({ theme }) => `

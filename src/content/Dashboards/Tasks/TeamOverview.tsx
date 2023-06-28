@@ -8,11 +8,11 @@ import {
   useTheme,
   LinearProgress,
   styled
-} from '@mui/material';
-import { formatDistance, subDays, subMinutes, subHours } from 'date-fns';
-import Text from 'src/components/Text';
+} from "@mui/material";
+import { formatDistance, subDays, subMinutes, subHours } from "date-fns";
+import Text from "src/components/Text";
 
-const DotLegend = styled('span')(
+const DotLegend = styled("span")(
   ({ theme }) => `
     border-radius: 22px;
     width: ${theme.spacing(1.5)};
@@ -55,8 +55,8 @@ function TeamOverview() {
           <Box display="flex" alignItems="center" pb={3}>
             <Badge
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right'
+                vertical: "bottom",
+                horizontal: "right"
               }}
               overlap="circular"
               badgeContent={
@@ -64,7 +64,7 @@ function TeamOverview() {
                   arrow
                   placement="top"
                   title={
-                    'Offline since ' +
+                    "Offline since " +
                     formatDistance(subDays(new Date(), 14), new Date(), {
                       addSuffix: true
                     })
@@ -96,7 +96,7 @@ function TeamOverview() {
           </Box>
 
           <Typography variant="subtitle2" gutterBottom>
-            <Text color="black">4</Text> out of <Text color="black">6</Text>{' '}
+            <Text color="black">4</Text> out of <Text color="black">6</Text>{" "}
             tasks completed
           </Typography>
           <LinearProgressWrapper
@@ -111,8 +111,8 @@ function TeamOverview() {
           <Box display="flex" alignItems="center" pb={3}>
             <Badge
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right'
+                vertical: "bottom",
+                horizontal: "right"
               }}
               overlap="circular"
               badgeContent={
@@ -120,7 +120,7 @@ function TeamOverview() {
                   arrow
                   placement="top"
                   title={
-                    'Online since ' +
+                    "Online since " +
                     formatDistance(subMinutes(new Date(), 6), new Date(), {
                       addSuffix: true
                     })
@@ -152,7 +152,7 @@ function TeamOverview() {
           </Box>
 
           <Typography variant="subtitle2" gutterBottom>
-            <Text color="black">2</Text> out of <Text color="black">8</Text>{' '}
+            <Text color="black">2</Text> out of <Text color="black">8</Text>{" "}
             tasks completed
           </Typography>
           <LinearProgressWrapper
@@ -167,8 +167,8 @@ function TeamOverview() {
           <Box display="flex" alignItems="center" pb={3}>
             <Badge
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right'
+                vertical: "bottom",
+                horizontal: "right"
               }}
               overlap="circular"
               badgeContent={
@@ -176,7 +176,7 @@ function TeamOverview() {
                   arrow
                   placement="top"
                   title={
-                    'Offline since ' +
+                    "Offline since " +
                     formatDistance(subHours(new Date(), 7), new Date(), {
                       addSuffix: true
                     })
@@ -208,7 +208,7 @@ function TeamOverview() {
           </Box>
 
           <Typography variant="subtitle2" gutterBottom>
-            <Text color="black">10</Text> out of <Text color="black">20</Text>{' '}
+            <Text color="black">10</Text> out of <Text color="black">20</Text>{" "}
             tasks completed
           </Typography>
           <LinearProgressWrapper

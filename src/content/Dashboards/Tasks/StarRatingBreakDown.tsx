@@ -1,20 +1,14 @@
-import {
-  Box,
-  Divider,
-  Typography,
-  useTheme
-} from '@mui/material';
-import { Chart } from '@/components/Chart';
-import type { ApexOptions } from 'apexcharts';
-import { useContext, useEffect, useState } from 'react';
-import * as htmlToImage from 'html-to-image';
-import DataContext from '@/contexts/DataContext';
-
+import { Box, Divider, Typography, useTheme } from "@mui/material";
+import { Chart } from "@/components/Chart";
+import type { ApexOptions } from "apexcharts";
+import { useContext, useEffect, useState } from "react";
+import * as htmlToImage from "html-to-image";
+import DataContext from "@/contexts/DataContext";
 
 const initOptions: ApexOptions = {
   chart: {
     width: 380,
-    type: 'donut'
+    type: "donut"
   },
   plotOptions: {
     pie: {
@@ -25,28 +19,30 @@ const initOptions: ApexOptions = {
   dataLabels: {
     enabled: true
   },
-  labels: ['5 stars', '4 stars', '3 stars', '2 stars', '1 star'],
+  labels: ["5 stars", "4 stars", "3 stars", "2 stars", "1 star"],
   fill: {
-    type: 'gradient',
+    type: "gradient"
   },
   legend: {
-    formatter: function(val, opts) {
-      return opts.w.globals.series[opts.seriesIndex] + '% ' + val
+    formatter: function (val, opts) {
+      return opts.w.globals.series[opts.seriesIndex] + "% " + val;
     }
   },
-  responsive: [{
-    breakpoint: 480,
-    options: {
-      chart: {
-        width: 200
-      },
-      legend: {
-        position: 'bottom'
+  responsive: [
+    {
+      breakpoint: 480,
+      options: {
+        chart: {
+          width: 200
+        },
+        legend: {
+          position: "bottom"
+        }
       }
     }
-  }],
+  ],
   series: [0, 0, 0, 0, 0]
-}
+};
 
 function StarRatingBreakDown({ data }) {
   const theme = useTheme();
@@ -58,7 +54,7 @@ function StarRatingBreakDown({ data }) {
       const newSeries = [];
 
       for (let i = 5; i > 0; i--) {
-        const index = data.findIndex(item => item.rating === i);
+        const index = data.findIndex((item) => item.rating === i);
         if (index > -1 && data[index].count) {
           newSeries.push(parseFloat(data[index].count));
         } else {
@@ -66,22 +62,24 @@ function StarRatingBreakDown({ data }) {
         }
       }
 
-      setOptions({...options, series: newSeries});
+      setOptions({ ...options, series: newSeries });
     }
   }, [data]);
 
   useEffect(() => {
     const getChart = async () => {
-      const chartElement = document.querySelector('#chart-donut') as HTMLElement;
+      const chartElement = document.querySelector(
+        "#chart-donut"
+      ) as HTMLElement;
 
       if (chartElement) {
         await htmlToImage.toPng(chartElement).then((dataUrl) => {
           setDonutURI(dataUrl);
         });
       }
-    }
+    };
 
-    getChart()
+    getChart();
   }, [options]);
 
   return (
@@ -107,7 +105,7 @@ function StarRatingBreakDown({ data }) {
         series={options.series}
       />
     </Box>
-  )
+  );
 }
 
 export default StarRatingBreakDown;
