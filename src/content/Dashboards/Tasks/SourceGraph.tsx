@@ -65,9 +65,7 @@ function SourceGraph({ data }) {
     }
   }, [data]);
 
-  return (
-    <Chart options={options} series={options.series} type="bar" height={450} />
-  );
+  return <Chart options={options} series={options.series} type="bar" height={450} />;
 }
 
 export default SourceGraph;

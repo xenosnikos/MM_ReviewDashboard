@@ -2,14 +2,7 @@ import Head from "next/head";
 import SidebarLayout from "@/layouts/SidebarLayout";
 import PageTitle from "@/components/PageTitle";
 import PageTitleWrapper from "@/components/PageTitleWrapper";
-import {
-  Container,
-  Grid,
-  Card,
-  CardHeader,
-  CardContent,
-  Divider
-} from "@mui/material";
+import { Container, Grid, Card, CardHeader, CardContent, Divider } from "@mui/material";
 import Footer from "src/components/Footer";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
@@ -75,14 +68,8 @@ function Avatars() {
               <CardContent>
                 <Stack direction="row" spacing={2}>
                   <Avatar alt="Remy Sharp" src="/static/images/avatars/1.jpg" />
-                  <Avatar
-                    alt="Travis Howard"
-                    src="/static/images/avatars/2.jpg"
-                  />
-                  <Avatar
-                    alt="Cindy Baker"
-                    src="/static/images/avatars/3.jpg"
-                  />
+                  <Avatar alt="Travis Howard" src="/static/images/avatars/2.jpg" />
+                  <Avatar alt="Cindy Baker" src="/static/images/avatars/3.jpg" />
                 </Stack>
               </CardContent>
             </Card>

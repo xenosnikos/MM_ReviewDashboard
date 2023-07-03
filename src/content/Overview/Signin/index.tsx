@@ -1,5 +1,6 @@
 import { VPassField, VTextField } from "@/forms";
 import {
+  AlertColor,
   Box,
   Button,
   Card,
@@ -19,6 +20,8 @@ import { useRouter } from "next/router";
 import { postSignin } from "@/services";
 import DataContext from "@/contexts/DataContext";
 
+import CustomAlert from "@/components/CustomAlert";
+
 export interface IFormData {
   username: string;
   password: string;
@@ -28,25 +31,30 @@ function Signin() {
   const theme = useTheme();
   const formRef = useRef<FormHandles>(null);
   const router = useRouter();
-  const { setRequiredTextError, setRequiredPassError } =
-    useContext(DataContext);
+  const { setDataState } = useContext(DataContext);
 
   const handleSubmit = async (data: IFormData) => {
     if (!data.username && !data.password) {
-      setRequiredTextError(true);
-      setRequiredPassError(true);
+      setDataState({
+        requiredTextError: true,
+        requiredPassError: true
+      });
       return;
     }
 
     if (!data.username) {
-      setRequiredTextError(true);
-      setRequiredPassError(false);
+      setDataState({
+        requiredTextError: true,
+        requiredPassError: false
+      });
       return;
     }
 
     if (!data.password) {
-      setRequiredTextError(false);
-      setRequiredPassError(true);
+      setDataState({
+        requiredTextError: false,
+        requiredPassError: true
+      });
       return;
     }
 
@@ -56,12 +64,25 @@ function Signin() {
 
       localStorage.setItem("MM_token", JSON.stringify(token));
 
-      setRequiredTextError(false);
-      setRequiredPassError(false);
+      setDataState({
+        requiredTextError: false,
+        requiredPassError: false
+      });
 
       return router.push("/dashboards/tasks?client=hamel-honda");
     } catch (error) {
-      console.log(error);
+      let errorMessage = "Something went wrong, please try again later.";
+      let severity: AlertColor = "error";
+
+      if (error === "username not match") {
+        errorMessage = "Your username or password is incorrect, please try again.";
+        severity = "warning";
+      }
+      return setDataState({
+        alertMessage: errorMessage,
+        alertSeverity: severity,
+        isAlertOpen: true
+      });
     }
   };
 
@@ -90,10 +111,7 @@ function Signin() {
               background: `${theme.colors.alpha.black[10]}`
             }}
           >
-            <CardHeader
-              title="Sign in"
-              subheader="Enter your account details below"
-            />
+            <CardHeader title="Sign in" subheader="Enter your account details below" />
             <Divider />
 
             <Box p={5}>
@@ -116,15 +134,8 @@ function Signin() {
                   label="Password"
                   onKeyDown={handleKeyDown}
                 />
-                <Box
-                  display="flex"
-                  justifyContent="flex-start"
-                  sx={{ width: "100%" }}
-                >
-                  <FormControlLabel
-                    control={<Checkbox />}
-                    label="Remember me"
-                  />
+                <Box display="flex" justifyContent="flex-start" sx={{ width: "100%" }}>
+                  <FormControlLabel control={<Checkbox />} label="Remember me" />
                 </Box>
               </Form>
               <Button
@@ -138,6 +149,7 @@ function Signin() {
           </Card>
         </Grid>
       </Container>
+      <CustomAlert />
     </>
   );
 }

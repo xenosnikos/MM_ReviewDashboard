@@ -395,10 +395,7 @@ export const DarkSpacesTheme = createTheme({
         },
         "#nprogress .peg": {
           boxShadow:
-            "0 0 15px " +
-            colors.primary.lighter +
-            ", 0 0 8px" +
-            colors.primary.light
+            "0 0 15px " + colors.primary.lighter + ", 0 0 8px" + colors.primary.light
         },
         ":root": {
           "--swiper-theme-color": colors.primary.main,

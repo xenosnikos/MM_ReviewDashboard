@@ -125,11 +125,7 @@ function Profile() {
             primary="Tasks"
             primaryTypographyProps={{ variant: "subtitle2" }}
           />
-          <Typography
-            variant="subtitle2"
-            color="text.primary"
-            fontWeight="bold"
-          >
+          <Typography variant="subtitle2" color="text.primary" fontWeight="bold">
             67 active
           </Typography>
         </ListItem>

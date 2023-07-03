@@ -68,20 +68,12 @@ function StatusMaintenance() {
               />
             </Box>
             <Divider sx={{ my: 4 }} />
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-            >
+            <Box display="flex" alignItems="center" justifyContent="space-between">
               <Box>
                 <Typography component="span" variant="subtitle1">
                   Phone:{" "}
                 </Typography>
-                <Typography
-                  component="span"
-                  variant="subtitle1"
-                  color="text.primary"
-                >
+                <Typography component="span" variant="subtitle1" color="text.primary">
                   + 00 1 888 555 444
                 </Typography>
               </Box>

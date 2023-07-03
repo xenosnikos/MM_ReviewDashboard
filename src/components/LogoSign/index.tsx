@@ -86,8 +86,7 @@ const TooltipWrapper = styled(({ className, ...props }: TooltipProps) => (
     fontSize: theme.typography.pxToRem(12),
     fontWeight: "bold",
     borderRadius: theme.general.borderRadiusSm,
-    boxShadow:
-      "0 .2rem .8rem rgba(7,9,25,.18), 0 .08rem .15rem rgba(7,9,25,.15)"
+    boxShadow: "0 .2rem .8rem rgba(7,9,25,.18), 0 .08rem .15rem rgba(7,9,25,.15)"
   },
   [`& .${tooltipClasses.arrow}`]: {
     color: theme.colors.alpha.trueWhite[100]
@@ -98,10 +97,7 @@ function Logo() {
   const theme = useTheme();
 
   return (
-    <TooltipWrapper
-      title="Tokyo Free Black Next.js Typescript Admin Dashboard"
-      arrow
-    >
+    <TooltipWrapper title="Tokyo Free Black Next.js Typescript Admin Dashboard" arrow>
       <LogoWrapper href="/">
         <Badge
           sx={{

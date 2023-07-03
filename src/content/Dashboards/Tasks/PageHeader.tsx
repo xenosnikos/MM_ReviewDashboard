@@ -45,26 +45,33 @@ const AvatarPageTitle = styled(Avatar)(
 function PageHeader({ clientName, params }) {
   const {
     reviewsData,
-    setReviewsData,
     data,
     chartURI,
     donutURI,
     donut2URI,
     disabledButton,
-    setDisabledButton
+    setDataState
   } = useContext(DataContext);
   const [refresh, setRefresh] = useState(false);
 
   const totalReviews = reviewsData?.total;
 
   const handlePDF = async () => {
-    setDisabledButton(true);
+    setDataState({
+      disabledButton: true
+    });
 
     await getReviewsData({ ...params, per_page: totalReviews })
-      .then((response) => setReviewsData(response))
+      .then((response) =>
+        setDataState({
+          reviewsData: response
+        })
+      )
       .catch((error) => {
         console.log(error);
-        return setDisabledButton(false);
+        return setDataState({
+          disabledButton: false
+        });
       });
     setRefresh(true);
   };
@@ -79,12 +86,16 @@ function PageHeader({ clientName, params }) {
       saveAs(blob, `${clientName}.pdf`);
       await getReviewsData(params)
         .then((response) => {
-          setReviewsData(response);
-          setDisabledButton(false);
+          setDataState({
+            reviewsData: response,
+            disabledButton: false
+          });
         })
         .catch((error) => {
           console.log(error);
-          setDisabledButton(false);
+          setDataState({
+            disabledButton: false
+          });
         });
     };
 

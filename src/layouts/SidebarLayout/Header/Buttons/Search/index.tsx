@@ -128,18 +128,10 @@ function HeaderSearch() {
 
         {openSearchResults && (
           <DialogContent>
-            <Box
-              sx={{ pt: 0, pb: 1 }}
-              display="flex"
-              justifyContent="space-between"
-            >
+            <Box sx={{ pt: 0, pb: 1 }} display="flex" justifyContent="space-between">
               <Typography variant="body2" component="span">
                 Search results for{" "}
-                <Typography
-                  sx={{ fontWeight: "bold" }}
-                  variant="body1"
-                  component="span"
-                >
+                <Typography sx={{ fontWeight: "bold" }} variant="body1" component="span">
                   {searchValue}
                 </Typography>
               </Typography>
@@ -154,8 +146,7 @@ function HeaderSearch() {
                   <ListItemAvatar>
                     <Avatar
                       sx={{
-                        background: (theme: Theme) =>
-                          theme.palette.secondary.main
+                        background: (theme: Theme) => theme.palette.secondary.main
                       }}
                     >
                       <FindInPageTwoToneIcon />
@@ -177,12 +168,11 @@ function HeaderSearch() {
                     component="span"
                     variant="body2"
                     sx={{
-                      color: (theme: Theme) =>
-                        lighten(theme.palette.secondary.main, 0.5)
+                      color: (theme: Theme) => lighten(theme.palette.secondary.main, 0.5)
                     }}
                   >
-                    This page contains all the necessary information for
-                    managing all hospital staff.
+                    This page contains all the necessary information for managing all
+                    hospital staff.
                   </Typography>
                 </Box>
                 <ChevronRightTwoToneIcon />
@@ -193,8 +183,7 @@ function HeaderSearch() {
                   <ListItemAvatar>
                     <Avatar
                       sx={{
-                        background: (theme: Theme) =>
-                          theme.palette.secondary.main
+                        background: (theme: Theme) => theme.palette.secondary.main
                       }}
                     >
                       <FindInPageTwoToneIcon />
@@ -216,8 +205,7 @@ function HeaderSearch() {
                     component="span"
                     variant="body2"
                     sx={{
-                      color: (theme: Theme) =>
-                        lighten(theme.palette.secondary.main, 0.5)
+                      color: (theme: Theme) => lighten(theme.palette.secondary.main, 0.5)
                     }}
                   >
                     This is yet another search result pointing to a app page.
@@ -231,8 +219,7 @@ function HeaderSearch() {
                   <ListItemAvatar>
                     <Avatar
                       sx={{
-                        background: (theme: Theme) =>
-                          theme.palette.secondary.main
+                        background: (theme: Theme) => theme.palette.secondary.main
                       }}
                     >
                       <FindInPageTwoToneIcon />
@@ -254,12 +241,11 @@ function HeaderSearch() {
                     component="span"
                     variant="body2"
                     sx={{
-                      color: (theme: Theme) =>
-                        lighten(theme.palette.secondary.main, 0.5)
+                      color: (theme: Theme) => lighten(theme.palette.secondary.main, 0.5)
                     }}
                   >
-                    Choose if you would like to show or not this typography
-                    section here...
+                    Choose if you would like to show or not this typography section
+                    here...
                   </Typography>
                 </Box>
                 <ChevronRightTwoToneIcon />

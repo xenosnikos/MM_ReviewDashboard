@@ -5,14 +5,7 @@ import { useState } from "react";
 
 import PageTitle from "@/components/PageTitle";
 import PageTitleWrapper from "@/components/PageTitleWrapper";
-import {
-  Container,
-  Grid,
-  Card,
-  CardHeader,
-  CardContent,
-  Divider
-} from "@mui/material";
+import { Container, Grid, Card, CardHeader, CardContent, Divider } from "@mui/material";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import List from "@mui/material/List";
@@ -45,11 +38,7 @@ function SimpleDialog(props) {
       <DialogTitle>Set backup account</DialogTitle>
       <List sx={{ pt: 0 }}>
         {emails.map((email) => (
-          <ListItem
-            button
-            onClick={() => handleListItemClick(email)}
-            key={email}
-          >
+          <ListItem button onClick={() => handleListItemClick(email)} key={email}>
             <ListItemAvatar>
               <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
                 <PersonIcon />
@@ -59,11 +48,7 @@ function SimpleDialog(props) {
           </ListItem>
         ))}
 
-        <ListItem
-          autoFocus
-          button
-          onClick={() => handleListItemClick("addAccount")}
-        >
+        <ListItem autoFocus button onClick={() => handleListItemClick("addAccount")}>
           <ListItemAvatar>
             <Avatar>
               <AddIcon />

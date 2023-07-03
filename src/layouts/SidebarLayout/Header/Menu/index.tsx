@@ -1,12 +1,4 @@
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemText,
-  Menu,
-  MenuItem,
-  styled
-} from "@mui/material";
+import { Box, List, ListItem, ListItemText, Menu, MenuItem, styled } from "@mui/material";
 import { useRef, useState } from "react";
 import Link from "src/components/Link";
 
@@ -92,10 +84,7 @@ function HeaderMenu() {
             component={Link}
             href="/components/buttons"
           >
-            <ListItemText
-              primaryTypographyProps={{ noWrap: true }}
-              primary="Buttons"
-            />
+            <ListItemText primaryTypographyProps={{ noWrap: true }} primary="Buttons" />
           </ListItem>
           <ListItem
             classes={{ root: "MuiListItem-indicators" }}
@@ -103,10 +92,7 @@ function HeaderMenu() {
             component={Link}
             href="/components/forms"
           >
-            <ListItemText
-              primaryTypographyProps={{ noWrap: true }}
-              primary="Forms"
-            />
+            <ListItemText primaryTypographyProps={{ noWrap: true }} primary="Forms" />
           </ListItem>
           <ListItem
             classes={{ root: "MuiListItem-indicators" }}

@@ -49,8 +49,7 @@ function Sidebar() {
             theme.palette.mode === "dark"
               ? alpha(lighten(theme.header.background, 0.1), 0.5)
               : darken(theme.colors.alpha.black[100], 0.5),
-          boxShadow:
-            theme.palette.mode === "dark" ? theme.sidebar.boxShadow : "none"
+          boxShadow: theme.palette.mode === "dark" ? theme.sidebar.boxShadow : "none"
         }}
       >
         <Scrollbar>

@@ -3,16 +3,7 @@ import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import PageHeader from "@/content/Dashboards/Tasks/PageHeader";
 import Footer from "@/components/Footer";
-import {
-  Grid,
-  Tab,
-  Tabs,
-  Container,
-  Card,
-  Box,
-  useTheme,
-  styled
-} from "@mui/material";
+import { Grid, Tab, Tabs, Container, Card, Box, useTheme, styled } from "@mui/material";
 import PageTitleWrapper from "@/components/PageTitleWrapper";
 
 import AverageStartRating from "@/content/Dashboards/Tasks/AverageStartRating";
@@ -115,15 +106,12 @@ function DashboardTasks() {
   const theme = useTheme();
   const {
     data,
-    setData,
     selectedSources,
     selectedRatings,
     page,
-    setPage,
     limit,
     reviewsData,
-    setReviewsData,
-    setDisabledButton
+    setDataState
   } = useContext(DataContext);
 
   const { client } = router.query;
@@ -140,7 +128,9 @@ function DashboardTasks() {
 
   const handleTabsChange = (_event: ChangeEvent<{}>, value: string): void => {
     setCurrentTab(value);
-    setPage(1);
+    setDataState({
+      page: 1
+    });
   };
 
   const params = {
@@ -154,7 +144,11 @@ function DashboardTasks() {
   useEffect(() => {
     const getData = async () => {
       await getReviewsData(params)
-        .then((response) => setReviewsData(response))
+        .then((response) =>
+          setDataState({
+            reviewsData: response
+          })
+        )
         .catch((error) => console.log(error));
     };
 
@@ -167,12 +161,16 @@ function DashboardTasks() {
     const getData = async () => {
       await getDashboardData(clientString)
         .then((response) => {
-          setData(response);
-          setDisabledButton(false);
+          setDataState({
+            data: response,
+            disabledButton: false
+          });
         })
         .catch((error) => {
           console.log(error);
-          setDisabledButton(false);
+          setDataState({
+            disabledButton: false
+          });
         });
     };
     if (typeof client === "string") {
@@ -223,9 +221,7 @@ function DashboardTasks() {
                     <Box display="flex" flexDirection="column" gap={2}>
                       <AverageStartRating
                         rating={
-                          data?.averageRating
-                            ? parseFloat(data.averageRating)
-                            : null
+                          data?.averageRating ? parseFloat(data.averageRating) : null
                         }
                       />
                       <TotalReviews amount={data?.totalReviews} />

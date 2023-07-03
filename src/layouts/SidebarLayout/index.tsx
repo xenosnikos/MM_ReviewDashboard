@@ -34,10 +34,7 @@ const SidebarLayout: FC<SidebarLayoutProps> = ({ children }) => {
                 : `0px 2px 4px -3px ${alpha(
                     theme.colors.alpha.black[100],
                     0.1
-                  )}, 0px 5px 12px -4px ${alpha(
-                    theme.colors.alpha.black[100],
-                    0.05
-                  )}`
+                  )}, 0px 5px 12px -4px ${alpha(theme.colors.alpha.black[100], 0.05)}`
           }
         }}
       >

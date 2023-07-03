@@ -1,13 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import {
-  Button,
-  Box,
-  Menu,
-  alpha,
-  MenuItem,
-  Typography,
-  useTheme
-} from "@mui/material";
+import { Button, Box, Menu, alpha, MenuItem, Typography, useTheme } from "@mui/material";
 import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
 import { Chart } from "src/components/Chart";
 import type { ApexOptions } from "apexcharts";
@@ -150,7 +142,7 @@ function ReviewGrowth({ params }) {
   const [openPeriod, setOpenMenuPeriod] = useState<boolean>(false);
   const [period, setPeriod] = useState<string>(periods[3].text);
   const [options, setOptions] = useState<ApexOptions>(initOptions);
-  const { setChartURI, reviewsData } = useContext(DataContext);
+  const { reviewsData, setDataState } = useContext(DataContext);
   const [revData, setRevData] = useState(null);
   const [data, setData] = useState(null);
   const totalReviews = reviewsData?.total;
@@ -232,9 +224,10 @@ function ReviewGrowth({ params }) {
         reviewsPerDay[dateArray[0]] = (reviewsPerDay[dateArray[0]] || 0) + 1;
       });
 
-      const reviewGrowth = Object.entries(reviewsPerDay).map(
-        ([day, count]) => ({ day: day, count })
-      );
+      const reviewGrowth = Object.entries(reviewsPerDay).map(([day, count]) => ({
+        day: day,
+        count
+      }));
 
       setData(reviewGrowth);
     }
@@ -245,18 +238,14 @@ function ReviewGrowth({ params }) {
       revData?.data?.forEach((review) => {
         const dateArray = review.date.split(" ");
         const monthIndex =
-          new Date(Date.parse(`${dateArray[1]}, ${dateArray[2]}`)).getMonth() +
-          1;
+          new Date(Date.parse(`${dateArray[1]}, ${dateArray[2]}`)).getMonth() + 1;
         const reviewDate = new Date(dateArray[2], monthIndex - 1);
 
         if (isNaN(monthIndex)) {
           return;
         }
 
-        if (
-          reviewDate >=
-          new Date(new Date().setMonth(new Date().getMonth() - 11))
-        ) {
+        if (reviewDate >= new Date(new Date().setMonth(new Date().getMonth() - 11))) {
           if (reviewCountByMonth[monthIndex]) {
             reviewCountByMonth[monthIndex].count += 1;
           } else {
@@ -323,8 +312,7 @@ function ReviewGrowth({ params }) {
 
       for (let i = 1; i <= lastMonthDays.length; i++) {
         const index = data.findIndex((item) => item.day.slice(0, -2) == i);
-        if (index > -1 && data[index].count)
-          newSeriesData.push(data[index].count);
+        if (index > -1 && data[index].count) newSeriesData.push(data[index].count);
         else newSeriesData.push(0);
       }
 
@@ -345,8 +333,7 @@ function ReviewGrowth({ params }) {
 
       for (let i = 1; i <= 12; i++) {
         const index = data.findIndex((item) => item.month === i);
-        if (index > -1 && data[index].count)
-          newSeriesData.push(data[index].count);
+        if (index > -1 && data[index].count) newSeriesData.push(data[index].count);
         else newSeriesData.push(0);
       }
 
@@ -369,7 +356,9 @@ function ReviewGrowth({ params }) {
 
       if (chartElement) {
         await htmlToImage.toPng(chartElement).then((dataUrl) => {
-          setChartURI(dataUrl);
+          setDataState({
+            chartURI: dataUrl
+          });
         });
       }
     };
@@ -379,12 +368,7 @@ function ReviewGrowth({ params }) {
 
   return (
     <Box>
-      <Box
-        mb={2}
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-      >
+      <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
         <Typography variant="h4">Review Growth</Typography>
         <Button
           size="small"

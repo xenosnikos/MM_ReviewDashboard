@@ -77,8 +77,6 @@ function ManagementUserSettings() {
   );
 }
 
-ManagementUserSettings.getLayout = (page) => (
-  <SidebarLayout>{page}</SidebarLayout>
-);
+ManagementUserSettings.getLayout = (page) => <SidebarLayout>{page}</SidebarLayout>;
 
 export default ManagementUserSettings;

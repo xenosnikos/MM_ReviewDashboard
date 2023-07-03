@@ -1,12 +1,4 @@
-import {
-  Grid,
-  Typography,
-  CardContent,
-  Card,
-  Box,
-  Divider,
-  Button
-} from "@mui/material";
+import { Grid, Typography, CardContent, Card, Box, Divider, Button } from "@mui/material";
 
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 import DoneTwoToneIcon from "@mui/icons-material/DoneTwoTone";
@@ -18,12 +10,7 @@ function EditProfileTab() {
     <Grid container spacing={3}>
       <Grid item xs={12}>
         <Card>
-          <Box
-            p={3}
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
+          <Box p={3} display="flex" alignItems="center" justifyContent="space-between">
             <Box>
               <Typography variant="h4" gutterBottom>
                 Personal Details
@@ -68,8 +55,7 @@ function EditProfileTab() {
                 <Grid item xs={12} sm={8} md={9}>
                   <Box sx={{ maxWidth: { xs: "auto", sm: 300 } }}>
                     <Text color="black">
-                      1749 High Meadow Lane, SEQUOIA NATIONAL PARK, California,
-                      93262
+                      1749 High Meadow Lane, SEQUOIA NATIONAL PARK, California, 93262
                     </Text>
                   </Box>
                 </Grid>
@@ -80,12 +66,7 @@ function EditProfileTab() {
       </Grid>
       <Grid item xs={12}>
         <Card>
-          <Box
-            p={3}
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
+          <Box p={3} display="flex" alignItems="center" justifyContent="space-between">
             <Box>
               <Typography variant="h4" gutterBottom>
                 Account Settings
@@ -140,12 +121,7 @@ function EditProfileTab() {
       </Grid>
       <Grid item xs={12}>
         <Card>
-          <Box
-            p={3}
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
+          <Box p={3} display="flex" alignItems="center" justifyContent="space-between">
             <Box>
               <Typography variant="h4" gutterBottom>
                 Email Addresses

@@ -48,7 +48,7 @@ const initOptions: ApexOptions = {
 function ReviewSourceBreakDown({ data }) {
   const theme = useTheme();
   const [options, setOptions] = useState<ApexOptions>(initOptions);
-  const { setDonut2URI } = useContext(DataContext);
+  const { setDataState } = useContext(DataContext);
 
   useEffect(() => {
     if (!data) return;
@@ -56,8 +56,7 @@ function ReviewSourceBreakDown({ data }) {
     const newSeries = [];
     providers.forEach((provider) => {
       const index = data.findIndex((item) => item.type === provider);
-      if (index > -1 && data[index].count)
-        newSeries.push(parseFloat(data[index].count));
+      if (index > -1 && data[index].count) newSeries.push(parseFloat(data[index].count));
       else newSeries.push(0);
     });
 
@@ -66,13 +65,13 @@ function ReviewSourceBreakDown({ data }) {
 
   useEffect(() => {
     const getChart = async () => {
-      const chartElement = document.querySelector(
-        "#chart-donut2"
-      ) as HTMLElement;
+      const chartElement = document.querySelector("#chart-donut2") as HTMLElement;
 
       if (chartElement) {
         await htmlToImage.toPng(chartElement).then((dataUrl) => {
-          setDonut2URI(dataUrl);
+          setDataState({
+            donut2URI: dataUrl
+          });
         });
       }
     };

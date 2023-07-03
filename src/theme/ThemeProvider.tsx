@@ -9,8 +9,7 @@ const ThemeProviderWrapper: FC = (props) => {
   const [themeName, _setThemeName] = useState("NebulaFighterTheme");
 
   useEffect(() => {
-    const curThemeName =
-      window.localStorage.getItem("appTheme") || "NebulaFighterTheme";
+    const curThemeName = window.localStorage.getItem("appTheme") || "NebulaFighterTheme";
     _setThemeName(curThemeName);
   }, []);
 

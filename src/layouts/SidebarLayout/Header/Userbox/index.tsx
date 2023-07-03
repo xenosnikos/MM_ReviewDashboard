@@ -83,9 +83,7 @@ function HeaderUserbox() {
         <Hidden mdDown>
           <UserBoxText>
             <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
-            <UserBoxDescription variant="body2">
-              {user.jobtitle}
-            </UserBoxDescription>
+            <UserBoxDescription variant="body2">{user.jobtitle}</UserBoxDescription>
           </UserBoxText>
         </Hidden>
         <Hidden smDown>
@@ -109,9 +107,7 @@ function HeaderUserbox() {
           <Avatar variant="rounded" alt={user.name} src={user.avatar} />
           <UserBoxText>
             <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
-            <UserBoxDescription variant="body2">
-              {user.jobtitle}
-            </UserBoxDescription>
+            <UserBoxDescription variant="body2">{user.jobtitle}</UserBoxDescription>
           </UserBoxText>
         </MenuUserBox>
         <Divider sx={{ mb: 0 }} />

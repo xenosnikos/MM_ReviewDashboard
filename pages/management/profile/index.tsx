@@ -62,8 +62,6 @@ function ManagementUserProfile() {
   );
 }
 
-ManagementUserProfile.getLayout = (page) => (
-  <SidebarLayout>{page}</SidebarLayout>
-);
+ManagementUserProfile.getLayout = (page) => <SidebarLayout>{page}</SidebarLayout>;
 
 export default ManagementUserProfile;

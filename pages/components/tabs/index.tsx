@@ -2,14 +2,7 @@ import Head from "next/head";
 import SidebarLayout from "@/layouts/SidebarLayout";
 import PageTitle from "@/components/PageTitle";
 import PageTitleWrapper from "@/components/PageTitleWrapper";
-import {
-  Container,
-  Grid,
-  Card,
-  CardHeader,
-  CardContent,
-  Divider
-} from "@mui/material";
+import { Container, Grid, Card, CardHeader, CardContent, Divider } from "@mui/material";
 import { useState, SyntheticEvent } from "react";
 
 import Tabs from "@mui/material/Tabs";

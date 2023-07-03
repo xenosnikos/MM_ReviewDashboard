@@ -34,8 +34,6 @@ function ApplicationsTransactions() {
   );
 }
 
-ApplicationsTransactions.getLayout = (page) => (
-  <SidebarLayout>{page}</SidebarLayout>
-);
+ApplicationsTransactions.getLayout = (page) => <SidebarLayout>{page}</SidebarLayout>;
 
 export default ApplicationsTransactions;

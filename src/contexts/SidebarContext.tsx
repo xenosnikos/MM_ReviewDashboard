@@ -5,9 +5,7 @@ type SidebarContext = {
   closeSidebar: () => void;
 };
 
-export const SidebarContext = createContext<SidebarContext>(
-  {} as SidebarContext
-);
+export const SidebarContext = createContext<SidebarContext>({} as SidebarContext);
 
 type Props = {
   children: ReactNode;
@@ -24,9 +22,7 @@ export function SidebarProvider({ children }: Props) {
   };
 
   return (
-    <SidebarContext.Provider
-      value={{ sidebarToggle, toggleSidebar, closeSidebar }}
-    >
+    <SidebarContext.Provider value={{ sidebarToggle, toggleSidebar, closeSidebar }}>
       {children}
     </SidebarContext.Provider>
   );

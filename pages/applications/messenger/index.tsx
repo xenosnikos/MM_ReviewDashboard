@@ -11,14 +11,7 @@ import MenuTwoToneIcon from "@mui/icons-material/MenuTwoTone";
 
 import Scrollbar from "@/components/Scrollbar";
 
-import {
-  Box,
-  styled,
-  Divider,
-  Drawer,
-  IconButton,
-  useTheme
-} from "@mui/material";
+import { Box, styled, Divider, Drawer, IconButton, useTheme } from "@mui/material";
 
 const RootWrapper = styled(Box)(
   ({ theme }) => `
@@ -142,8 +135,6 @@ function ApplicationsMessenger() {
   );
 }
 
-ApplicationsMessenger.getLayout = (page) => (
-  <SidebarLayout>{page}</SidebarLayout>
-);
+ApplicationsMessenger.getLayout = (page) => <SidebarLayout>{page}</SidebarLayout>;
 
 export default ApplicationsMessenger;

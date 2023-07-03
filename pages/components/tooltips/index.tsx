@@ -2,14 +2,7 @@ import Head from "next/head";
 import SidebarLayout from "@/layouts/SidebarLayout";
 import PageTitle from "@/components/PageTitle";
 import PageTitleWrapper from "@/components/PageTitleWrapper";
-import {
-  Container,
-  Grid,
-  Card,
-  CardHeader,
-  CardContent,
-  Divider
-} from "@mui/material";
+import { Container, Grid, Card, CardHeader, CardContent, Divider } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
@@ -69,13 +62,7 @@ function Tooltips() {
                         <Button>left-end</Button>
                       </Tooltip>
                     </Grid>
-                    <Grid
-                      item
-                      container
-                      xs={6}
-                      alignItems="flex-end"
-                      direction="column"
-                    >
+                    <Grid item container xs={6} alignItems="flex-end" direction="column">
                       <Grid item>
                         <Tooltip arrow title="Add" placement="right-start">
                           <Button>right-start</Button>

@@ -56,8 +56,11 @@ const postSignin = async (params: IFormData) => {
     axios
       .post(urlSignin, params)
       .then((response) => {
+        console.log(response);
         if (response?.data?.status === "success")
           resolve(response.data.data.remember_token);
+        if (response?.data?.message === "username not match")
+          reject(response?.data?.message);
         else reject("Something went wrong");
       })
       .catch((error) => {

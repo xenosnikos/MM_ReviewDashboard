@@ -1,15 +1,7 @@
 import { useContext } from "react";
 import { useRouter } from "next/router";
 
-import {
-  ListSubheader,
-  alpha,
-  Box,
-  List,
-  styled,
-  Button,
-  ListItem
-} from "@mui/material";
+import { ListSubheader, alpha, Box, List, styled, Button, ListItem } from "@mui/material";
 import NextLink from "next/link";
 import { SidebarContext } from "src/contexts/SidebarContext";
 
@@ -147,10 +139,7 @@ const SubMenuWrapper = styled(Box)(
                 content: ' ';
                 background: ${theme.colors.alpha.trueWhite[100]};
                 opacity: 0;
-                transition: ${theme.transitions.create([
-                  "transform",
-                  "opacity"
-                ])};
+                transition: ${theme.transitions.create(["transform", "opacity"])};
                 width: 6px;
                 height: 6px;
                 transform: scale(0);
@@ -215,9 +204,7 @@ function SidebarMenu() {
               <ListItem component="div">
                 <NextLink href="/dashboards/tasks" passHref>
                   <Button
-                    className={
-                      currentRoute === "/dashboards/tasks" ? "active" : ""
-                    }
+                    className={currentRoute === "/dashboards/tasks" ? "active" : ""}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -230,9 +217,7 @@ function SidebarMenu() {
               <ListItem component="div">
                 <NextLink href="/applications/messenger" passHref>
                   <Button
-                    className={
-                      currentRoute === "/applications/messenger" ? "active" : ""
-                    }
+                    className={currentRoute === "/applications/messenger" ? "active" : ""}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -259,9 +244,7 @@ function SidebarMenu() {
                 <NextLink href="/management/transactions" passHref>
                   <Button
                     className={
-                      currentRoute === "/management/transactions"
-                        ? "active"
-                        : ""
+                      currentRoute === "/management/transactions" ? "active" : ""
                     }
                     disableRipple
                     component="a"
@@ -288,9 +271,7 @@ function SidebarMenu() {
               <ListItem component="div">
                 <NextLink href="/management/profile" passHref>
                   <Button
-                    className={
-                      currentRoute === "/management/profile" ? "active" : ""
-                    }
+                    className={currentRoute === "/management/profile" ? "active" : ""}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -304,9 +285,7 @@ function SidebarMenu() {
                 <NextLink href="/management/profile/settings" passHref>
                   <Button
                     className={
-                      currentRoute === "/management/profile/settings"
-                        ? "active"
-                        : ""
+                      currentRoute === "/management/profile/settings" ? "active" : ""
                     }
                     disableRipple
                     component="a"
@@ -333,9 +312,7 @@ function SidebarMenu() {
               <ListItem component="div">
                 <NextLink href="/components/buttons" passHref>
                   <Button
-                    className={
-                      currentRoute === "/components/buttons" ? "active" : ""
-                    }
+                    className={currentRoute === "/components/buttons" ? "active" : ""}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -348,9 +325,7 @@ function SidebarMenu() {
               <ListItem component="div">
                 <NextLink href="/components/modals" passHref>
                   <Button
-                    className={
-                      currentRoute === "/components/modals" ? "active" : ""
-                    }
+                    className={currentRoute === "/components/modals" ? "active" : ""}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -363,9 +338,7 @@ function SidebarMenu() {
               <ListItem component="div">
                 <NextLink href="/components/accordions" passHref>
                   <Button
-                    className={
-                      currentRoute === "/components/accordions" ? "active" : ""
-                    }
+                    className={currentRoute === "/components/accordions" ? "active" : ""}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -378,9 +351,7 @@ function SidebarMenu() {
               <ListItem component="div">
                 <NextLink href="/components/tabs" passHref>
                   <Button
-                    className={
-                      currentRoute === "/components/tabs" ? "active" : ""
-                    }
+                    className={currentRoute === "/components/tabs" ? "active" : ""}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -393,9 +364,7 @@ function SidebarMenu() {
               <ListItem component="div">
                 <NextLink href="/components/badges" passHref>
                   <Button
-                    className={
-                      currentRoute === "/components/badges" ? "active" : ""
-                    }
+                    className={currentRoute === "/components/badges" ? "active" : ""}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -408,9 +377,7 @@ function SidebarMenu() {
               <ListItem component="div">
                 <NextLink href="/components/tooltips" passHref>
                   <Button
-                    className={
-                      currentRoute === "/components/tooltips" ? "active" : ""
-                    }
+                    className={currentRoute === "/components/tooltips" ? "active" : ""}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -423,9 +390,7 @@ function SidebarMenu() {
               <ListItem component="div">
                 <NextLink href="/components/avatars" passHref>
                   <Button
-                    className={
-                      currentRoute === "/components/avatars" ? "active" : ""
-                    }
+                    className={currentRoute === "/components/avatars" ? "active" : ""}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -438,9 +403,7 @@ function SidebarMenu() {
               <ListItem component="div">
                 <NextLink href="/components/cards" passHref>
                   <Button
-                    className={
-                      currentRoute === "/components/cards" ? "active" : ""
-                    }
+                    className={currentRoute === "/components/cards" ? "active" : ""}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -453,9 +416,7 @@ function SidebarMenu() {
               <ListItem component="div">
                 <NextLink href="/components/forms" passHref>
                   <Button
-                    className={
-                      currentRoute === "/components/forms" ? "active" : ""
-                    }
+                    className={currentRoute === "/components/forms" ? "active" : ""}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -507,9 +468,7 @@ function SidebarMenu() {
               <ListItem component="div">
                 <NextLink href="/status/coming-soon" passHref>
                   <Button
-                    className={
-                      currentRoute === "/status/coming-soon" ? "active" : ""
-                    }
+                    className={currentRoute === "/status/coming-soon" ? "active" : ""}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -522,9 +481,7 @@ function SidebarMenu() {
               <ListItem component="div">
                 <NextLink href="/status/maintenance" passHref>
                   <Button
-                    className={
-                      currentRoute === "/status/maintenance" ? "active" : ""
-                    }
+                    className={currentRoute === "/status/maintenance" ? "active" : ""}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}

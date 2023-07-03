@@ -19,11 +19,7 @@ function Footer() {
         <Box>
           <Typography variant="subtitle1">
             &copy; 2022 - &nbsp;
-            <Link
-              href={"http://gopinion.ca"}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Link href={"http://gopinion.ca"} target="_blank" rel="noopener noreferrer">
               Gopinion.ca
             </Link>
           </Typography>
@@ -35,11 +31,7 @@ function Footer() {
           variant="subtitle1"
         >
           Powered by{" "}
-          <Link
-            href="http://maxxmedia.ca/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <Link href="http://maxxmedia.ca/" target="_blank" rel="noopener noreferrer">
             MaxxMedia
           </Link>
         </Typography>

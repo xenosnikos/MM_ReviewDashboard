@@ -1,11 +1,4 @@
-import {
-  Box,
-  Card,
-  Container,
-  styled,
-  Typography,
-  useTheme
-} from "@mui/material";
+import { Box, Card, Container, styled, Typography, useTheme } from "@mui/material";
 import type { ReactElement } from "react";
 import BaseLayout from "src/layouts/BaseLayout";
 

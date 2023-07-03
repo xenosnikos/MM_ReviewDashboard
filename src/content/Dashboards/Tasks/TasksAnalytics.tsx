@@ -171,12 +171,7 @@ function TasksAnalytics() {
 
   return (
     <Box>
-      <Box
-        mb={2}
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-      >
+      <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
         <Typography variant="h4">Tasks Analytics</Typography>
         <Button
           size="small"
@@ -240,12 +235,7 @@ function TasksAnalytics() {
           tasks completed
         </Typography>
       </Box>
-      <Chart
-        options={chartOptions}
-        series={chartData}
-        type="bar"
-        height={270}
-      />
+      <Chart options={chartOptions} series={chartData} type="bar" height={270} />
     </Box>
   );
 }

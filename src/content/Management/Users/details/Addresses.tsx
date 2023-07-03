@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Typography,
-  Card,
-  CardHeader,
-  Divider,
-  Grid
-} from "@mui/material";
+import { Box, Button, Typography, Card, CardHeader, Divider, Grid } from "@mui/material";
 
 import { ArrowForwardTwoTone } from "@mui/icons-material";
 
@@ -44,11 +36,7 @@ function Addresses() {
                 348 W. Goldfield Street Bethel Park, PA 15102
               </Typography>
             </Box>
-            <Button
-              fullWidth
-              variant="outlined"
-              endIcon={<ArrowForwardTwoTone />}
-            >
+            <Button fullWidth variant="outlined" endIcon={<ArrowForwardTwoTone />}>
               Manage
             </Button>
           </Box>
@@ -74,11 +62,7 @@ function Addresses() {
                 10 E. Wrangler Avenue Sioux Falls, SD 57103
               </Typography>
             </Box>
-            <Button
-              fullWidth
-              variant="outlined"
-              endIcon={<ArrowForwardTwoTone />}
-            >
+            <Button fullWidth variant="outlined" endIcon={<ArrowForwardTwoTone />}>
               Manage
             </Button>
           </Box>

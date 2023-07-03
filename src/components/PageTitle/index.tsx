@@ -16,12 +16,7 @@ const PageTitle: FC<PageTitleProps> = ({
   ...rest
 }) => {
   return (
-    <Grid
-      container
-      justifyContent="space-between"
-      alignItems="center"
-      {...rest}
-    >
+    <Grid container justifyContent="space-between" alignItems="center" {...rest}>
       <Grid item>
         <Typography variant="h3" component="h3" gutterBottom>
           {heading}

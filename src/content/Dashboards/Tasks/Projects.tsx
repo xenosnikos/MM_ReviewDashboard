@@ -106,11 +106,7 @@ function Projects() {
                 </Text>
                 <b> /100</b>
               </Typography>
-              <LinearProgressWrapper
-                value={25}
-                color="primary"
-                variant="determinate"
-              />
+              <LinearProgressWrapper value={25} color="primary" variant="determinate" />
             </Box>
             <Box
               sx={{
@@ -193,11 +189,7 @@ function Projects() {
                     <CalendarTodayTwoToneIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>
-                <Tooltip
-                  arrow
-                  title="Mark project as favourite"
-                  placement="top"
-                >
+                <Tooltip arrow title="Mark project as favourite" placement="top">
                   <IconButton
                     size="small"
                     sx={{
@@ -247,11 +239,7 @@ function Projects() {
                 </Text>
                 <b> /100</b>
               </Typography>
-              <LinearProgressWrapper
-                value={80}
-                color="primary"
-                variant="determinate"
-              />
+              <LinearProgressWrapper value={80} color="primary" variant="determinate" />
             </Box>
             <Box
               sx={{
@@ -310,11 +298,7 @@ function Projects() {
                     <CalendarTodayTwoToneIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>
-                <Tooltip
-                  arrow
-                  title="Mark project as favourite"
-                  placement="top"
-                >
+                <Tooltip arrow title="Mark project as favourite" placement="top">
                   <IconButton
                     size="small"
                     sx={{
@@ -345,9 +329,7 @@ function Projects() {
                   overlap="circular"
                   badgeContent={
                     <Tooltip arrow placement="top" title="Online right now">
-                      <DotLegend
-                        style={{ background: `${theme.colors.success.main}` }}
-                      />
+                      <DotLegend style={{ background: `${theme.colors.success.main}` }} />
                     </Tooltip>
                   }
                 >
@@ -373,11 +355,7 @@ function Projects() {
                 </Text>
                 <b> /100</b>
               </Typography>
-              <LinearProgressWrapper
-                value={87}
-                color="primary"
-                variant="determinate"
-              />
+              <LinearProgressWrapper value={87} color="primary" variant="determinate" />
             </Box>
             <Box
               sx={{
@@ -448,11 +426,7 @@ function Projects() {
                     <CalendarTodayTwoToneIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>
-                <Tooltip
-                  arrow
-                  title="Mark project as favourite"
-                  placement="top"
-                >
+                <Tooltip arrow title="Mark project as favourite" placement="top">
                   <IconButton
                     size="small"
                     sx={{

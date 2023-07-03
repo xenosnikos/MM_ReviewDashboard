@@ -74,10 +74,7 @@ function ActivityTab() {
           Organizing Your Remote Office for Maximum Productivity
         </Typography>
         <Typography variant="subtitle2">
-          <Link
-            href="@/content/Management/Users/settings/ActivityTab#"
-            underline="hover"
-          >
+          <Link href="@/content/Management/Users/settings/ActivityTab#" underline="hover">
             example.com
           </Link>{" "}
           • 4 mins read
@@ -95,11 +92,7 @@ function ActivityTab() {
           <Button startIcon={<ThumbUpAltTwoToneIcon />} variant="contained">
             Like
           </Button>
-          <Button
-            startIcon={<CommentTwoToneIcon />}
-            variant="outlined"
-            sx={{ mx: 2 }}
-          >
+          <Button startIcon={<CommentTwoToneIcon />} variant="outlined" sx={{ mx: 2 }}>
             Comment
           </Button>
           <Button startIcon={<ShareTwoToneIcon />} variant="outlined">

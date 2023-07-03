@@ -54,10 +54,7 @@ function BottomBarContent() {
       </Box>
       <Box>
         <Tooltip arrow placement="top" title="Choose an emoji">
-          <IconButton
-            sx={{ fontSize: theme.typography.pxToRem(16) }}
-            color="primary"
-          >
+          <IconButton sx={{ fontSize: theme.typography.pxToRem(16) }} color="primary">
             😀
           </IconButton>
         </Tooltip>

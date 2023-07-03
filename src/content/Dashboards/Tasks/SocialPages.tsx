@@ -84,11 +84,7 @@ function SocialPages() {
           Add social page link
         </Typography>
         <Form ref={formRef} onSubmit={handleSubmit}>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
+          <Box display="flex" justifyContent="space-between" alignItems="center">
             <Box>
               <VTextField
                 id="social-link"
@@ -168,11 +164,7 @@ function SocialPages() {
               >
                 {pageLabel}
               </Typography>
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
+              <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Box display="flex" alignItems="center">
                   <AttachFileIcon sx={{ fontSize: 18, marginRight: "5px" }} />
                   <Link

@@ -104,10 +104,7 @@ function MyCards() {
           <Grid item xs={12} sm={6}>
             <CardCc sx={{ px: 2, pt: 2, pb: 1 }}>
               <Box display="flex" alignItems="center">
-                <CardLogo
-                  src="/static/images/placeholders/logo/visa.png"
-                  alt="Visa"
-                />
+                <CardLogo src="/static/images/placeholders/logo/visa.png" alt="Visa" />
                 <Box>
                   <Typography variant="h3" fontWeight="normal">
                     •••• 6879

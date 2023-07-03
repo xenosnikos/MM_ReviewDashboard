@@ -61,10 +61,7 @@ const getStatusLabel = (cryptoOrderStatus: CryptoOrderStatus): JSX.Element => {
   return <Label color={color}>{text}</Label>;
 };
 
-const applyFilters = (
-  cryptoOrders: CryptoOrder[],
-  filters: Filters
-): CryptoOrder[] => {
+const applyFilters = (cryptoOrders: CryptoOrder[], filters: Filters): CryptoOrder[] => {
   return cryptoOrders.filter((cryptoOrder) => {
     let matches = true;
 
@@ -85,9 +82,7 @@ const applyPagination = (
 };
 
 const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
-  const [selectedCryptoOrders, setSelectedCryptoOrders] = useState<string[]>(
-    []
-  );
+  const [selectedCryptoOrders, setSelectedCryptoOrders] = useState<string[]>([]);
   const selectedBulkActions = selectedCryptoOrders.length > 0;
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(5);
@@ -127,13 +122,9 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
     }));
   };
 
-  const handleSelectAllCryptoOrders = (
-    event: ChangeEvent<HTMLInputElement>
-  ): void => {
+  const handleSelectAllCryptoOrders = (event: ChangeEvent<HTMLInputElement>): void => {
     setSelectedCryptoOrders(
-      event.target.checked
-        ? cryptoOrders.map((cryptoOrder) => cryptoOrder.id)
-        : []
+      event.target.checked ? cryptoOrders.map((cryptoOrder) => cryptoOrder.id) : []
     );
   };
 
@@ -142,10 +133,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
     cryptoOrderId: string
   ): void => {
     if (!selectedCryptoOrders.includes(cryptoOrderId)) {
-      setSelectedCryptoOrders((prevSelected) => [
-        ...prevSelected,
-        cryptoOrderId
-      ]);
+      setSelectedCryptoOrders((prevSelected) => [...prevSelected, cryptoOrderId]);
     } else {
       setSelectedCryptoOrders((prevSelected) =>
         prevSelected.filter((id) => id !== cryptoOrderId)
@@ -162,16 +150,10 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
   };
 
   const filteredCryptoOrders = applyFilters(cryptoOrders, filters);
-  const paginatedCryptoOrders = applyPagination(
-    filteredCryptoOrders,
-    page,
-    limit
-  );
+  const paginatedCryptoOrders = applyPagination(filteredCryptoOrders, page, limit);
   const selectedSomeCryptoOrders =
-    selectedCryptoOrders.length > 0 &&
-    selectedCryptoOrders.length < cryptoOrders.length;
-  const selectedAllCryptoOrders =
-    selectedCryptoOrders.length === cryptoOrders.length;
+    selectedCryptoOrders.length > 0 && selectedCryptoOrders.length < cryptoOrders.length;
+  const selectedAllCryptoOrders = selectedCryptoOrders.length === cryptoOrders.length;
   const theme = useTheme();
 
   return (
@@ -228,15 +210,9 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
           </TableHead>
           <TableBody>
             {paginatedCryptoOrders.map((cryptoOrder) => {
-              const isCryptoOrderSelected = selectedCryptoOrders.includes(
-                cryptoOrder.id
-              );
+              const isCryptoOrderSelected = selectedCryptoOrders.includes(cryptoOrder.id);
               return (
-                <TableRow
-                  hover
-                  key={cryptoOrder.id}
-                  selected={isCryptoOrderSelected}
-                >
+                <TableRow hover key={cryptoOrder.id} selected={isCryptoOrderSelected}>
                   <TableCell padding="checkbox">
                     <Checkbox
                       color="primary"

@@ -18,9 +18,7 @@ import {
 function ExportPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
   const reviewsReverse = reviewsData?.data?.reverse();
 
-  const { positive, neutral, negative } = (
-    data?.sourcesGraphData?.series || []
-  ).reduce(
+  const { positive, neutral, negative } = (data?.sourcesGraphData?.series || []).reduce(
     (acc, value) => {
       switch (value.name) {
         case "5 Stars":
@@ -83,23 +81,17 @@ function ExportPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
           <View style={[styles.sectionReviews, styles.borderRight]}>
             <Image src={positiveIcon} style={styles.emoji} />
             <Text>Positive</Text>
-            <Text style={[styles.valueReviews, styles.colorPurple]}>
-              {positive}
-            </Text>
+            <Text style={[styles.valueReviews, styles.colorPurple]}>{positive}</Text>
           </View>
           <View style={[styles.sectionReviews, styles.borderRight]}>
             <Image src={neutralIcon} style={styles.emoji} />
             <Text>Neutral</Text>
-            <Text style={[styles.valueReviews, styles.colorPurple]}>
-              {neutral}
-            </Text>
+            <Text style={[styles.valueReviews, styles.colorPurple]}>{neutral}</Text>
           </View>
           <View style={styles.sectionReviews}>
             <Image src={negativeIcon} style={styles.emoji} />
             <Text>Negative</Text>
-            <Text style={[styles.valueReviews, styles.colorPurple]}>
-              {negative}
-            </Text>
+            <Text style={[styles.valueReviews, styles.colorPurple]}>{negative}</Text>
           </View>
         </View>
         <View style={styles.sectionAverage}>
@@ -141,13 +133,7 @@ function ExportPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
           <Text style={styles.title}>Star Rating Breakdown</Text>
           <Text style={styles.title}>Review Source Breakdown</Text>
         </View>
-        <View
-          style={[
-            styles.donutsCharts,
-            styles.paddingBottom,
-            styles.borderBottom
-          ]}
-        >
+        <View style={[styles.donutsCharts, styles.paddingBottom, styles.borderBottom]}>
           <View style={styles.borderRight}>
             <Image src={donutURI} />
           </View>

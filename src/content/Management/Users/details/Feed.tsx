@@ -71,11 +71,7 @@ function Feed() {
                   <Typography color="text.primary" sx={{ pb: 2 }}>
                     {_feed.jobtitle}
                   </Typography>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    startIcon={<AddTwoToneIcon />}
-                  >
+                  <Button variant="outlined" size="small" startIcon={<AddTwoToneIcon />}>
                     Follow
                   </Button>
                 </Box>

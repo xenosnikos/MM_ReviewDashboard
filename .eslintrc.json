@@ -8,6 +8,9 @@
     "react-hooks/exhaustive-deps": "off",
     "react/no-unescaped-entities": "off",
     "quotes": ["error", "double"],
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "unix"],
+    "semi": ["error", "always"],
     "react/jsx-max-props-per-line": [
       1,
       {

@@ -5,14 +5,7 @@ import clsx from "clsx";
 
 interface TextProps {
   className?: string;
-  color?:
-    | "primary"
-    | "secondary"
-    | "error"
-    | "warning"
-    | "success"
-    | "info"
-    | "black";
+  color?: "primary" | "secondary" | "error" | "warning" | "success" | "info" | "black";
   flex?: boolean;
   children?: ReactNode;
 }
@@ -67,10 +60,7 @@ const Text: FC<TextProps> = ({
   ...rest
 }) => {
   return (
-    <TextWrapper
-      className={clsx("MuiText-" + color, { flexItem: flex })}
-      {...rest}
-    >
+    <TextWrapper className={clsx("MuiText-" + color, { flexItem: flex })} {...rest}>
       {children}
     </TextWrapper>
   );

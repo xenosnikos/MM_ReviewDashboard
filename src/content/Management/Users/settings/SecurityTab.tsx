@@ -255,9 +255,7 @@ function SecurityTab() {
                     <TableCell>{log.browser}</TableCell>
                     <TableCell>{log.ipaddress}</TableCell>
                     <TableCell>{log.location}</TableCell>
-                    <TableCell>
-                      {format(log.date, "dd MMMM, yyyy - h:mm:ss a")}
-                    </TableCell>
+                    <TableCell>{format(log.date, "dd MMMM, yyyy - h:mm:ss a")}</TableCell>
                     <TableCell align="right">
                       <Tooltip placement="top" title="Delete" arrow>
                         <IconButton

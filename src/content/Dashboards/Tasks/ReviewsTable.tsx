@@ -25,17 +25,8 @@ import DataContext from "@/contexts/DataContext";
 
 function ReviewsTable() {
   const theme = useTheme();
-  const {
-    selectedSources,
-    setSelectedSources,
-    selectedRatings,
-    setSelectedRatings,
-    page,
-    setPage,
-    limit,
-    setLimit,
-    reviewsData
-  } = useContext(DataContext);
+  const { selectedSources, selectedRatings, page, limit, reviewsData, setDataState } =
+    useContext(DataContext);
 
   console.log(reviewsData);
 
@@ -47,27 +38,33 @@ function ReviewsTable() {
   const handleChangeSelectSources = (event) => {
     const value = event.target.value;
     if (value[value.length - 1] === "all") {
-      setSelectedSources(
-        selectedSources.length === providers.length ? [] : providers
-      );
+      setDataState({
+        selectedSources: selectedSources.length === providers.length ? [] : providers
+      });
       return;
     }
-    setSelectedSources(value);
+    setDataState({
+      selectedSources: value
+    });
   };
 
   const handleChangeSelectRatings = (event) => {
     const value = event.target.value;
     if (value[value.length - 1] === "all") {
-      setSelectedRatings(
-        selectedRatings.length === ratings.length ? [] : ratings
-      );
+      setDataState({
+        selectedRatings: selectedRatings.length === ratings.length ? [] : ratings
+      });
       return;
     }
-    setSelectedRatings(value);
+    setDataState({
+      selectedRatings: value
+    });
   };
 
   const handlePageChange = (_event: any, newPage: number): void => {
-    setPage(newPage);
+    setDataState({
+      page: newPage
+    });
   };
 
   return (
@@ -149,8 +146,7 @@ function ReviewsTable() {
                 <Checkbox
                   checked={isAllSelectedRatings}
                   indeterminate={
-                    selectedRatings.length > 0 &&
-                    selectedRatings.length < ratings.length
+                    selectedRatings.length > 0 && selectedRatings.length < ratings.length
                   }
                 />
               </ListItemIcon>
@@ -201,8 +197,10 @@ function ReviewsTable() {
         <Button
           variant="outlined"
           onClick={() => {
-            setSelectedSources(providers);
-            setSelectedRatings(ratings);
+            setDataState({
+              selectedSources: providers,
+              selectedRatings: ratings
+            });
           }}
         >
           Reset
@@ -257,8 +255,10 @@ function ReviewsTable() {
           count={reviewsData?.total || 0}
           onPageChange={handlePageChange}
           onRowsPerPageChange={(event: ChangeEvent<HTMLInputElement>) => {
-            setPage(0);
-            setLimit(parseInt(event.target.value));
+            setDataState({
+              page: 0,
+              limit: parseInt(event.target.value)
+            });
           }}
           page={page}
           rowsPerPage={limit}

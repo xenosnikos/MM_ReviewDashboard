@@ -47,7 +47,7 @@ const initOptions: ApexOptions = {
 function StarRatingBreakDown({ data }) {
   const theme = useTheme();
   const [options, setOptions] = useState<ApexOptions>(initOptions);
-  const { setDonutURI } = useContext(DataContext);
+  const { setDataState } = useContext(DataContext);
 
   useEffect(() => {
     if (data) {
@@ -68,13 +68,13 @@ function StarRatingBreakDown({ data }) {
 
   useEffect(() => {
     const getChart = async () => {
-      const chartElement = document.querySelector(
-        "#chart-donut"
-      ) as HTMLElement;
+      const chartElement = document.querySelector("#chart-donut") as HTMLElement;
 
       if (chartElement) {
         await htmlToImage.toPng(chartElement).then((dataUrl) => {
-          setDonutURI(dataUrl);
+          setDataState({
+            donutURI: dataUrl
+          });
         });
       }
     };

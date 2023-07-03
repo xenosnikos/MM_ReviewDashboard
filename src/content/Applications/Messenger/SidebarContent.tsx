@@ -132,11 +132,7 @@ function SidebarContent() {
             flex: 1
           }}
         >
-          <Box
-            display="flex"
-            alignItems="flex-start"
-            justifyContent="space-between"
-          >
+          <Box display="flex" alignItems="flex-start" justifyContent="space-between">
             <Box>
               <Typography variant="h5" noWrap>
                 {user.name}

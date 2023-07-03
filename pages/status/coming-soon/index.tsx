@@ -128,8 +128,7 @@ function StatusComingSoon() {
                   fontWeight="normal"
                   sx={{ mb: 4 }}
                 >
-                  We're working on implementing the last features before our
-                  launch!
+                  We're working on implementing the last features before our launch!
                 </Typography>
               </Container>
               <img

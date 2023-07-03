@@ -48,11 +48,7 @@ function Buttons() {
                 <Button sx={{ margin: 1 }} variant="contained" color="primary">
                   Primary
                 </Button>
-                <Button
-                  sx={{ margin: 1 }}
-                  variant="contained"
-                  color="secondary"
-                >
+                <Button sx={{ margin: 1 }} variant="contained" color="secondary">
                   Secondary
                 </Button>
                 <Button sx={{ margin: 1 }} variant="contained" disabled>
@@ -188,11 +184,7 @@ function Buttons() {
                     </Button>
                   </div>
                   <div>
-                    <IconButton
-                      aria-label="delete"
-                      sx={{ margin: 1 }}
-                      size="small"
-                    >
+                    <IconButton aria-label="delete" sx={{ margin: 1 }} size="small">
                       <ArrowDownwardIcon fontSize="inherit" />
                     </IconButton>
                     <IconButton aria-label="delete" sx={{ margin: 1 }}>
