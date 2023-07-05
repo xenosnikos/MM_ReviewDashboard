@@ -27,7 +27,8 @@ const initialDataState = {
   requiredPassError: false,
   alertMessage: "",
   alertSeverity: "error",
-  isAlertOpen: false
+  isAlertOpen: false,
+  clientId: null
 };
 
 type DataState = typeof initialDataState;

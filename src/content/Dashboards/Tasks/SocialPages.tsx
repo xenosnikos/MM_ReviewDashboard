@@ -16,25 +16,7 @@ import AddIcon from "@mui/icons-material/Add";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
-
-const pages = [
-  {
-    value: "facebook",
-    label: "Facebook"
-  },
-  {
-    value: "google",
-    label: "Google"
-  },
-  {
-    value: "yelp",
-    label: "Yelp"
-  },
-  {
-    value: "yellow_pages",
-    label: "Yellow Pages"
-  }
-];
+import { providers } from "@/helpers/constant";
 
 function SocialPages() {
   const theme = useTheme();
@@ -106,9 +88,9 @@ function SocialPages() {
                 InputProps={{ style: { height: "35px", width: "15vw" } }}
                 sx={{ marginTop: "16px", marginLeft: "10px" }}
               >
-                {pages.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
+                {providers.map((option, index) => (
+                  <MenuItem key={index} value={option}>
+                    {option}
                   </MenuItem>
                 ))}
               </VTextField>
@@ -140,10 +122,8 @@ function SocialPages() {
         </Typography>
       ) : (
         links.map((linkObj, index) => {
-          const selectedPage = pages.find(
-            (option) => option.value === linkObj.socialPage
-          );
-          const pageLabel = selectedPage ? selectedPage.label : "";
+          const selectedPage = providers.find((option) => option === linkObj.socialPage);
+          const pageLabel = selectedPage ? selectedPage : "";
 
           return (
             <Box

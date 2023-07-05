@@ -8,6 +8,7 @@ const urlData = `${BACKEND_API_URL}/getDashboardData`;
 const urlReviews = `${BACKEND_API_URL}/getReviewsData`;
 const urlSignin = `${BACKEND_API_URL}/login`;
 const urlClient = `${BACKEND_API_URL}/getClient`;
+const urlGetClientSocialMedia = `${BACKEND_API_URL}/getClientSocialmedialink`;
 
 const getDashboardData = async (client: string) => {
   return await new Promise((resolve, reject) => {
@@ -59,7 +60,10 @@ const postSignin = async (params: IFormData) => {
         console.log(response);
         if (response?.data?.status === "success")
           resolve(response.data.data.remember_token);
-        if (response?.data?.message === "username not match")
+        if (
+          response?.data?.message === "username not match" ||
+          response?.data?.message === "password not match"
+        )
           reject(response?.data?.message);
         else reject("Something went wrong");
       })
@@ -85,4 +89,23 @@ const getClient = async (): Promise<Client[]> => {
   });
 };
 
-export { getDashboardData, getReviewsData, postSignin, getClient };
+const getClientSocialMedia = async (clientid: number) => {
+  return await new Promise((resolve, reject) => {
+    axios
+      .get(urlGetClientSocialMedia, {
+        params: {
+          clientid
+        }
+      })
+      .then((response) => {
+        if (response?.data?.status === "success") resolve(response.data.data);
+        else reject("Something went wrong");
+      })
+      .catch((error) => {
+        if (error?.message) reject(error.message);
+        else reject("Something went wrong");
+      });
+  });
+};
+
+export { getDashboardData, getReviewsData, postSignin, getClient, getClientSocialMedia };

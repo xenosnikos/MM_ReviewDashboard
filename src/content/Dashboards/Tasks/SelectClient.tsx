@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import { Box, MenuItem, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getClient } from "@/services";
+import DataContext from "@/contexts/DataContext";
 
 export interface Client {
   id: number;
@@ -12,14 +13,17 @@ export interface Client {
 
 const SelectClient = () => {
   const router = useRouter();
-  const { client } = router.query;
-  const [currency, setCurrency] = useState<string>(() => {
+  const { setDataState } = useContext(DataContext);
+  const [clients, setClients] = useState<Client[]>([]);
+  const [clientName, setClientName] = useState<string>(() => {
     if (typeof window !== "undefined") {
-      return (client as string) || localStorage.getItem("selectedClient") || "";
+      const selectedClient = localStorage.getItem("selectedClient");
+      if (selectedClient) {
+        return selectedClient;
+      }
     }
     return "";
   });
-  const [clients, setClients] = useState<Client[]>([]);
 
   const handleGetClients = async (): Promise<void> => {
     try {
@@ -32,7 +36,11 @@ const SelectClient = () => {
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>): void => {
     const selectedClient = event.target.value as string;
-    setCurrency(selectedClient);
+    setClientName(selectedClient);
+    const selectedClientObj = clients.find((client) => client.urlKey === selectedClient);
+    if (selectedClientObj) {
+      setDataState({ clientId: selectedClientObj.id });
+    }
     if (typeof window !== "undefined") {
       localStorage.setItem("selectedClient", selectedClient);
       const currentUrl = new URL(window.location.href);
@@ -46,18 +54,12 @@ const SelectClient = () => {
     handleGetClients();
   }, []);
 
-  useEffect(() => {
-    if (!currency && clients.length > 0) {
-      setCurrency(clients[0].urlKey);
-    }
-  }, [clients]);
-
   return (
     <Box sx={{ marginLeft: "10px", marginTop: "23px" }}>
       <TextField
         id="standard-select-currency"
         select
-        value={currency}
+        value={clientName}
         onChange={handleChange}
         helperText="Please select the client"
         variant="standard"

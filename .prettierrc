@@ -4,5 +4,6 @@
   "trailingComma": "none",
   "tabWidth": 2,
   "useTabs": false,
-  "bracketSameLine": false
+  "bracketSameLine": false,
+  "singleQuote": false
 }

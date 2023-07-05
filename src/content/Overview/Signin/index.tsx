@@ -69,12 +69,17 @@ function Signin() {
         requiredPassError: false
       });
 
-      return router.push("/dashboards/tasks?client=hamel-honda");
+      const selectedClient = localStorage.getItem("selectedClient");
+      if (selectedClient) {
+        return router.push(`/dashboards/tasks?client=${selectedClient}`);
+      }
+
+      return router.push("/dashboards/tasks");
     } catch (error) {
       let errorMessage = "Something went wrong, please try again later.";
       let severity: AlertColor = "error";
 
-      if (error === "username not match") {
+      if (error === "username not match" || error === "password not match") {
         errorMessage = "Your username or password is incorrect, please try again.";
         severity = "warning";
       }
