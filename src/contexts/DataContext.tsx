@@ -12,6 +12,16 @@ type Props = {
 const DataContext = createContext<DataContext>({} as DataContext);
 export default DataContext;
 
+function clientId() {
+  if (typeof window !== "undefined") {
+    const clientId = localStorage.getItem("clientId");
+    if (clientId) {
+      return clientId;
+    }
+  }
+  return "";
+}
+
 const initialDataState = {
   selectedSources: providers,
   selectedRatings: ratings,
@@ -28,7 +38,7 @@ const initialDataState = {
   alertMessage: "",
   alertSeverity: "error",
   isAlertOpen: false,
-  clientId: null
+  clientId: clientId()
 };
 
 type DataState = typeof initialDataState;

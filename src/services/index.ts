@@ -89,7 +89,7 @@ const getClient = async (): Promise<Client[]> => {
   });
 };
 
-const getClientSocialMedia = async (clientid: number) => {
+const getClientSocialMedia = async (clientid: string) => {
   return await new Promise((resolve, reject) => {
     axios
       .get(urlGetClientSocialMedia, {

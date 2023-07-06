@@ -39,10 +39,11 @@ const SelectClient = () => {
     setClientName(selectedClient);
     const selectedClientObj = clients.find((client) => client.urlKey === selectedClient);
     if (selectedClientObj) {
-      setDataState({ clientId: selectedClientObj.id });
+      setDataState({ clientId: selectedClientObj.id.toString() });
     }
     if (typeof window !== "undefined") {
       localStorage.setItem("selectedClient", selectedClient);
+      localStorage.setItem("clientId", selectedClientObj.id.toString());
       const currentUrl = new URL(window.location.href);
       currentUrl.searchParams.set("client", selectedClient);
       window.history.replaceState(null, "", currentUrl);
