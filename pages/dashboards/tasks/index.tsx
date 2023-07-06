@@ -17,7 +17,8 @@ import SourceTable from "@/content/Dashboards/Tasks/SourceTable";
 
 import { getDashboardData, getReviewsData } from "@/services";
 import DataContext from "@/contexts/DataContext";
-import SocialPages from "@/content/Dashboards/Tasks/SocialPages";
+import SocialPages from "@/content/Dashboards/Tasks/AddSocialPages";
+import CustomAlert from "@/components/CustomAlert";
 
 const TabsContainerWrapper = styled(Box)(
   ({ theme }) => `
@@ -268,6 +269,7 @@ function DashboardTasks() {
             </Grid>
           </Box>
         </Card>
+        <CustomAlert />
       </Container>
       <Footer />
     </>

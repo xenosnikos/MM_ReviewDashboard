@@ -8,7 +8,10 @@ export const postSignin = async (params: IFormData) => {
       .then((response) => {
         console.log(response);
         if (response?.data?.status === "success")
-          resolve(response.data.data.remember_token);
+          resolve(
+            (response.data.data.remember_token =
+              "cd4db1885dfaf939a6684f968a8c2f755f3f38b9d") //added makeshift token for login
+          );
         if (
           response?.data?.message === "username not match" ||
           response?.data?.message === "password not match"
