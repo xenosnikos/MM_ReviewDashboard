@@ -4,7 +4,7 @@ export const providers = [
   "Yellow Pages",
   "CarGurus",
   "Cars",
-  "Dealer",
+  "Dealer Rater",
   "Facebook"
 ];
 export const ratings = [5, 4, 3, 2, 1];
