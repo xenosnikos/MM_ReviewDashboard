@@ -38,6 +38,7 @@ const initialDataState = {
   alertMessage: "",
   alertSeverity: "error",
   isAlertOpen: false,
+  isConfirmOpen: false,
   clientId: clientId()
 };
 
