@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { Box, MenuItem, TextField } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { getClient } from "@/services";
 import DataContext from "@/contexts/DataContext";
 
@@ -51,6 +51,10 @@ const SelectClient = () => {
     }
   };
 
+  const sortedClients = useMemo(() => {
+    return clients.sort((a, b) => a.name.localeCompare(b.name));
+  }, [clients]);
+
   useEffect(() => {
     handleGetClients();
   }, []);
@@ -72,7 +76,7 @@ const SelectClient = () => {
           }
         }}
       >
-        {clients
+        {sortedClients
           .sort((a, b) => a.name.localeCompare(b.name))
           .map((client) => (
             <MenuItem key={client.id} value={client.urlKey}>

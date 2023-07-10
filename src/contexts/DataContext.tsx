@@ -1,4 +1,4 @@
-import { providers, ratings } from "@/helpers/constant";
+import { filterProvider, providers, ratings } from "@/helpers/constant";
 import { createContext, ReactNode, useState } from "react";
 
 interface DataContext {
@@ -39,6 +39,9 @@ const initialDataState = {
   alertSeverity: "error",
   isAlertOpen: false,
   isConfirmOpen: false,
+  refresh: false,
+  links: [],
+  filter: filterProvider[0],
   clientId: clientId()
 };
 
