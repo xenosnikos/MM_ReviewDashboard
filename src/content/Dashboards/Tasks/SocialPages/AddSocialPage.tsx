@@ -74,7 +74,7 @@ function AddSocialPage() {
           color: `${theme.colors.alpha.black[100]}`
         }}
       >
-        Add social page link
+        Add social media link
       </Typography>
       <Form ref={formRef} onSubmit={handleSubmit}>
         <Box display="flex" justifyContent="space-between" alignItems="center">

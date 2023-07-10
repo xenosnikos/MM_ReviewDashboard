@@ -1,6 +1,6 @@
 import api from "../api/index";
 
-export const getClientSocialMediaLink = async (clientid: string, title?: string) => {
+const getClientSocialMediaLink = async (clientid: string, title?: string) => {
   return await new Promise((resolve, reject) => {
     api
       .get("/getClientSocialmedialink", {
@@ -20,12 +20,11 @@ export const getClientSocialMediaLink = async (clientid: string, title?: string)
   });
 };
 
-export const createClientSocialMediaLink = async (params) => {
+const createClientSocialMediaLink = async (params) => {
   return await new Promise((resolve, reject) => {
     api
       .post("/createClientSocialmedialink", params)
       .then((response) => {
-        console.log(response);
         if (response?.data?.status === "success") resolve("success");
         else reject("Something went wrong");
       })
@@ -37,7 +36,7 @@ export const createClientSocialMediaLink = async (params) => {
   });
 };
 
-export const deleteClientSocialMediaLink = async (id: number) => {
+const deleteClientSocialMediaLink = async (id: number) => {
   return await new Promise((resolve, reject) => {
     api
       .post("/deleteClientSocialmedialink", { id })
@@ -52,4 +51,28 @@ export const deleteClientSocialMediaLink = async (id: number) => {
         else reject("Something went wrong");
       });
   });
+};
+
+const editClientSocialMediaLink = async (params) => {
+  return await new Promise((resolve, reject) => {
+    api
+      .post("/editClientSocialmedialink", params)
+      .then((response) => {
+        console.log(response);
+        if (response?.data?.status === "success") resolve("success");
+        else reject("Something went wrong");
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error?.message) reject(error.message);
+        else reject("Something went wrong");
+      });
+  });
+};
+
+export {
+  getClientSocialMediaLink,
+  createClientSocialMediaLink,
+  deleteClientSocialMediaLink,
+  editClientSocialMediaLink
 };

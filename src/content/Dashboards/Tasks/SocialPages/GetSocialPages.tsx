@@ -12,16 +12,20 @@ import {
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
+import DoneIcon from "@mui/icons-material/Done";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { useCallback, useContext, useState } from "react";
 import { filterProvider } from "@/helpers/constant";
 import DataContext from "@/contexts/DataContext";
-import { deleteClientSocialMediaLink } from "@/services";
+import { deleteClientSocialMediaLink, editClientSocialMediaLink } from "@/services";
 import CustomConfirm from "@/components/CustomConfirm";
 
 function GetSocialPages() {
   const theme = useTheme();
   const { links, filter, refresh, setDataState } = useContext(DataContext);
   const [selectedLinkId, setSelectedLinkId] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [editLinkValue, setEditLinkValue] = useState("");
 
   const handleDeleteLink = useCallback(async () => {
     try {
@@ -51,6 +55,54 @@ function GetSocialPages() {
       });
     }
   }, [selectedLinkId]);
+
+  const handleEditLink = useCallback(async () => {
+    const body = {
+      id: selectedLinkId,
+      url: editLinkValue
+    };
+
+    try {
+      await editClientSocialMediaLink(body);
+
+      const successMessage = "Social media link successfully edited!";
+      const successSeverity: AlertColor = "success";
+
+      setDataState({
+        alertMessage: successMessage,
+        alertSeverity: successSeverity,
+        isAlertOpen: true
+      });
+
+      setEditMode(false);
+      setSelectedLinkId(null);
+      setEditLinkValue("");
+      setDataState({
+        refresh: !refresh
+      });
+    } catch (error) {
+      const errorMessage = "Something went wrong, please try again later.";
+      const errorSeverity: AlertColor = "error";
+
+      setDataState({
+        alertMessage: errorMessage,
+        alertSeverity: errorSeverity,
+        isAlertOpen: true
+      });
+    }
+  }, [selectedLinkId, editLinkValue]);
+
+  const handleCancelEdit = () => {
+    setSelectedLinkId(null);
+    setEditLinkValue("");
+    setEditMode(false);
+  };
+
+  const handleStartEdit = (linkObj) => {
+    setSelectedLinkId(linkObj.id);
+    setEditLinkValue(linkObj.link);
+    setEditMode(true);
+  };
 
   return (
     <>
@@ -108,55 +160,111 @@ function GetSocialPages() {
               <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Box display="flex" alignItems="center">
                   <AttachFileIcon sx={{ fontSize: 18, marginRight: "5px" }} />
-                  <Link
-                    href={linkObj.link}
-                    target="_blank"
-                    rel="noopener"
-                    underline="hover"
-                    color="inherit"
-                  >
-                    <Typography
-                      variant="body2"
+                  {editMode && selectedLinkId === linkObj.id ? (
+                    <TextField
+                      id="social-url"
+                      name="socialUrl"
+                      margin="normal"
+                      type="url"
+                      value={editLinkValue}
+                      onChange={(e) => setEditLinkValue(e.target.value)}
+                      InputProps={{ style: { height: "35px" } }}
                       sx={{
-                        fontSize: `${theme.typography.pxToRem(14)}`,
-                        color: `${theme.palette.text.primary}`
+                        "& .MuiInputBase-root": {
+                          fontSize: "14px",
+                          width: "40vw",
+                          marginBottom: "7px"
+                        }
                       }}
+                      required
+                    />
+                  ) : (
+                    <Link
+                      href={linkObj.link}
+                      target="_blank"
+                      rel="noopener"
+                      underline="hover"
+                      color="inherit"
                     >
-                      {linkObj.link}
-                    </Typography>
-                  </Link>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          fontSize: `${theme.typography.pxToRem(14)}`,
+                          color: `${theme.palette.text.primary}`
+                        }}
+                      >
+                        {linkObj.link}
+                      </Typography>
+                    </Link>
+                  )}
                 </Box>
                 <Box>
-                  <Tooltip title="Edit Link" arrow>
-                    <IconButton
-                      sx={{
-                        "&:hover": {
-                          background: theme.colors.primary.lighter
-                        },
-                        color: theme.palette.primary.main
-                      }}
-                      color="inherit"
-                      size="small"
-                    >
-                      <EditTwoToneIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Delete Link" arrow>
-                    <IconButton
-                      sx={{
-                        "&:hover": { background: theme.colors.error.lighter },
-                        color: theme.palette.error.main
-                      }}
-                      color="inherit"
-                      size="small"
-                      onClick={() => {
-                        setSelectedLinkId(linkObj.id);
-                        setDataState({ isConfirmOpen: true });
-                      }}
-                    >
-                      <DeleteTwoToneIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
+                  {editMode && selectedLinkId === linkObj.id ? (
+                    <>
+                      <Tooltip title="Cancel Edit" arrow>
+                        <IconButton
+                          sx={{
+                            "&:hover": { background: theme.colors.error.lighter },
+                            color: theme.palette.error.main
+                          }}
+                          color="inherit"
+                          size="small"
+                          onClick={handleCancelEdit}
+                        >
+                          <CancelIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Save Link" arrow>
+                        <IconButton
+                          sx={{
+                            "&:hover": {
+                              background: theme.colors.success.lighter
+                            },
+                            color: theme.palette.success.main
+                          }}
+                          color="inherit"
+                          size="small"
+                          onClick={handleEditLink}
+                        >
+                          <DoneIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                    </>
+                  ) : (
+                    <>
+                      <Tooltip title="Edit Link" arrow>
+                        <IconButton
+                          sx={{
+                            "&:hover": {
+                              background: theme.colors.primary.lighter
+                            },
+                            color: theme.palette.primary.main
+                          }}
+                          color="inherit"
+                          size="small"
+                          onClick={() => handleStartEdit(linkObj)}
+                        >
+                          <EditTwoToneIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Delete Link" arrow>
+                        <IconButton
+                          sx={{
+                            "&:hover": { background: theme.colors.error.lighter },
+                            color: theme.palette.error.main
+                          }}
+                          color="inherit"
+                          size="small"
+                          onClick={() => {
+                            setSelectedLinkId(linkObj.id);
+                            setDataState({ isConfirmOpen: true });
+                          }}
+                        >
+                          <DeleteTwoToneIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                    </>
+                  )}
                 </Box>
               </Box>
             </Box>
