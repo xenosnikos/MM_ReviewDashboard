@@ -115,8 +115,15 @@ const TabsContainerWrapper = styled(Box)(
 function DashboardTasks() {
   const router = useRouter();
   const theme = useTheme();
-  const { data, selectedSources, selectedRatings, page, limit, setDataState } =
-    useContext(DataContext);
+  const {
+    data,
+    selectedSources,
+    selectedRatings,
+    page,
+    limit,
+    setDataState,
+    reviewsData
+  } = useContext(DataContext);
 
   const { client } = router.query;
   const clientString = typeof client === "string" ? client : "";
@@ -196,6 +203,11 @@ function DashboardTasks() {
       getData();
     }
   }, [client]);
+
+  useEffect(() => {
+    console.log(data);
+    console.log(reviewsData);
+  }, [data, reviewsData]);
 
   return (
     <>
