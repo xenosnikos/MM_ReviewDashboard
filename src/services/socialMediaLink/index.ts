@@ -26,10 +26,11 @@ const createClientSocialMediaLink = async (params) => {
       .post("/createClientSocialmedialink", params)
       .then((response) => {
         if (response?.data?.status === "success") resolve("success");
+        if (response?.data?.message === "link already exist")
+          reject(response?.data?.message);
         else reject("Something went wrong");
       })
       .catch((error) => {
-        console.log(error);
         if (error?.message) reject(error.message);
         else reject("Something went wrong");
       });
@@ -41,12 +42,10 @@ const deleteClientSocialMediaLink = async (id: number) => {
     api
       .post("/deleteClientSocialmedialink", { id })
       .then((response) => {
-        console.log(response);
         if (response?.data?.status === "success") resolve("success");
         else reject("Something went wrong");
       })
       .catch((error) => {
-        console.log(error);
         if (error?.message) reject(error.message);
         else reject("Something went wrong");
       });
@@ -58,12 +57,10 @@ const editClientSocialMediaLink = async (params) => {
     api
       .post("/editClientSocialmedialink", params)
       .then((response) => {
-        console.log(response);
         if (response?.data?.status === "success") resolve("success");
         else reject("Something went wrong");
       })
       .catch((error) => {
-        console.log(error);
         if (error?.message) reject(error.message);
         else reject("Something went wrong");
       });

@@ -28,8 +28,6 @@ function ReviewsTable() {
   const { selectedSources, selectedRatings, page, limit, reviewsData, setDataState } =
     useContext(DataContext);
 
-  console.log(reviewsData);
-
   const isAllSelectedSources =
     providers.length > 0 && selectedSources.length === providers.length;
   const isAllSelectedRatings =
@@ -162,38 +160,6 @@ function ReviewsTable() {
             ))}
           </Select>
         </FormControl>
-        {/*<FormControl style={{minWidth: 150}}>*/}
-        {/*  <Select*/}
-        {/*    multiple*/}
-        {/*    value={selected}*/}
-        {/*    renderValue={() => "Select Time"}*/}
-        {/*    onChange={handleChange}*/}
-        {/*  >*/}
-        {/*    <MenuItem value="all">*/}
-        {/*      <ListItemIcon>*/}
-        {/*        <Checkbox*/}
-        {/*          checked={isAllSelected}*/}
-        {/*          indeterminate={*/}
-        {/*            selected.length > 0 && selected.length < providers.length*/}
-        {/*          }*/}
-        {/*        />*/}
-        {/*      </ListItemIcon>*/}
-        {/*      <ListItemText*/}
-        {/*        primary="Select All"*/}
-        {/*      />*/}
-        {/*    </MenuItem>*/}
-        {/*    {providers.map((option) => (*/}
-        {/*      <MenuItem key={option} value={option}>*/}
-        {/*        <ListItemIcon>*/}
-        {/*          <Checkbox*/}
-        {/*            checked={selected.indexOf(option) > -1}*/}
-        {/*          />*/}
-        {/*        </ListItemIcon>*/}
-        {/*        <ListItemText primary={option} />*/}
-        {/*      </MenuItem>*/}
-        {/*    ))}*/}
-        {/*  </Select>*/}
-        {/*</FormControl>*/}
         <Button
           variant="outlined"
           onClick={() => {

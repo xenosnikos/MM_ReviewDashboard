@@ -3,7 +3,17 @@ import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import PageHeader from "@/content/Dashboards/Tasks/PageHeader";
 import Footer from "@/components/Footer";
-import { Grid, Tab, Tabs, Container, Card, Box, useTheme, styled } from "@mui/material";
+import {
+  Grid,
+  Tab,
+  Tabs,
+  Container,
+  Card,
+  Box,
+  useTheme,
+  styled,
+  AlertColor
+} from "@mui/material";
 import PageTitleWrapper from "@/components/PageTitleWrapper";
 
 import AverageStartRating from "@/content/Dashboards/Tasks/AverageStartRating";
@@ -105,15 +115,8 @@ const TabsContainerWrapper = styled(Box)(
 function DashboardTasks() {
   const router = useRouter();
   const theme = useTheme();
-  const {
-    data,
-    selectedSources,
-    selectedRatings,
-    page,
-    limit,
-    reviewsData,
-    setDataState
-  } = useContext(DataContext);
+  const { data, selectedSources, selectedRatings, page, limit, setDataState } =
+    useContext(DataContext);
 
   const { client } = router.query;
   const clientString = typeof client === "string" ? client : "";
@@ -144,13 +147,22 @@ function DashboardTasks() {
 
   useEffect(() => {
     const getData = async () => {
-      await getReviewsData(params)
-        .then((response) =>
-          setDataState({
-            reviewsData: response
-          })
-        )
-        .catch((error) => console.log(error));
+      try {
+        const response = await getReviewsData(params);
+
+        setDataState({
+          reviewsData: response
+        });
+      } catch (error) {
+        const errorMessage = "Could not load reviews, please try again later.";
+        const severity: AlertColor = "error";
+
+        setDataState({
+          alertMessage: errorMessage,
+          alertSeverity: severity,
+          isAlertOpen: true
+        });
+      }
     };
 
     if (typeof client === "string") {
@@ -160,29 +172,30 @@ function DashboardTasks() {
 
   useEffect(() => {
     const getData = async () => {
-      await getDashboardData(clientString)
-        .then((response) => {
-          setDataState({
-            data: response,
-            disabledButton: false
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-          setDataState({
-            disabledButton: false
-          });
+      try {
+        const response = await getDashboardData(clientString);
+
+        setDataState({
+          data: response,
+          disabledButton: false
         });
+      } catch (error) {
+        const errorMessage = "Could not load data, please try again later.";
+        const severity: AlertColor = "error";
+
+        setDataState({
+          disabledButton: false,
+          alertMessage: errorMessage,
+          alertSeverity: severity,
+          isAlertOpen: true
+        });
+      }
     };
+
     if (typeof client === "string") {
       getData();
     }
   }, [client]);
-
-  useEffect(() => {
-    console.log(data);
-    console.log(reviewsData);
-  }, [data]);
 
   return (
     <>

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Box, MenuItem, TextField } from "@mui/material";
+import { AlertColor, Box, MenuItem, TextField } from "@mui/material";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { getClient } from "@/services";
 import DataContext from "@/contexts/DataContext";
@@ -28,9 +28,17 @@ const SelectClient = () => {
   const handleGetClients = async (): Promise<void> => {
     try {
       const response: Client[] = await getClient();
+
       setClients(response);
     } catch (error) {
-      console.log(error);
+      const errorMessage = "Could not load clients, please try again later.";
+      const severity: AlertColor = "error";
+
+      setDataState({
+        alertMessage: errorMessage,
+        alertSeverity: severity,
+        isAlertOpen: true
+      });
     }
   };
 
@@ -46,10 +54,7 @@ const SelectClient = () => {
     if (typeof window !== "undefined") {
       localStorage.setItem("selectedClient", selectedClient);
       localStorage.setItem("clientId", selectedClientObj.id.toString());
-      const currentUrl = new URL(window.location.href);
-      currentUrl.searchParams.set("client", selectedClient);
-      window.history.replaceState(null, "", currentUrl);
-      router.reload();
+      router.push(`/dashboards/tasks?client=${selectedClient}`);
     }
   };
 

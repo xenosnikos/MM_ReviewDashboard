@@ -43,8 +43,13 @@ function AddSocialPage() {
     } catch (error) {
       formRef.current.setFieldValue("socialLink", "");
       formRef.current.setFieldValue("socialPage", "Google");
-      const errorMessage = "Something went wrong, please try again later.";
-      const severity: AlertColor = "error";
+      let errorMessage = "Something went wrong, please try again later.";
+      let severity: AlertColor = "error";
+
+      if (error === "link already exist") {
+        errorMessage = "Social media link already exists";
+        severity = "warning";
+      }
 
       setDataState({
         alertMessage: errorMessage,

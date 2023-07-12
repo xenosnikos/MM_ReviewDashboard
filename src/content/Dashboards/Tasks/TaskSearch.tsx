@@ -217,7 +217,7 @@ function TaskSearch() {
                 })}
               </Typography>
               <AvatarGroup>
-                <Tooltip arrow title={`$"View profile for')} Remy Sharp`}>
+                <Tooltip arrow title={"$\"View profile for')} Remy Sharp"}>
                   <Avatar
                     sx={{
                       width: 30,

@@ -1,5 +1,14 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { Button, Box, Menu, alpha, MenuItem, Typography, useTheme } from "@mui/material";
+import {
+  Button,
+  Box,
+  Menu,
+  alpha,
+  MenuItem,
+  Typography,
+  useTheme,
+  AlertColor
+} from "@mui/material";
 import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
 import { Chart } from "src/components/Chart";
 import type { ApexOptions } from "apexcharts";
@@ -149,9 +158,20 @@ function ReviewGrowth({ params }) {
 
   useEffect(() => {
     const getData = async () => {
-      await getReviewsData({ ...params, per_page: totalReviews })
-        .then((response) => setRevData(response))
-        .catch((error) => console.log(error));
+      try {
+        const response = await getReviewsData({ ...params, per_page: totalReviews });
+
+        setRevData(response);
+      } catch (error) {
+        const errorMessage = "Something went wrong, please try again later.";
+        const severity: AlertColor = "error";
+
+        setDataState({
+          alertMessage: errorMessage,
+          alertSeverity: severity,
+          isAlertOpen: true
+        });
+      }
     };
 
     getData();

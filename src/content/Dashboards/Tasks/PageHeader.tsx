@@ -6,7 +6,8 @@ import {
   lighten,
   Avatar,
   styled,
-  CircularProgress
+  CircularProgress,
+  AlertColor
 } from "@mui/material";
 import DocumentScannerTwoToneIcon from "@mui/icons-material/DocumentScannerTwoTone";
 import AddAlertTwoToneIcon from "@mui/icons-material/AddAlertTwoTone";
@@ -61,18 +62,24 @@ function PageHeader({ clientName, params }) {
       disabledButton: true
     });
 
-    await getReviewsData({ ...params, per_page: totalReviews })
-      .then((response) =>
-        setDataState({
-          reviewsData: response
-        })
-      )
-      .catch((error) => {
-        console.log(error);
-        return setDataState({
-          disabledButton: false
-        });
+    try {
+      const response = await getReviewsData({ ...params, per_page: totalReviews });
+
+      setDataState({
+        reviewsData: response
       });
+    } catch (error) {
+      const errorMessage = "Something went wrong, please try again later.";
+      const severity: AlertColor = "error";
+
+      setDataState({
+        alertMessage: errorMessage,
+        alertSeverity: severity,
+        isAlertOpen: true,
+        disabledButton: false
+      });
+    }
+
     setRefresh(true);
   };
 
@@ -84,19 +91,25 @@ function PageHeader({ clientName, params }) {
       asPdf.updateContainer(doc);
       const blob = await asPdf.toBlob();
       saveAs(blob, `${clientName}.pdf`);
-      await getReviewsData(params)
-        .then((response) => {
-          setDataState({
-            reviewsData: response,
-            disabledButton: false
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-          setDataState({
-            disabledButton: false
-          });
+
+      try {
+        const response = await getReviewsData(params);
+
+        setDataState({
+          reviewsData: response,
+          disabledButton: false
         });
+      } catch (error) {
+        const errorMessage = "Something went wrong, please try again later.";
+        const severity: AlertColor = "error";
+
+        setDataState({
+          alertMessage: errorMessage,
+          alertSeverity: severity,
+          isAlertOpen: true,
+          disabledButton: false
+        });
+      }
     };
 
     if (refresh) {
