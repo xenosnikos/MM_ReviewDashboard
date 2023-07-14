@@ -1,4 +1,4 @@
-import { AlertColor, Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { useContext, useEffect } from "react";
 import DataContext from "@/contexts/DataContext";
 import { getClientSocialMediaLink } from "@/services";
