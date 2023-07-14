@@ -1,21 +1,39 @@
 import { useRouter } from "next/router";
-import { AlertColor, Box, MenuItem, TextField } from "@mui/material";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { AlertColor, Box, TextField } from "@mui/material";
+import React, { useContext, useEffect, useState } from "react";
 import { getClient } from "@/services";
 import DataContext from "@/contexts/DataContext";
+import Autocomplete from "@mui/material/Autocomplete";
+import { styled, lighten, darken } from "@mui/system";
+
+const GroupHeader = styled("div")(({ theme }) => ({
+  position: "sticky",
+  top: "-8px",
+  padding: "4px 10px",
+  color: theme.palette.primary.main,
+  backgroundColor:
+    theme.palette.mode === "light"
+      ? lighten(theme.palette.primary.light, 0.85)
+      : darken(theme.palette.primary.main, 0.8)
+}));
+
+const GroupItems = styled("ul")({
+  padding: 0
+});
 
 export interface Client {
   id: number;
   name: string;
   urlKey: string;
   phoneNumber: string;
+  firstLetter?: string;
 }
 
 const SelectClient = () => {
   const router = useRouter();
   const { setDataState } = useContext(DataContext);
   const [clients, setClients] = useState<Client[]>([]);
-  const [clientName, setClientName] = useState<string>(() => {
+  const [selectedClient, setSelectedClient] = useState<string>(() => {
     if (typeof window !== "undefined") {
       const selectedClient = localStorage.getItem("selectedClient");
       if (selectedClient) {
@@ -23,6 +41,13 @@ const SelectClient = () => {
       }
     }
     return "";
+  });
+  const options = clients.map((option) => {
+    const firstLetter = option.name[0].toUpperCase();
+    return {
+      firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
+      ...option
+    };
   });
 
   const handleGetClients = async (): Promise<void> => {
@@ -42,55 +67,65 @@ const SelectClient = () => {
     }
   };
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>): void => {
-    const selectedClient = event.target.value as string;
-    setClientName(selectedClient);
-    const selectedClientObj = clients.find((client) => client.urlKey === selectedClient);
+  const handleChange = (_event: React.ChangeEvent<{}>, value: any) => {
+    if (value) {
+      setSelectedClient(value);
 
-    if (selectedClientObj) {
-      setDataState({ clientId: selectedClientObj.id.toString() });
-    }
+      setDataState({ clientId: value.id.toString() });
 
-    if (typeof window !== "undefined") {
-      localStorage.setItem("selectedClient", selectedClient);
-      localStorage.setItem("clientId", selectedClientObj.id.toString());
-      router.push(`/dashboards/tasks?client=${selectedClient}`);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("selectedClient", value.name);
+        localStorage.setItem("clientId", value.id.toString());
+        router.push(`/dashboards/tasks?client=${value.urlKey}`);
+      }
     }
   };
-
-  const sortedClients = useMemo(() => {
-    return clients.sort((a, b) => a.name.localeCompare(b.name));
-  }, [clients]);
 
   useEffect(() => {
     handleGetClients();
   }, []);
 
   return (
-    <Box sx={{ marginLeft: "10px", marginTop: "23px" }}>
-      <TextField
-        id="standard-select-currency"
-        select
-        value={clientName}
+    <Box
+      sx={{
+        marginLeft: "10px",
+        width: "100%"
+      }}
+    >
+      <Autocomplete
+        id="select-client"
+        options={options.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
+        groupBy={(option) => option.firstLetter}
+        getOptionLabel={(client) => (typeof client === "string" ? client : client.name)}
+        value={selectedClient}
         onChange={handleChange}
-        helperText="Please select the client"
-        variant="standard"
-        sx={{
-          "& .MuiInputBase-root": {
-            fontSize: "20px",
-            height: "36px",
-            fontWeight: "bold"
-          }
-        }}
-      >
-        {sortedClients
-          .sort((a, b) => a.name.localeCompare(b.name))
-          .map((client) => (
-            <MenuItem key={client.id} value={client.urlKey}>
-              {client.name}
-            </MenuItem>
-          ))}
-      </TextField>
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label={selectedClient ? "" : "Please select the client"}
+            variant="standard"
+            sx={{
+              "& .MuiInputBase-root": {
+                fontSize: "20px",
+                height: "36px",
+                fontWeight: "bold"
+              }
+            }}
+          />
+        )}
+        renderGroup={(params) => (
+          <li key={params.key}>
+            <GroupHeader>{params.group}</GroupHeader>
+            <GroupItems>
+              {React.Children.map(params.children, (child, index) => {
+                return React.isValidElement(child)
+                  ? React.cloneElement(child, { key: index })
+                  : null;
+              })}
+            </GroupItems>
+          </li>
+        )}
+      />
     </Box>
   );
 };
