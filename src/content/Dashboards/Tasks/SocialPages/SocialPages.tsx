@@ -23,14 +23,7 @@ function SocialPages() {
 
       throw new Error("Invalid response data.");
     } catch (error) {
-      const errorMessage = "Something went wrong, please try again later.";
-      const severity: AlertColor = "error";
-
-      return setDataState({
-        alertMessage: errorMessage,
-        alertSeverity: severity,
-        isAlertOpen: true
-      });
+      setDataState({ links: [] });
     }
   };
 

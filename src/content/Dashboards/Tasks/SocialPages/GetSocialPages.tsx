@@ -106,24 +106,23 @@ function GetSocialPages() {
 
   return (
     <>
-      {links.length > 0 && (
-        <TextField
-          name="filterOption"
-          id="outlined-select-filter"
-          select
-          label="Filter"
-          value={filter}
-          defaultValue={filter}
-          onChange={(e) => setDataState({ filter: e.target.value })}
-          InputProps={{ style: { marginBottom: "5px", height: "35px", width: "15vw" } }}
-        >
-          {filterProvider.map((option, index) => (
-            <MenuItem key={index} value={option}>
-              {option}
-            </MenuItem>
-          ))}
-        </TextField>
-      )}
+      <TextField
+        name="filterOption"
+        id="outlined-select-filter"
+        select
+        label="Filter"
+        value={filter}
+        defaultValue={filter}
+        onChange={(e) => setDataState({ filter: e.target.value })}
+        InputProps={{ style: { marginBottom: "5px", height: "35px", width: "15vw" } }}
+      >
+        {filterProvider.map((option, index) => (
+          <MenuItem key={index} value={option}>
+            {option}
+          </MenuItem>
+        ))}
+      </TextField>
+
       {links.length === 0 ? (
         <Typography
           variant="body1"
