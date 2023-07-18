@@ -16,6 +16,7 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import { DataProvider } from "@/contexts/DataContext";
 
 import "../assets/global.css";
+import PrivatePage from "@/components/PrivatePage";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -45,16 +46,18 @@ function TokyoApp(props: TokyoAppProps) {
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
       </Head>
-      <SidebarProvider>
-        <ThemeProvider>
-          <DataProvider>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <CssBaseline />
-              {getLayout(<Component {...pageProps} />)}
-            </LocalizationProvider>
-          </DataProvider>
-        </ThemeProvider>
-      </SidebarProvider>
+      <PrivatePage>
+        <SidebarProvider>
+          <ThemeProvider>
+            <DataProvider>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <CssBaseline />
+                {getLayout(<Component {...pageProps} />)}
+              </LocalizationProvider>
+            </DataProvider>
+          </ThemeProvider>
+        </SidebarProvider>
+      </PrivatePage>
     </CacheProvider>
   );
 }
