@@ -7,7 +7,7 @@ function PrivatePage({ children }) {
   useEffect(() => {
     function isAuthenticated() {
       if (typeof window !== "undefined") {
-        const auth = JSON.parse(localStorage.getItem("token"));
+        const auth = JSON.parse(localStorage.getItem("MM_token"));
         return auth;
       }
       return false;
