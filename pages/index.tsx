@@ -1,4 +1,4 @@
-import { Box, Card, Container, styled, Typography, useTheme } from "@mui/material";
+import { Box, Container, Divider, styled, Typography, useTheme } from "@mui/material";
 import type { ReactElement } from "react";
 import BaseLayout from "src/layouts/BaseLayout";
 
@@ -8,14 +8,14 @@ import Signin from "@/content/Overview/Signin";
 
 import Footer from "src/components/Footer";
 
-const HeaderWrapper = styled(Card)(
+const HeaderWrapper = styled(Box)(
   ({ theme }) => `
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   height: ${theme.spacing(10)};
-  margin-bottom: ${theme.spacing(10)};
+  background-color: ${theme.colors.alpha.black[5]};
 `
 );
 
@@ -52,6 +52,7 @@ function Overview() {
           </Box>
         </Container>
       </HeaderWrapper>
+      <Divider sx={{ mb: `${theme.spacing(6)}` }} />
       <Signin />
       <Footer />
     </OverviewWrapper>
