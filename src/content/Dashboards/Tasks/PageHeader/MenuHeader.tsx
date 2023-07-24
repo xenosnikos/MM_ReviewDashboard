@@ -18,7 +18,6 @@ import {
 import DocumentScannerTwoToneIcon from "@mui/icons-material/DocumentScannerTwoTone";
 import { styled } from "@mui/material/styles";
 import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
-import LockOpenTwoToneIcon from "@mui/icons-material/LockOpenTwoTone";
 import AccountTreeTwoToneIcon from "@mui/icons-material/AccountTreeTwoTone";
 import SettingsTwoToneIcon from "@mui/icons-material/SettingsTwoTone";
 import DataContext from "@/contexts/DataContext";
@@ -26,6 +25,7 @@ import { getReviewsData } from "@/services";
 import ExportPDF from "../ExportPDF/ExportPDF";
 import { pdf } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
+import SignOut from "./SignOut";
 
 const UserBoxButton = styled(Button)(
   ({ theme }) => `
@@ -220,12 +220,7 @@ function MenuHeader({ clientName, params }) {
           </NextLink>
         </List>
         <Divider />
-        <Box sx={{ m: 1 }}>
-          <Button color="primary" fullWidth>
-            <LockOpenTwoToneIcon sx={{ mr: 1 }} />
-            Sign out
-          </Button>
-        </Box>
+        <SignOut />
       </Popover>
     </>
   );
