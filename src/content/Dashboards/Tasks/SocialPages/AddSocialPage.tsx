@@ -102,8 +102,6 @@ function AddSocialPage() {
               label="Select social page"
               value={page}
               onChange={(e) => setPage(e.target.value)}
-              InputProps={{ style: { height: "35px", width: "15vw" } }}
-              sx={{ marginTop: "16px", marginLeft: "10px" }}
             >
               {selectProvider.map((option, index) => (
                 <MenuItem key={index} value={option}>
