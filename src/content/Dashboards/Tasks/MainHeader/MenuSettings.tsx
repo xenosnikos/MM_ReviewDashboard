@@ -62,11 +62,10 @@ const UserBoxDescription = styled(Typography)(
 `
 );
 
-function MenuHeader({ clientName, params }) {
+function MenuSettings({ clientName, params }) {
   const user = {
-    name: "Menu Settings",
-    avatar: "/static/images/avatars/1.jpg",
-    jobtitle: "MaxxMedia"
+    title: "Menu Settings",
+    subtitle: "MaxxMedia"
   };
 
   const ref = useRef<any>(null);
@@ -168,11 +167,11 @@ function MenuHeader({ clientName, params }) {
   return (
     <>
       <UserBoxButton color="secondary" ref={ref} onClick={handleOpen}>
-        <SettingsTwoToneIcon fontSize="medium" />
+        <SettingsTwoToneIcon color="primary" fontSize="medium" />
         <Hidden mdDown>
           <UserBoxText>
-            <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
-            <UserBoxDescription variant="body2">{user.jobtitle}</UserBoxDescription>
+            <UserBoxLabel variant="body1">{user.title}</UserBoxLabel>
+            <UserBoxDescription variant="body2">{user.subtitle}</UserBoxDescription>
           </UserBoxText>
         </Hidden>
         <Hidden smDown>
@@ -195,8 +194,8 @@ function MenuHeader({ clientName, params }) {
         <MenuUserBox sx={{ minWidth: 210 }} display="flex" alignItems="center">
           <SettingsTwoToneIcon fontSize="medium" />
           <UserBoxText>
-            <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
-            <UserBoxDescription variant="body2">{user.jobtitle}</UserBoxDescription>
+            <UserBoxLabel variant="body1">{user.title}</UserBoxLabel>
+            <UserBoxDescription variant="body2">{user.subtitle}</UserBoxDescription>
           </UserBoxText>
         </MenuUserBox>
         <Divider sx={{ mb: 0 }} />
@@ -226,4 +225,4 @@ function MenuHeader({ clientName, params }) {
   );
 }
 
-export default MenuHeader;
+export default MenuSettings;

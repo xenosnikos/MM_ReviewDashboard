@@ -1,8 +1,9 @@
 import { Typography, Box } from "@mui/material";
 import SelectClient from "./SelectClient";
-import MenuHeader from "./MenuHeader";
+import EmailNotification from "./EmailNotification";
+import MenuSettings from "./MenuSettings";
 
-function PageHeader({ clientName, params }) {
+function MainHeader({ clientName, params }) {
   return (
     <Box
       display="flex"
@@ -23,9 +24,12 @@ function PageHeader({ clientName, params }) {
           </Typography>
         </Box>
       </Box>
-      <MenuHeader clientName={clientName} params={params} />
+      <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <EmailNotification />
+        <MenuSettings clientName={clientName} params={params} />
+      </Box>
     </Box>
   );
 }
 
-export default PageHeader;
+export default MainHeader;

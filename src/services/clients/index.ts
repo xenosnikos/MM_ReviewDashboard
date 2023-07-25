@@ -1,4 +1,4 @@
-import { Client } from "@/content/Dashboards/Tasks/SelectClient";
+import { Client } from "@/content/Dashboards/Tasks/MainHeader/SelectClient";
 import api from "../api/index";
 
 export const getClient = async (): Promise<Client[]> => {

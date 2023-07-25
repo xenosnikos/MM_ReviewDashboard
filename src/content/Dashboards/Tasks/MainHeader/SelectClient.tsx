@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { AlertColor, Box, Popper, TextField } from "@mui/material";
+import { AlertColor, Box, TextField } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { getClient } from "@/services";
 import DataContext from "@/contexts/DataContext";
@@ -72,6 +72,8 @@ const SelectClient = () => {
       setSelectedClient(value);
 
       setDataState({ clientId: value.id.toString() });
+
+      console.log(value.urlKey);
 
       if (typeof window !== "undefined") {
         localStorage.setItem("selectedClient", value.name);
