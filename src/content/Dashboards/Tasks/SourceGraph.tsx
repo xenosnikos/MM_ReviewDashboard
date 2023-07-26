@@ -5,6 +5,7 @@ import { providers } from "@/helpers/constant";
 
 const initOptions: ApexOptions = {
   chart: {
+    id: "source-chart",
     type: "bar",
     height: 450,
     stacked: true

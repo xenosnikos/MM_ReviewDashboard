@@ -29,9 +29,6 @@ const initialDataState = {
   limit: 5,
   reviewsData: null,
   data: null,
-  chartURI: null,
-  donutURI: null,
-  donut2URI: null,
   disabledButton: true,
   requiredTextError: false,
   requiredPassError: false,
@@ -42,6 +39,7 @@ const initialDataState = {
   refresh: false,
   links: [],
   filter: filterProvider[0],
+  refreshPDF: false,
   clientId: clientId()
 };
 

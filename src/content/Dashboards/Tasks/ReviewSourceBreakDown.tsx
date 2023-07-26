@@ -1,13 +1,12 @@
 import { Box, Divider, Typography, useTheme } from "@mui/material";
 import { ApexOptions } from "apexcharts";
 import { Chart } from "@/components/Chart";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { providers } from "@/helpers/constant";
-import DataContext from "@/contexts/DataContext";
-import * as htmlToImage from "html-to-image";
 
 const initOptions: ApexOptions = {
   chart: {
+    id: "review-donut",
     width: 380,
     type: "donut"
   },
@@ -48,7 +47,6 @@ const initOptions: ApexOptions = {
 function ReviewSourceBreakDown({ data }) {
   const theme = useTheme();
   const [options, setOptions] = useState<ApexOptions>(initOptions);
-  const { setDataState } = useContext(DataContext);
 
   useEffect(() => {
     if (!data) return;
@@ -62,22 +60,6 @@ function ReviewSourceBreakDown({ data }) {
 
     setOptions({ ...options, series: newSeries });
   }, [data]);
-
-  useEffect(() => {
-    const getChart = async () => {
-      const chartElement = document.querySelector("#chart-donut2") as HTMLElement;
-
-      if (chartElement) {
-        await htmlToImage.toPng(chartElement).then((dataUrl) => {
-          setDataState({
-            donut2URI: dataUrl
-          });
-        });
-      }
-    };
-
-    getChart();
-  }, [options]);
 
   return (
     <Box>

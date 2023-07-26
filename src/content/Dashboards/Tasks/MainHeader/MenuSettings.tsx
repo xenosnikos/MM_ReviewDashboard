@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import NextLink from "next/link";
 import {
   AlertColor,
@@ -22,10 +22,11 @@ import AccountTreeTwoToneIcon from "@mui/icons-material/AccountTreeTwoTone";
 import SettingsTwoToneIcon from "@mui/icons-material/SettingsTwoTone";
 import DataContext from "@/contexts/DataContext";
 import { getReviewsData } from "@/services";
-import ExportPDF from "../ExportPDF/ExportPDF";
-import { pdf } from "@react-pdf/renderer";
-import { saveAs } from "file-saver";
 import SignOut from "./SignOut";
+import dynamic from "next/dynamic";
+const PDFGenerator = dynamic(() => import("../ExportPDF/PDFGenerator"), {
+  ssr: false
+});
 
 const UserBoxButton = styled(Button)(
   ({ theme }) => `
@@ -79,16 +80,8 @@ function MenuSettings({ clientName, params }) {
     setOpen(false);
   };
 
-  const {
-    reviewsData,
-    data,
-    chartURI,
-    donutURI,
-    donut2URI,
-    disabledButton,
-    setDataState
-  } = useContext(DataContext);
-  const [refresh, setRefresh] = useState(false);
+  const { refreshPDF, reviewsData, data, disabledButton, setDataState } =
+    useContext(DataContext);
 
   const totalReviews = reviewsData?.total;
 
@@ -115,57 +108,21 @@ function MenuSettings({ clientName, params }) {
       });
     }
 
-    setRefresh(true);
-  };
-
-  useEffect(() => {
-    const getPDF = async () => {
-      const props = getProps();
-      const doc = <ExportPDF {...props} />;
-      const asPdf = pdf(doc);
-      asPdf.updateContainer(doc);
-      const blob = await asPdf.toBlob();
-      saveAs(blob, `${clientName}.pdf`);
-
-      try {
-        const response = await getReviewsData(params);
-
-        setDataState({
-          reviewsData: response,
-          disabledButton: false
-        });
-        setOpen(false);
-      } catch (error) {
-        const errorMessage = "Something went wrong, please try again later.";
-        const severity: AlertColor = "error";
-
-        setDataState({
-          alertMessage: errorMessage,
-          alertSeverity: severity,
-          isAlertOpen: true,
-          disabledButton: false
-        });
-      }
-    };
-
-    if (refresh) {
-      setRefresh(false);
-      getPDF();
-    }
-  }, [refresh]);
-
-  const getProps = () => {
-    return {
-      data,
-      reviewsData,
-      chartURI,
-      donutURI,
-      donut2URI
-    };
+    setDataState({ refreshPDF: true });
   };
 
   return (
     <>
+      {typeof window !== "undefined" && (
+        <PDFGenerator
+          clientName={clientName}
+          params={params}
+          reviewsData={reviewsData}
+          data={data}
+          refreshPDF={refreshPDF}
+          setDataState={setDataState}
+        />
+      )}
       <UserBoxButton color="secondary" ref={ref} onClick={handleOpen}>
         <SettingsTwoToneIcon color="primary" fontSize="medium" />
         <Hidden mdDown>

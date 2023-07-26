@@ -1,12 +1,11 @@
 import { Box, Divider, Typography, useTheme } from "@mui/material";
 import { Chart } from "@/components/Chart";
 import type { ApexOptions } from "apexcharts";
-import { useContext, useEffect, useState } from "react";
-import * as htmlToImage from "html-to-image";
-import DataContext from "@/contexts/DataContext";
+import { useEffect, useState } from "react";
 
 const initOptions: ApexOptions = {
   chart: {
+    id: "star-donut",
     width: 380,
     type: "donut"
   },
@@ -47,7 +46,6 @@ const initOptions: ApexOptions = {
 function StarRatingBreakDown({ data }) {
   const theme = useTheme();
   const [options, setOptions] = useState<ApexOptions>(initOptions);
-  const { setDataState } = useContext(DataContext);
 
   useEffect(() => {
     if (data) {
@@ -65,22 +63,6 @@ function StarRatingBreakDown({ data }) {
       setOptions({ ...options, series: newSeries });
     }
   }, [data]);
-
-  useEffect(() => {
-    const getChart = async () => {
-      const chartElement = document.querySelector("#chart-donut") as HTMLElement;
-
-      if (chartElement) {
-        await htmlToImage.toPng(chartElement).then((dataUrl) => {
-          setDataState({
-            donutURI: dataUrl
-          });
-        });
-      }
-    };
-
-    getChart();
-  }, [options]);
 
   return (
     <Box>
