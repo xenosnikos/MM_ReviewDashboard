@@ -73,10 +73,9 @@ const SelectClient = () => {
 
       setDataState({ clientId: value.id.toString() });
 
-      console.log(value.urlKey);
-
       if (typeof window !== "undefined") {
         localStorage.setItem("selectedClient", value.name);
+        localStorage.setItem("clientUrlKey", value.urlKey);
         localStorage.setItem("clientId", value.id.toString());
         router.push(`/dashboards/tasks?client=${value.urlKey}`);
       }

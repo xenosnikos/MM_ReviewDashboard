@@ -15,7 +15,7 @@ import {
   reviewIcon
 } from "./icons";
 
-function ExportPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
+function DocPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
   const reviewsReverse = reviewsData?.data?.reverse();
 
   const { positive, neutral, negative } = (data?.sourcesGraphData?.series || []).reduce(
@@ -228,4 +228,4 @@ function ExportPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
   );
 }
 
-export default ExportPDF;
+export default DocPDF;

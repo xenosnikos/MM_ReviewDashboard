@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import PageHeader from "@/content/Dashboards/Tasks/MainHeader/MainHeader";
 import Footer from "@/components/Footer";
@@ -116,6 +116,7 @@ function DashboardTasks() {
   const router = useRouter();
   const theme = useTheme();
   const {
+    currentTab,
     data,
     selectedSources,
     selectedRatings,
@@ -128,8 +129,6 @@ function DashboardTasks() {
   const { client } = router.query;
   const clientString = typeof client === "string" ? client : "";
 
-  const [currentTab, setCurrentTab] = useState<string>("overview");
-
   const tabs = [
     { value: "overview", label: "Overview" },
     { value: "reviews", label: "Reviews" },
@@ -138,8 +137,8 @@ function DashboardTasks() {
   ];
 
   const handleTabsChange = (_event: ChangeEvent<{}>, value: string): void => {
-    setCurrentTab(value);
     setDataState({
+      currentTab: value,
       page: 1
     });
   };

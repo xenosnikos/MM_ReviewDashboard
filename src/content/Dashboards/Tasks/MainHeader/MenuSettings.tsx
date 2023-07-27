@@ -24,6 +24,7 @@ import DataContext from "@/contexts/DataContext";
 import { getReviewsData } from "@/services";
 import SignOut from "./SignOut";
 import dynamic from "next/dynamic";
+import DocConfirm from "./DocConfirm";
 const PDFGenerator = dynamic(() => import("../ExportPDF/PDFGenerator"), {
   ssr: false
 });
@@ -80,10 +81,26 @@ function MenuSettings({ clientName, params }) {
     setOpen(false);
   };
 
-  const { refreshPDF, reviewsData, data, disabledButton, setDataState } =
+  const { currentTab, refreshPDF, reviewsData, data, disabledButton, setDataState } =
     useContext(DataContext);
 
   const totalReviews = reviewsData?.total;
+
+  const [isConfirmationDialogOpen, setConfirmationDialogOpen] = useState(false);
+
+  const handleConfirmationDialogOpen = () => {
+    if (currentTab !== "overview") {
+      setDataState({
+        currentTab: "overview"
+      });
+    }
+    handleClose();
+    setConfirmationDialogOpen(true);
+  };
+
+  const handleConfirmationDialogClose = () => {
+    setConfirmationDialogOpen(false);
+  };
 
   const handlePDF = async () => {
     setDataState({
@@ -94,8 +111,11 @@ function MenuSettings({ clientName, params }) {
       const response = await getReviewsData({ ...params, per_page: totalReviews });
 
       setDataState({
-        reviewsData: response
+        reviewsData: response,
+        refreshPDF: true
       });
+
+      handleConfirmationDialogClose();
     } catch (error) {
       const errorMessage = "Something went wrong, please try again later.";
       const severity: AlertColor = "error";
@@ -108,7 +128,7 @@ function MenuSettings({ clientName, params }) {
       });
     }
 
-    setDataState({ refreshPDF: true });
+    /*  setDataState({ refreshPDF: true }); */
   };
 
   return (
@@ -157,7 +177,7 @@ function MenuSettings({ clientName, params }) {
         </MenuUserBox>
         <Divider sx={{ mb: 0 }} />
         <List sx={{ p: 1 }} component="nav">
-          <ListItem button onClick={handlePDF}>
+          <ListItem button onClick={handleConfirmationDialogOpen}>
             <DocumentScannerTwoToneIcon fontSize="small" />
             <ListItemText primary="Export PDF" />
             {disabledButton ? (
@@ -178,6 +198,11 @@ function MenuSettings({ clientName, params }) {
         <Divider />
         <SignOut />
       </Popover>
+      <DocConfirm
+        open={isConfirmationDialogOpen}
+        onClose={handleConfirmationDialogClose}
+        onConfirm={handlePDF}
+      />
     </>
   );
 }

@@ -101,6 +101,15 @@ function AddSocialPage() {
               select
               label="Select social page"
               value={page}
+              InputProps={{
+                style: {
+                  marginTop: "15px",
+                  marginLeft: "10px",
+                  height: "35px",
+                  width: "15vw"
+                }
+              }}
+              InputLabelProps={{ style: { marginTop: "15px", marginLeft: "10px" } }}
               onChange={(e) => setPage(e.target.value)}
             >
               {selectProvider.map((option, index) => (

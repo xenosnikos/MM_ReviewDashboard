@@ -2,21 +2,21 @@ import { useEffect } from "react";
 import ApexCharts from "apexcharts";
 import { pdf } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
-import ExportPDF from "./ExportPDF";
+import DocPDF from "./DocPDF";
 import { getReviewsData } from "@/services";
 
-const PDFGenerator = ({
+function PDFGenerator({
   clientName,
   params,
   reviewsData,
   data,
   refreshPDF,
   setDataState
-}) => {
+}) {
   useEffect(() => {
     const generatePDF = async () => {
       const props = await getProps();
-      const doc = <ExportPDF {...props} />;
+      const doc = <DocPDF {...props} />;
       const asPdf = pdf(doc);
       asPdf.updateContainer(doc);
       const blob = await asPdf.toBlob();
@@ -52,12 +52,10 @@ const PDFGenerator = ({
     const chartInstance = ApexCharts.getChartByID("review-chart");
     const chartInstance2 = ApexCharts.getChartByID("star-donut");
     const chartInstance3 = ApexCharts.getChartByID("review-donut");
-    /* const chartInstance4 = ApexCharts.getChartByID("source-chart"); */
 
     const base64 = await chartInstance.dataURI();
     const base642 = await chartInstance2.dataURI();
     const base643 = await chartInstance3.dataURI();
-    /* const base644 = await chartInstance4.dataURI(); */
 
     let chartURI: any;
     let donutURI: any;
@@ -79,6 +77,6 @@ const PDFGenerator = ({
   };
 
   return null;
-};
+}
 
 export default PDFGenerator;

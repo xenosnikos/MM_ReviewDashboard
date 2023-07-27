@@ -17,8 +17,7 @@ import {
   TableCell,
   TableBody,
   TablePagination,
-  Rating,
-  InputLabel
+  Rating
 } from "@mui/material";
 import { providers, ratings } from "@/helpers/constant";
 import DataContext from "@/contexts/DataContext";
@@ -90,7 +89,6 @@ function ReviewsTable() {
           {reviewsData?.total || 0} Results
         </Typography>
         <FormControl style={{ minWidth: 150 }}>
-          <InputLabel htmlFor="sourcesSelect">Select Sources</InputLabel>
           <Select
             multiple
             inputProps={{
@@ -103,7 +101,6 @@ function ReviewsTable() {
             notched={true}
             onChange={handleChangeSelectSources}
             autoWidth
-            style={{ marginTop: "8px" }}
           >
             <MenuItem value="all">
               <ListItemIcon>
@@ -128,7 +125,6 @@ function ReviewsTable() {
           </Select>
         </FormControl>
         <FormControl style={{ minWidth: 150 }}>
-          <InputLabel htmlFor="ratingsSelect">Select Ratings</InputLabel>
           <Select
             multiple
             inputProps={{
@@ -137,7 +133,6 @@ function ReviewsTable() {
             value={selectedRatings}
             renderValue={() => "Select Ratings"}
             onChange={handleChangeSelectRatings}
-            style={{ marginTop: "8px" }}
           >
             <MenuItem value="all">
               <ListItemIcon>

@@ -27,6 +27,7 @@ const initialDataState = {
   selectedRatings: ratings,
   page: 1,
   limit: 5,
+  currentTab: "overview",
   reviewsData: null,
   data: null,
   disabledButton: true,
