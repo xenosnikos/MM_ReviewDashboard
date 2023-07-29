@@ -14,7 +14,6 @@ import {
   Popover,
   Typography
 } from "@mui/material";
-
 import DocumentScannerTwoToneIcon from "@mui/icons-material/DocumentScannerTwoTone";
 import { styled } from "@mui/material/styles";
 import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
@@ -81,8 +80,17 @@ function MenuSettings({ clientName, params }) {
     setOpen(false);
   };
 
-  const { currentTab, refreshPDF, reviewsData, data, disabledButton, setDataState } =
-    useContext(DataContext);
+  const {
+    currentTab,
+    refreshPDF,
+    reviewsData,
+    data,
+    disabledButton,
+    /* selectedDateOption,
+    startDate,
+    endDate, */
+    setDataState
+  } = useContext(DataContext);
 
   const totalReviews = reviewsData?.total;
 
@@ -109,6 +117,8 @@ function MenuSettings({ clientName, params }) {
 
     try {
       const response = await getReviewsData({ ...params, per_page: totalReviews });
+
+      // aqui
 
       setDataState({
         reviewsData: response,
@@ -140,6 +150,9 @@ function MenuSettings({ clientName, params }) {
           reviewsData={reviewsData}
           data={data}
           refreshPDF={refreshPDF}
+          /* selectedDateOption={selectedDateOption}
+          startDate={startDate}
+          endDate={endDate} */
           setDataState={setDataState}
         />
       )}

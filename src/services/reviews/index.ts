@@ -8,7 +8,6 @@ export const getReviewsData = async (params: {
   ratings: string;
 }) => {
   return await new Promise((resolve, reject) => {
-    console.log(params.sources);
     api
       .get("/getReviewsData", {
         params

@@ -41,6 +41,9 @@ const initialDataState = {
   links: [],
   filter: filterProvider[0],
   refreshPDF: false,
+  selectedDateOption: "all",
+  startDate: null,
+  endDate: null,
   clientId: clientId()
 };
 

@@ -16,7 +16,7 @@ import {
 } from "./icons";
 
 function DocPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
-  const reviewsReverse = reviewsData?.data?.reverse();
+  const reviews = reviewsData?.data;
 
   const { positive, neutral, negative } = (data?.sourcesGraphData?.series || []).reduce(
     (acc, value) => {
@@ -198,7 +198,7 @@ function DocPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
         >
           <Text style={styles.title}>Reviews</Text>
         </View>
-        {reviewsReverse.map((value: any, index: number) => (
+        {reviews.map((value: any, index: number) => (
           <View
             key={index}
             wrap={false}

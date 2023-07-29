@@ -20,15 +20,24 @@ import {
 } from "@mui/material";
 import { providers } from "@/helpers/constant";
 import DataContext from "@/contexts/DataContext";
+import { MobileDatePicker } from "@mui/lab";
 
 function DocConfirm({ open, onClose, onConfirm }) {
-  const { selectedSources, setDataState } = useContext(DataContext);
-  const [selectedOption, setSelectedOption] = useState("all");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const { selectedSources, selectedDateOption, startDate, endDate, setDataState } =
+    useContext(DataContext);
+  const [disabledDate, setDisabledDate] = useState(true);
 
   const handleChangeOption = (event) => {
-    setSelectedOption(event.target.value);
+    const value = event.target.value;
+    setDataState({ selectedDateOption: value });
+
+    if (value === "all") {
+      setDataState({ startDate: null, endDate: null });
+      setDisabledDate(true);
+      return;
+    }
+
+    setDisabledDate(false);
   };
 
   const isAllSelectedSources =
@@ -107,7 +116,7 @@ function DocConfirm({ open, onClose, onConfirm }) {
           </Grid>
           <Grid item xs={12}>
             <FormControl component="fieldset">
-              <RadioGroup value={selectedOption} onChange={handleChangeOption}>
+              <RadioGroup value={selectedDateOption} onChange={handleChangeOption}>
                 <Grid container spacing={2} alignItems="center">
                   <Grid item>
                     <FormControlLabel
@@ -124,38 +133,44 @@ function DocConfirm({ open, onClose, onConfirm }) {
                     />
                   </Grid>
                 </Grid>
-                {selectedOption === "dateRange" && (
-                  <Grid container spacing={2} alignItems="center">
-                    <Grid item>
-                      <Typography variant="subtitle2">From the:</Typography>
-                    </Grid>
-                    <Grid item>
-                      <TextField
-                        id="startDate"
-                        type="date"
-                        value={startDate}
-                        onChange={(e) => setStartDate(e.target.value)}
-                        InputLabelProps={{
-                          shrink: true
-                        }}
-                      />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="subtitle2">To the:</Typography>
-                    </Grid>
-                    <Grid item>
-                      <TextField
-                        id="endDate"
-                        type="date"
-                        value={endDate}
-                        onChange={(e) => setEndDate(e.target.value)}
-                        InputLabelProps={{
-                          shrink: true
-                        }}
-                      />
-                    </Grid>
+                <Grid spacing={2} alignItems="center" sx={{ marginTop: "8px" }}>
+                  <Grid item>
+                    <Typography
+                      variant="subtitle2"
+                      color={disabledDate ? "" : "textPrimary"}
+                    >
+                      From the:
+                    </Typography>
                   </Grid>
-                )}
+                  <Grid item sx={{ marginTop: "10px" }}>
+                    <MobileDatePicker
+                      label="Start Date"
+                      inputFormat="dd/MM/yyyy"
+                      value={startDate}
+                      onChange={(date) => setDataState({ startDate: date })}
+                      renderInput={(params) => <TextField {...params} />}
+                      disabled={disabledDate}
+                    />
+                  </Grid>
+                  <Grid item sx={{ marginTop: "10px" }}>
+                    <Typography
+                      variant="subtitle2"
+                      color={disabledDate ? "" : "textPrimary"}
+                    >
+                      To the:
+                    </Typography>
+                  </Grid>
+                  <Grid item sx={{ marginTop: "10px" }}>
+                    <MobileDatePicker
+                      label="End Date"
+                      inputFormat="dd/MM/yyyy"
+                      value={endDate}
+                      onChange={(date) => setDataState({ endDate: date })}
+                      renderInput={(params) => <TextField {...params} />}
+                      disabled={disabledDate}
+                    />
+                  </Grid>
+                </Grid>
               </RadioGroup>
             </FormControl>
           </Grid>
