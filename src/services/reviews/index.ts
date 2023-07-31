@@ -1,3 +1,4 @@
+import { ReviewsDataResponse } from "@/models";
 import api from "../api/index";
 
 export const getReviewsData = async (params: {
@@ -6,7 +7,7 @@ export const getReviewsData = async (params: {
   page: number;
   sources: string;
   ratings: string;
-}) => {
+}): Promise<ReviewsDataResponse> => {
   return await new Promise((resolve, reject) => {
     api
       .get("/getReviewsData", {

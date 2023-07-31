@@ -24,6 +24,7 @@ import { getReviewsData } from "@/services";
 import SignOut from "./SignOut";
 import dynamic from "next/dynamic";
 import DocConfirm from "./DocConfirm";
+import { ReviewsDataResponse } from "@/models";
 const PDFGenerator = dynamic(() => import("../ExportPDF/PDFGenerator"), {
   ssr: false
 });
@@ -86,9 +87,9 @@ function MenuSettings({ clientName, params }) {
     reviewsData,
     data,
     disabledButton,
-    /* selectedDateOption,
+    selectedDateOption,
     startDate,
-    endDate, */
+    endDate,
     setDataState
   } = useContext(DataContext);
 
@@ -116,9 +117,35 @@ function MenuSettings({ clientName, params }) {
     });
 
     try {
-      const response = await getReviewsData({ ...params, per_page: totalReviews });
+      const response: ReviewsDataResponse = await getReviewsData({
+        ...params,
+        per_page: totalReviews
+      });
 
-      // aqui
+      if (selectedDateOption !== "all") {
+        if (typeof response === "object" && response !== null && "data" in response) {
+          const filteredResponse = {
+            ...response,
+            data: (response.data as Array<any>).filter((review) => {
+              const reviewDate = new Date(
+                review.date.replace(/\b(\d+)(st|nd|rd|th)\b/g, "$1")
+              );
+              const startDateFormatted = new Date(startDate);
+              const endDateFormatted = new Date(endDate);
+
+              return reviewDate >= startDateFormatted && reviewDate <= endDateFormatted;
+            })
+          };
+
+          setDataState({
+            reviewsData: filteredResponse,
+            refreshPDF: true
+          });
+        }
+
+        handleConfirmationDialogClose();
+        return;
+      }
 
       setDataState({
         reviewsData: response,
@@ -137,25 +164,10 @@ function MenuSettings({ clientName, params }) {
         disabledButton: false
       });
     }
-
-    /*  setDataState({ refreshPDF: true }); */
   };
 
   return (
     <>
-      {typeof window !== "undefined" && (
-        <PDFGenerator
-          clientName={clientName}
-          params={params}
-          reviewsData={reviewsData}
-          data={data}
-          refreshPDF={refreshPDF}
-          /* selectedDateOption={selectedDateOption}
-          startDate={startDate}
-          endDate={endDate} */
-          setDataState={setDataState}
-        />
-      )}
       <UserBoxButton color="secondary" ref={ref} onClick={handleOpen}>
         <SettingsTwoToneIcon color="primary" fontSize="medium" />
         <Hidden mdDown>
@@ -216,6 +228,16 @@ function MenuSettings({ clientName, params }) {
         onClose={handleConfirmationDialogClose}
         onConfirm={handlePDF}
       />
+      {typeof window !== "undefined" && (
+        <PDFGenerator
+          clientName={clientName}
+          params={params}
+          reviewsData={reviewsData}
+          data={data}
+          refreshPDF={refreshPDF}
+          setDataState={setDataState}
+        />
+      )}
     </>
   );
 }

@@ -11,9 +11,6 @@ function PDFGenerator({
   reviewsData,
   data,
   refreshPDF,
-  /*   selectedDateOption,
-  startDate,
-  endDate, */
   setDataState
 }) {
   useEffect(() => {
