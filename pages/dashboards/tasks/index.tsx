@@ -139,14 +139,14 @@ function DashboardTasks() {
   const handleTabsChange = (_event: ChangeEvent<{}>, value: string): void => {
     setDataState({
       currentTab: value,
-      page: 1
+      page: 0
     });
   };
 
   const params = {
     client: clientString,
     per_page: limit,
-    page: page,
+    page: page + 1,
     sources: JSON.stringify(selectedSources),
     ratings: JSON.stringify(selectedRatings)
   };

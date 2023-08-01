@@ -5,6 +5,7 @@ import { getClient } from "@/services";
 import DataContext from "@/contexts/DataContext";
 import Autocomplete from "@mui/material/Autocomplete";
 import { styled, lighten, darken } from "@mui/system";
+import { Client } from "@/models";
 
 const GroupHeader = styled("div")(({ theme }) => ({
   position: "sticky",
@@ -20,14 +21,6 @@ const GroupHeader = styled("div")(({ theme }) => ({
 const GroupItems = styled("ul")({
   padding: 0
 });
-
-export interface Client {
-  id: number;
-  name: string;
-  urlKey: string;
-  phoneNumber: string;
-  firstLetter?: string;
-}
 
 const SelectClient = () => {
   const router = useRouter();

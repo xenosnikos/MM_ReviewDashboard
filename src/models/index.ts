@@ -14,6 +14,14 @@ export interface CryptoOrder {
   currency: string;
 }
 
+export interface Client {
+  id: number;
+  name: string;
+  urlKey: string;
+  phoneNumber: string;
+  firstLetter?: string;
+}
+
 interface Review {
   author: string;
   date: string;

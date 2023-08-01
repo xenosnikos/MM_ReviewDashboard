@@ -169,7 +169,11 @@ function MenuSettings({ clientName, params }) {
   return (
     <>
       <UserBoxButton color="secondary" ref={ref} onClick={handleOpen}>
-        <SettingsTwoToneIcon color="primary" fontSize="medium" />
+        {disabledButton ? (
+          <CircularProgress size={17.5} sx={{ marginRight: "10px" }} />
+        ) : (
+          <SettingsTwoToneIcon color="primary" fontSize="medium" />
+        )}
         <Hidden mdDown>
           <UserBoxText>
             <UserBoxLabel variant="body1">{user.title}</UserBoxLabel>
@@ -206,9 +210,7 @@ function MenuSettings({ clientName, params }) {
             <DocumentScannerTwoToneIcon fontSize="small" />
             <ListItemText primary="Export PDF" />
             {disabledButton ? (
-              <>
-                <CircularProgress size={17.5} sx={{ marginRight: "15px" }} />
-              </>
+              <CircularProgress size={17.5} sx={{ marginRight: "15px" }} />
             ) : (
               ""
             )}

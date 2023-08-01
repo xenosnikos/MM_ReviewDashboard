@@ -25,7 +25,7 @@ function clientId() {
 const initialDataState = {
   selectedSources: providers,
   selectedRatings: ratings,
-  page: 1,
+  page: 0,
   limit: 5,
   currentTab: "overview",
   reviewsData: null,
