@@ -150,7 +150,9 @@ export const styles = StyleSheet.create({
   },
   sectionReview: {
     width: "100%",
-    height: 30,
+    marginTop: 10,
+    marginBottom: 10,
+    wrap: true,
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center"
@@ -175,7 +177,8 @@ export const styles = StyleSheet.create({
   },
   textComment: {
     fontSize: 11,
-    paddingLeft: 7
+    paddingLeft: 7,
+    paddingRight: 7
   },
   paddingTopChart: {
     paddingTop: 50
