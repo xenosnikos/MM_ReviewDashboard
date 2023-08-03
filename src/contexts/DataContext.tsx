@@ -44,6 +44,7 @@ const initialDataState = {
   selectedDateOption: "all",
   startDate: null,
   endDate: null,
+  chartTitle: "",
   clientId: clientId()
 };
 

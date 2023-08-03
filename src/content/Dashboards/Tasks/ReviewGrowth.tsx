@@ -7,7 +7,7 @@ import { Chart } from "@/components/Chart";
 
 function ReviewGrowth() {
   const theme = useTheme();
-  const { data } = useContext(DataContext);
+  const { data, chartTitle, setDataState } = useContext(DataContext);
 
   const labelsInit = useMemo(
     () => [
@@ -166,20 +166,33 @@ function ReviewGrowth() {
 
   const getCurrentMonthData = (data) => {
     const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1;
-    const lastDayOfMonth = new Date(currentYear, currentMonth, 0).getDate();
+    const currentYear = currentDate.getUTCFullYear();
+    const currentMonth = currentDate.getUTCMonth() + 1;
 
-    const currentMonthData = data.filter((item) => {
-      const itemDate = new Date(item.date);
-      return (
-        itemDate.getFullYear() === currentYear &&
-        itemDate.getMonth() + 1 === currentMonth &&
-        itemDate.getDate() <= lastDayOfMonth
-      );
+    const lastDayOfMonth = new Date(currentYear, currentMonth, 0).getUTCDate();
+    const monthDays = Array.from({ length: lastDayOfMonth }, (_, index) => index + 1);
+
+    const currentMonthData = monthDays.map((day) => {
+      const itemDate = new Date(Date.UTC(currentYear, currentMonth - 1, day, 0, 0, 0, 0));
+
+      const reviewDay = data.find((item) => {
+        const [itemYear, itemMonth, itemDay] = item.date.split("-");
+        const reviewDate = new Date(
+          Date.UTC(itemYear, itemMonth - 1, itemDay, 0, 0, 0, 0)
+        );
+        return reviewDate.getTime() === itemDate.getTime();
+      });
+
+      return {
+        date: itemDate.toISOString().split("T")[0],
+        count: reviewDay ? reviewDay.count : 0,
+        dayNumber: day - 1
+      };
     });
 
-    return currentMonthData;
+    const filteredData = currentMonthData.filter((item) => item.count > 0);
+
+    return filteredData;
   };
 
   const updateChartData = (selectedOption) => {
@@ -187,6 +200,8 @@ function ReviewGrowth() {
       selectedOption === "current_month"
         ? getCurrentMonthData(data?.reviewGrowth || [])
         : getLastYearData(data?.reviewGrowth || []);
+
+    console.log(selectedData);
 
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
@@ -197,12 +212,27 @@ function ReviewGrowth() {
 
     if (selectedOption === "current_month") {
       const lastDayOfMonth = new Date(currentYear, currentMonth, 0).getDate();
+      const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ];
+
+      setDataState({ chartTitle: `${monthNames[currentMonth - 1]}` });
+
       for (let day = 1; day <= lastDayOfMonth; day++) {
-        const reviewDay = selectedData.find(
-          (item) => new Date(item.date).getDate() === day
-        );
+        const reviewDay = selectedData.find((item) => item.dayNumber === day - 1);
         if (reviewDay) {
-          labels.push((day + 1).toString());
+          labels.push(day.toString());
           seriesData.push(reviewDay.count);
         }
       }
@@ -220,6 +250,8 @@ function ReviewGrowth() {
         labels.push(monthLabel);
         seriesData.push(monthCounts[month - 1] || 0);
       }
+
+      setDataState({ chartTitle: `${currentYear - 1} - ${currentYear}` });
     }
 
     setOptions((prevOptions) => ({
@@ -237,7 +269,9 @@ function ReviewGrowth() {
   useEffect(() => {
     if (period === "Current month") {
       updateChartData("current_month");
-    } else if (period === "Current year") {
+    }
+
+    if (period === "Current year") {
       updateChartData("current_year");
     }
   }, [data, period]);
@@ -245,7 +279,7 @@ function ReviewGrowth() {
   return (
     <Box>
       <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
-        <Typography variant="h4">Review Growth</Typography>
+        <Typography variant="h4">Review Growth: {chartTitle}</Typography>
         <Button
           size="small"
           variant="contained"

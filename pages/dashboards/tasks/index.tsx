@@ -259,7 +259,7 @@ function DashboardTasks() {
                         background: `${theme.colors.alpha.black[5]}`
                       }}
                     >
-                      <ReviewGrowth /* params={params} */ />
+                      <ReviewGrowth />
                     </Box>
                   </Grid>
                   <Grid item xs={6}>
