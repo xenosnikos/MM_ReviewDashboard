@@ -230,7 +230,8 @@ function ReviewGrowth() {
       for (let day = 1; day <= lastDayOfMonth; day++) {
         const reviewDay = selectedData.find((item) => item.dayNumber === day - 1);
         if (reviewDay) {
-          labels.push(day.toString());
+          const dayWithSuffix = `${day}${getDaySuffix(day)}`;
+          labels.push(dayWithSuffix);
           seriesData.push(reviewDay.count);
         }
       }
@@ -263,6 +264,24 @@ function ReviewGrowth() {
         }
       ]
     }));
+  };
+
+  const getDaySuffix = (day) => {
+    if (day >= 11 && day <= 13) {
+      return "th";
+    }
+
+    const lastDigit = day % 10;
+    switch (lastDigit) {
+      case 1:
+        return "st";
+      case 2:
+        return "nd";
+      case 3:
+        return "rd";
+      default:
+        return "th";
+    }
   };
 
   useEffect(() => {
