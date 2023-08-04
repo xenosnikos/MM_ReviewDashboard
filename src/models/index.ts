@@ -17,8 +17,6 @@ export interface CryptoOrder {
 export interface Client {
   id: number;
   name: string;
-  urlKey: string;
-  phoneNumber: string;
   firstLetter?: string;
 }
 

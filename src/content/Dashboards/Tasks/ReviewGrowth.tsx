@@ -227,7 +227,7 @@ function ReviewGrowth() {
         "December"
       ];
 
-      setDataState({ chartTitle: `${monthNames[currentMonth - 1]}` });
+      setDataState({ chartTitle: `Review Growth: ${monthNames[currentMonth - 1]}` });
 
       for (let day = 1; day <= lastDayOfMonth; day++) {
         const reviewDay = selectedData.find((item) => item.dayNumber === day - 1);
@@ -251,7 +251,7 @@ function ReviewGrowth() {
         seriesData.push(monthCounts[month - 1] || 0);
       }
 
-      setDataState({ chartTitle: `${currentYear - 1} - ${currentYear}` });
+      setDataState({ chartTitle: `Review Growth: ${currentYear - 1} - ${currentYear}` });
     }
 
     setOptions((prevOptions) => ({
@@ -279,7 +279,7 @@ function ReviewGrowth() {
   return (
     <Box>
       <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
-        <Typography variant="h4">Review Growth: {chartTitle}</Typography>
+        <Typography variant="h4">{chartTitle}</Typography>
         <Button
           size="small"
           variant="contained"

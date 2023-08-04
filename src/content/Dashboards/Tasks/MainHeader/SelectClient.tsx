@@ -68,9 +68,8 @@ const SelectClient = () => {
 
       if (typeof window !== "undefined") {
         localStorage.setItem("selectedClient", value.name);
-        localStorage.setItem("clientUrlKey", value.urlKey);
         localStorage.setItem("clientId", value.id.toString());
-        router.push(`/dashboards/tasks?client=${value.urlKey}`);
+        router.push(`/dashboards/tasks?client=${value.id}`);
       }
     }
   };

@@ -60,7 +60,7 @@ function Signin() {
 
     try {
       const token = await postSignin(data);
-      const clientUrlKey = localStorage.getItem("clientUrlKey");
+      const clientId = localStorage.getItem("clientId");
 
       localStorage.setItem("MM_token", JSON.stringify(token));
 
@@ -69,8 +69,8 @@ function Signin() {
         requiredPassError: false
       });
 
-      if (clientUrlKey) {
-        return router.push(`/dashboards/tasks?client=${clientUrlKey}`);
+      if (clientId) {
+        return router.push(`/dashboards/tasks?client=${clientId}`);
       }
 
       return router.push("/dashboards/tasks");
