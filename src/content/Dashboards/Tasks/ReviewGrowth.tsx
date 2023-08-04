@@ -201,8 +201,6 @@ function ReviewGrowth() {
         ? getCurrentMonthData(data?.reviewGrowth || [])
         : getLastYearData(data?.reviewGrowth || []);
 
-    console.log(selectedData);
-
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth() + 1;
@@ -238,8 +236,9 @@ function ReviewGrowth() {
       }
     } else {
       const monthCounts = selectedData.reduce((acc, item) => {
-        const itemDate = new Date(item.date);
-        const month = itemDate.getMonth();
+        const [itemYear, itemMonth, itemDay] = item.date.split("-");
+        const itemDate = new Date(Date.UTC(itemYear, itemMonth - 1, itemDay, 0, 0, 0, 0));
+        const month = itemDate.getUTCMonth();
         acc[month] = (acc[month] || 0) + item.count;
         return acc;
       }, {});
