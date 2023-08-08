@@ -13,17 +13,15 @@ const neutralIcon = "http://localhost:3000/static/images/icons/neutral.png";
 const negativeIcon = "http://localhost:3000/static/images/icons/negative.png";
 const reviewIcon = "http://localhost:3000/static/images/icons/reviews.png";
 
-export {
-  googleLogo,
-  yelpLogo,
-  yellowPagesLogo,
-  carGurusLogo,
-  carsLogo,
-  dealerLogo,
-  facebookLogo,
-  star,
-  positiveIcon,
-  neutralIcon,
-  negativeIcon,
-  reviewIcon
+export const logo = (type: string) => {
+  if (type === "Google") return googleLogo;
+  if (type === "Yelp") return yelpLogo;
+  if (type === "Yellow Pages") return yellowPagesLogo;
+  if (type === "CarGurus") return carGurusLogo;
+  if (type === "Cars") return carsLogo;
+  if (type === "Dealer") return dealerLogo;
+  if (type === "Facebook") return facebookLogo;
+  return type;
 };
+
+export { star, positiveIcon, neutralIcon, negativeIcon, reviewIcon };

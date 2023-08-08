@@ -149,11 +149,11 @@ function ReviewGrowth() {
     () => [
       {
         value: "current_month",
-        text: "Current month"
+        text: "Current Month"
       },
       {
         value: "current_year",
-        text: "Current year"
+        text: "Current Year"
       }
     ],
     []
@@ -285,11 +285,11 @@ function ReviewGrowth() {
   };
 
   useEffect(() => {
-    if (period === "Current month") {
+    if (period === "Current Month") {
       updateChartData("current_month");
     }
 
-    if (period === "Current year") {
+    if (period === "Current Year") {
       updateChartData("current_year");
     }
   }, [data, period]);

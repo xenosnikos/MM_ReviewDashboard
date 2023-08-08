@@ -1,19 +1,13 @@
 import { Document, Page, Text, View, Image } from "@react-pdf/renderer";
 import { styles } from "./styles";
 import {
-  googleLogo,
-  yelpLogo,
-  yellowPagesLogo,
-  carGurusLogo,
-  carsLogo,
-  dealerLogo,
-  facebookLogo,
-  star,
-  positiveIcon,
-  neutralIcon,
+  logo,
   negativeIcon,
-  reviewIcon
-} from "./icons";
+  neutralIcon,
+  positiveIcon,
+  reviewIcon,
+  star
+} from "@/components/ReviewIcons/icons";
 
 function DocPDF({ data, reviewsData, chartURI, donutURI, donut2URI, chartTitle }) {
   const reviews = reviewsData?.data;
@@ -39,16 +33,6 @@ function DocPDF({ data, reviewsData, chartURI, donutURI, donut2URI, chartTitle }
     },
     { positive: 0, neutral: 0, negative: 0 }
   );
-
-  const logo = (type: string) => {
-    if (type === "Google") return googleLogo;
-    if (type === "Yelp") return yelpLogo;
-    if (type === "Yellow Pages") return yellowPagesLogo;
-    if (type === "CarGurus") return carGurusLogo;
-    if (type === "Cars") return carsLogo;
-    if (type === "Dealer") return dealerLogo;
-    if (type === "Facebook") return facebookLogo;
-  };
 
   const backStyle = (index: number) => {
     if (index % 2 === 0) return styles.backColor;
@@ -198,7 +182,7 @@ function DocPDF({ data, reviewsData, chartURI, donutURI, donut2URI, chartTitle }
         >
           <Text style={styles.title}>Reviews</Text>
         </View>
-        {reviews.map((value: any, index: number) => (
+        {reviews.map((review: any, index: number) => (
           <View
             key={index}
             wrap={false}
@@ -206,19 +190,19 @@ function DocPDF({ data, reviewsData, chartURI, donutURI, donut2URI, chartTitle }
           >
             <View style={styles.sectionReview}>
               <View style={styles.sectionLogo}>
-                <Image src={logo(value.type)} style={styles.logo} />
+                <Image src={logo(review.type)} style={styles.logo} />
               </View>
               <Text style={styles.textDate}>
-                {value.date} - {data.clientName}
+                {review.date} - {data.clientName}
               </Text>
             </View>
             <View style={styles.sectionReview}>
-              <Text style={styles.textReviewer}>Review by {value.author}:</Text>
-              {rating(value.rating)}
+              <Text style={styles.textReviewer}>Review by {review.author}:</Text>
+              {rating(review.rating)}
             </View>
             <View style={styles.sectionReview}>
               <Text style={styles.textComment}>
-                {value.review ? value.review : "(No comments)"}
+                {review.review ? review.review : "(No comments)"}
               </Text>
             </View>
           </View>

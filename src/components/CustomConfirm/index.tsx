@@ -47,14 +47,14 @@ function CustomConfirm({ onConfirm }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} style={{ color: theme.palette.error.main }}>
-            Disagree
+            Cancel
           </Button>
           <Button
             onClick={handleAgree}
             autoFocus
             style={{ color: theme.palette.success.main }}
           >
-            Agree
+            Confirm
           </Button>
         </DialogActions>
       </Dialog>
