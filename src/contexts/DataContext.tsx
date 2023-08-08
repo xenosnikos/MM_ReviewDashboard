@@ -30,7 +30,7 @@ const initialDataState = {
   currentTab: "overview",
   reviewsData: null,
   data: null,
-  disabledButton: true,
+  disabledButton: false,
   requiredTextError: false,
   requiredPassError: false,
   alertMessage: "",

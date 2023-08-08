@@ -91,7 +91,8 @@ function MenuSettings({ clientName, params }) {
     startDate,
     endDate,
     setDataState,
-    chartTitle
+    chartTitle,
+    clientId
   } = useContext(DataContext);
 
   const totalReviews = reviewsData?.total;
@@ -99,6 +100,18 @@ function MenuSettings({ clientName, params }) {
   const [isConfirmationDialogOpen, setConfirmationDialogOpen] = useState(false);
 
   const handleConfirmationDialogOpen = () => {
+    if (!clientId) {
+      const errorMessage = "Please select a client before proceeding.";
+      const severity: AlertColor = "warning";
+
+      setDataState({
+        alertMessage: errorMessage,
+        alertSeverity: severity,
+        isAlertOpen: true
+      });
+      return;
+    }
+
     if (currentTab !== "overview") {
       setDataState({
         currentTab: "overview"
