@@ -15,7 +15,7 @@ import {
   reviewIcon
 } from "./icons";
 
-function DocPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
+function DocPDF({ data, reviewsData, chartURI, donutURI, donut2URI, chartTitle }) {
   const reviews = reviewsData?.data;
 
   const { positive, neutral, negative } = (data?.sourcesGraphData?.series || []).reduce(
@@ -117,7 +117,7 @@ function DocPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
           </View>
         </View>
         <View style={[styles.sectionAverage, styles.paddingTopChart]}>
-          <Text style={styles.title}>Review Growth</Text>
+          <Text style={styles.title}>{chartTitle}</Text>
         </View>
         <View style={[styles.center, styles.borderTop]}>
           <Image src={chartURI} style={styles.chartImage} />

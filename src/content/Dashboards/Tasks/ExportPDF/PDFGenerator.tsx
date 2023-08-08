@@ -11,6 +11,7 @@ function PDFGenerator({
   reviewsData,
   data,
   refreshPDF,
+  chartTitle,
   setDataState
 }) {
   useEffect(() => {
@@ -72,7 +73,8 @@ function PDFGenerator({
       reviewsData,
       chartURI,
       donutURI,
-      donut2URI
+      donut2URI,
+      chartTitle
     };
   };
 

@@ -8,6 +8,14 @@ import {
 } from "@mui/material";
 
 function SourceTable({ data }) {
+  const currentDate = new Date();
+  const currentMonth = currentDate.toLocaleString("default", { month: "short" });
+  const currentYear = currentDate.getFullYear();
+  const lastMonth = new Date(currentDate);
+  lastMonth.setMonth(lastMonth.getMonth() - 1);
+  const lastMonthName = lastMonth.toLocaleString("default", { month: "short" });
+  const lastMonthYear = lastMonth.getFullYear();
+
   return (
     <TableContainer>
       <Table>
@@ -16,8 +24,12 @@ function SourceTable({ data }) {
             <TableCell>Source</TableCell>
             <TableCell>Total Reviews</TableCell>
             <TableCell>Last 30 days</TableCell>
-            <TableCell>This Month (Nov 2022)</TableCell>
-            <TableCell>Last Month (Oct 2022)</TableCell>
+            <TableCell>
+              This Month ({currentMonth} {currentYear})
+            </TableCell>
+            <TableCell>
+              Last Month ({lastMonthName} {lastMonthYear})
+            </TableCell>
             <TableCell>This Year</TableCell>
           </TableRow>
         </TableHead>

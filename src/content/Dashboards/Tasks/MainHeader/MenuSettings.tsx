@@ -90,7 +90,8 @@ function MenuSettings({ clientName, params }) {
     selectedDateOption,
     startDate,
     endDate,
-    setDataState
+    setDataState,
+    chartTitle
   } = useContext(DataContext);
 
   const totalReviews = reviewsData?.total;
@@ -237,6 +238,7 @@ function MenuSettings({ clientName, params }) {
           reviewsData={reviewsData}
           data={data}
           refreshPDF={refreshPDF}
+          chartTitle={chartTitle}
           setDataState={setDataState}
         />
       )}
