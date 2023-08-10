@@ -16,18 +16,18 @@ import {
 } from "@mui/material";
 import PageTitleWrapper from "@/components/PageTitleWrapper";
 
-import AverageStartRating from "@/content/Dashboards/Tasks/AverageStartRating";
-import TotalReviews from "@/content/Dashboards/Tasks/TotalReviews";
-import ReviewGrowth from "@/content/Dashboards/Tasks/ReviewGrowth";
-import StarRatingBreakDown from "@/content/Dashboards/Tasks/StarRatingBreakDown";
-import ReviewSourceBreakDown from "@/content/Dashboards/Tasks/ReviewSourceBreakDown";
-import ReviewsTable from "@/content/Dashboards/Tasks/ReviewsTable/ReviewsTable";
-import SourceGraph from "@/content/Dashboards/Tasks/SourceGraph";
-import SourceTable from "@/content/Dashboards/Tasks/SourceTable";
+import AverageStartRating from "@/content/Dashboards/Tasks/OverviewTab/AverageStartRating";
+import TotalReviews from "@/content/Dashboards/Tasks/OverviewTab/TotalReviews";
+import ReviewGrowth from "@/content/Dashboards/Tasks/OverviewTab/ReviewGrowth";
+import StarRatingBreakDown from "@/content/Dashboards/Tasks/OverviewTab/StarRatingBreakDown";
+import ReviewSourceBreakDown from "@/content/Dashboards/Tasks/OverviewTab/ReviewSourceBreakDown";
+import ReviewsTable from "@/content/Dashboards/Tasks/ReviewsTab/ReviewsTable";
+import SourceGraph from "@/content/Dashboards/Tasks/SourcesTab/SourceGraph";
+import SourceTable from "@/content/Dashboards/Tasks/SourcesTab/SourceTable";
 
 import { getDashboardData, getReviewsData } from "@/services";
 import DataContext from "@/contexts/DataContext";
-import SocialPages from "@/content/Dashboards/Tasks/SocialPages/SocialPages";
+import SocialPages from "@/content/Dashboards/Tasks/SocialPagesTab/SocialPages";
 import CustomAlert from "@/components/CustomAlert";
 
 const TabsContainerWrapper = styled(Box)(

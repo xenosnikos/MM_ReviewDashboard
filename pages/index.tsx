@@ -4,7 +4,7 @@ import BaseLayout from "src/layouts/BaseLayout";
 
 import Head from "next/head";
 
-import Signin from "@/content/Overview/Signin";
+import Signin from "@/content/Signin";
 
 import Footer from "src/components/Footer";
 

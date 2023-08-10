@@ -82,7 +82,7 @@ const SelectClient = () => {
     <Box
       sx={{
         marginLeft: "10px",
-        width: "100%"
+        width: "250px"
       }}
     >
       <Autocomplete
@@ -100,7 +100,7 @@ const SelectClient = () => {
             sx={{
               "& .MuiInputBase-root": {
                 fontSize: "20px",
-                height: "36px",
+                height: "38px",
                 fontWeight: "bold"
               }
             }}

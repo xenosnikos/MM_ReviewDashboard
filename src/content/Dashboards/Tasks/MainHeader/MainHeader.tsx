@@ -11,11 +11,11 @@ function MainHeader({ clientName, params }) {
       flexDirection={{ xs: "column", md: "row" }}
       justifyContent="space-between"
     >
-      <Box display="flex" alignItems="center">
+      <Box display="flex" alignItems="center" sx={{ maxWidthidth: "500px" }}>
         <Box>
           <Box display="flex" alignItems="center" sx={{ marginBottom: "5px" }}>
             <Typography variant="h3" component="h3" gutterBottom>
-              Welcome,
+              Welcome to Client:
             </Typography>
             <SelectClient />
           </Box>

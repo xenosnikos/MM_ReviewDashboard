@@ -22,6 +22,7 @@ import {
 import { providers, ratings } from "@/helpers/constant";
 import DataContext from "@/contexts/DataContext";
 import Review from "./Review";
+import { logo } from "@/components/ReviewIcons/icons";
 
 function ReviewsTable() {
   const theme = useTheme();
@@ -204,7 +205,9 @@ function ReviewsTable() {
                   return (
                     <TableRow hover key={index}>
                       <TableCell>{review.date}</TableCell>
-                      <TableCell>{review.type}</TableCell>
+                      <TableCell>
+                        <img src={logo(review.type)} style={{ width: 60 }} />
+                      </TableCell>
                       <TableCell>
                         <Box display="flex" alignItems="center" gap={1}>
                           <Rating
@@ -213,7 +216,6 @@ function ReviewsTable() {
                             precision={0.1}
                             readOnly
                           />
-                          {review.rating}
                         </Box>
                       </TableCell>
                       <TableCell>
