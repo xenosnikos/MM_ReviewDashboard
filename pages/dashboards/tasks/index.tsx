@@ -41,10 +41,6 @@ const TabsContainerWrapper = styled(Box)(
         min-height: 44px;
       }
 
-      .MuiTabs-scrollableX {
-        overflow-x: auto !important;
-      }
-
       .MuiTabs-indicator {
           min-height: 4px;
           height: 4px;

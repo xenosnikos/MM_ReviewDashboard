@@ -41,7 +41,7 @@ function TotalReviews({ amount }) {
           color: `${theme.colors.alpha.white[100]}`
         }}
       >
-        {amount}
+        {amount || 0}
       </Typography>
     </RootWrapper>
   );

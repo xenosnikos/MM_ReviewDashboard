@@ -65,6 +65,20 @@ const UserBoxDescription = styled(Typography)(
 );
 
 function MenuSettings({ clientName, params }) {
+  const {
+    currentTab,
+    refreshPDF,
+    reviewsData,
+    data,
+    disabledButton,
+    selectedDateOption,
+    startDate,
+    endDate,
+    setDataState,
+    chartTitle,
+    clientId
+  } = useContext(DataContext);
+
   const user = {
     title: "Menu Settings",
     subtitle: "MaxxMedia"
@@ -80,20 +94,6 @@ function MenuSettings({ clientName, params }) {
   const handleClose = (): void => {
     setOpen(false);
   };
-
-  const {
-    currentTab,
-    refreshPDF,
-    reviewsData,
-    data,
-    disabledButton,
-    selectedDateOption,
-    startDate,
-    endDate,
-    setDataState,
-    chartTitle,
-    clientId
-  } = useContext(DataContext);
 
   const totalReviews = reviewsData?.total;
 
