@@ -7,6 +7,7 @@ function SignOut() {
 
   const handleSignOut = () => {
     localStorage.removeItem("MM_token");
+    localStorage.removeItem("check");
     router.push("/");
   };
 

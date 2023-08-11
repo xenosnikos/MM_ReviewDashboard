@@ -6,7 +6,6 @@ export const postSignin = async (params: IFormData) => {
     api
       .post("/login", params)
       .then((response) => {
-        console.log(response);
         if (response?.data?.status === "success")
           resolve(
             (response.data.data.remember_token =

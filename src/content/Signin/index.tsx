@@ -15,11 +15,10 @@ import {
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/web";
 import Head from "next/head";
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { postSignin } from "@/services";
 import DataContext from "@/contexts/DataContext";
-
 import CustomAlert from "@/components/CustomAlert";
 
 export interface IFormData {
@@ -32,6 +31,33 @@ function Signin() {
   const formRef = useRef<FormHandles>(null);
   const router = useRouter();
   const { setDataState } = useContext(DataContext);
+  const [checked, setChecked] = useState<boolean | null>(null);
+
+  const handleRememberMeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      setChecked(true);
+    } else {
+      setChecked(false);
+    }
+  };
+
+  if (typeof window !== "undefined") {
+    const clientId = localStorage.getItem("clientId");
+    const rememberedUsername = localStorage.getItem("rememberedUsername");
+    const check = localStorage.getItem("check");
+
+    if (rememberedUsername) {
+      formRef.current?.setFieldValue("username", rememberedUsername);
+    }
+
+    if (clientId && check === "check") {
+      router.push(`/dashboards/tasks?client=${clientId}`);
+    }
+
+    if (check === "check") {
+      router.push("/dashboards/tasks");
+    }
+  }
 
   const handleSubmit = async (data: IFormData) => {
     if (!data.username && !data.password) {
@@ -56,6 +82,16 @@ function Signin() {
         requiredPassError: true
       });
       return;
+    }
+
+    if (checked) {
+      localStorage.setItem("rememberedUsername", data.username);
+      localStorage.setItem("check", "check");
+    }
+
+    if (!checked) {
+      localStorage.removeItem("rememberedUsername");
+      localStorage.removeItem("check");
     }
 
     try {
@@ -139,7 +175,10 @@ function Signin() {
                   onKeyDown={handleKeyDown}
                 />
                 <Box display="flex" justifyContent="flex-start" sx={{ width: "100%" }}>
-                  <FormControlLabel control={<Checkbox />} label="Remember me" />
+                  <FormControlLabel
+                    control={<Checkbox onChange={handleRememberMeChange} />}
+                    label="Remember me"
+                  />
                 </Box>
               </Form>
               <Button
