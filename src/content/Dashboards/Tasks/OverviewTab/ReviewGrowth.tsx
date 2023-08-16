@@ -97,10 +97,10 @@ function ReviewGrowth() {
       },
       xaxis: {
         axisBorder: {
-          show: false
+          show: true //h
         },
         axisTicks: {
-          show: false
+          show: true //h
         },
         labels: {
           style: {
@@ -111,10 +111,10 @@ function ReviewGrowth() {
       yaxis: {
         tickAmount: 6,
         axisBorder: {
-          show: false
+          show: true
         },
         axisTicks: {
-          show: false
+          show: true
         },
         labels: {
           style: {
@@ -124,7 +124,7 @@ function ReviewGrowth() {
       },
       tooltip: {
         x: {
-          show: false
+          show: true
         },
         marker: {
           show: false

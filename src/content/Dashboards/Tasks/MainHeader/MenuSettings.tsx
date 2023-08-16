@@ -147,7 +147,29 @@ function MenuSettings({ clientName, params }) {
               const startDateFormatted = new Date(startDate);
               const endDateFormatted = new Date(endDate);
 
-              return reviewDate >= startDateFormatted && reviewDate <= endDateFormatted;
+              const reviewDateUTC = new Date(
+                Date.UTC(
+                  reviewDate.getFullYear(),
+                  reviewDate.getMonth(),
+                  reviewDate.getDate()
+                )
+              );
+              const startDateUTC = new Date(
+                Date.UTC(
+                  startDateFormatted.getFullYear(),
+                  startDateFormatted.getMonth(),
+                  startDateFormatted.getDate()
+                )
+              );
+              const endDateUTC = new Date(
+                Date.UTC(
+                  endDateFormatted.getFullYear(),
+                  endDateFormatted.getMonth(),
+                  endDateFormatted.getDate()
+                )
+              );
+
+              return reviewDateUTC >= startDateUTC && reviewDateUTC <= endDateUTC;
             })
           };
 
