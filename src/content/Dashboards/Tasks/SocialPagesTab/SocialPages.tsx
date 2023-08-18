@@ -4,6 +4,7 @@ import DataContext from "@/contexts/DataContext";
 import { getClientSocialMediaLink } from "@/services";
 import AddSocialPage from "./AddSocialPage";
 import GetSocialPages from "./GetSocialPages";
+import { ClientSocialMediaLink } from "@/models";
 
 function SocialPages() {
   const theme = useTheme();
@@ -17,7 +18,10 @@ function SocialPages() {
     const title = filter === "All Social Media" ? null : filter;
 
     try {
-      const response = await getClientSocialMediaLink(clientId, title);
+      const response: ClientSocialMediaLink[] = await getClientSocialMediaLink(
+        clientId,
+        title
+      );
 
       if (Array.isArray(response)) return setDataState({ links: response });
 

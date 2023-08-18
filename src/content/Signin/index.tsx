@@ -20,11 +20,7 @@ import { useRouter } from "next/router";
 import { postSignin } from "@/services";
 import DataContext from "@/contexts/DataContext";
 import CustomAlert from "@/components/CustomAlert";
-
-export interface IFormData {
-  username: string;
-  password: string;
-}
+import { IFormData } from "@/models";
 
 function Signin() {
   const theme = useTheme();

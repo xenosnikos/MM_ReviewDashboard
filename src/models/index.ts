@@ -14,6 +14,11 @@ export interface CryptoOrder {
   currency: string;
 }
 
+export interface IFormData {
+  username: string;
+  password: string;
+}
+
 export interface Client {
   id: number;
   name: string;
@@ -49,4 +54,70 @@ export interface ReviewsDataResponse {
   prev_page_url: string | null;
   to: number;
   total: number;
+}
+
+interface SourceTableData {
+  lastMonth?: number;
+  lastThirtyDaysCount?: number;
+  thisMonth?: number;
+  thisYear?: number;
+  totalCount?: number;
+  type: string;
+}
+
+interface SeriesData {
+  data: number[];
+  name: string;
+}
+
+interface SourcesGraphData {
+  categories: {
+    [key: string]: string;
+  };
+  series: SeriesData[];
+}
+
+interface ReviewGrowth {
+  date: string;
+  count: number;
+}
+
+interface ReviewSourceBreakdown {
+  type: string;
+  count: string;
+}
+
+interface StarRatingBreakdown {
+  rating: number;
+  count: string;
+}
+
+export interface DashboardDataResponse {
+  clientName: string;
+  averageRating: string;
+  totalReviews: number;
+  starRatingBreakdown: StarRatingBreakdown[];
+  reviewSourceBreakDown: ReviewSourceBreakdown[];
+  reviewGrowth: ReviewGrowth[];
+  sourceTableData: SourceTableData[];
+  sourcesGraphData: SourcesGraphData;
+}
+
+export interface ClientSocialMediaLink {
+  clientId: number;
+  id: number;
+  link: string;
+  socialMediaLinkId: number;
+  title: string;
+}
+
+export interface CreateClientSocialMediaLink {
+  clientid: number;
+  title: string;
+  url: string;
+}
+
+export interface EditClientSocialMediaLink {
+  id: number;
+  url: string;
 }

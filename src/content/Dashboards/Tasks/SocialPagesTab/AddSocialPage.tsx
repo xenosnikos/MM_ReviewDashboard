@@ -7,6 +7,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { FormHandles } from "@unform/core";
 import DataContext from "@/contexts/DataContext";
 import { createClientSocialMediaLink } from "@/services";
+import { CreateClientSocialMediaLink } from "@/models";
 
 function AddSocialPage() {
   const theme = useTheme();
@@ -17,7 +18,7 @@ function AddSocialPage() {
   const handleSubmit = async (data) => {
     const { socialLink, socialPage } = data;
 
-    const body = {
+    const body: CreateClientSocialMediaLink = {
       clientid: clientId,
       title: socialPage,
       url: socialLink

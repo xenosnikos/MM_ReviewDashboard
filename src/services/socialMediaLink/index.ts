@@ -1,6 +1,14 @@
+import {
+  ClientSocialMediaLink,
+  CreateClientSocialMediaLink,
+  EditClientSocialMediaLink
+} from "@/models";
 import api from "../api/index";
 
-const getClientSocialMediaLink = async (clientid: string, title?: string) => {
+const getClientSocialMediaLink = async (
+  clientid: string,
+  title?: string
+): Promise<ClientSocialMediaLink[]> => {
   return await new Promise((resolve, reject) => {
     api
       .get("/getClientSocialmedialink", {
@@ -10,6 +18,7 @@ const getClientSocialMediaLink = async (clientid: string, title?: string) => {
         }
       })
       .then((response) => {
+        console.log(response.data.data);
         if (response?.data?.status === "success") resolve(response.data.data);
         else reject("Something went wrong");
       })
@@ -20,7 +29,7 @@ const getClientSocialMediaLink = async (clientid: string, title?: string) => {
   });
 };
 
-const createClientSocialMediaLink = async (params) => {
+const createClientSocialMediaLink = async (params: CreateClientSocialMediaLink) => {
   return await new Promise((resolve, reject) => {
     api
       .post("/createClientSocialmedialink", params)
@@ -52,7 +61,7 @@ const deleteClientSocialMediaLink = async (id: number) => {
   });
 };
 
-const editClientSocialMediaLink = async (params) => {
+const editClientSocialMediaLink = async (params: EditClientSocialMediaLink) => {
   return await new Promise((resolve, reject) => {
     api
       .post("/editClientSocialmedialink", params)

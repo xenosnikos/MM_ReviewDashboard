@@ -1,6 +1,9 @@
+import { DashboardDataResponse } from "@/models";
 import api from "../api/index";
 
-export const getDashboardData = async (client: string) => {
+export const getDashboardData = async (
+  client: string
+): Promise<DashboardDataResponse> => {
   return await new Promise((resolve, reject) => {
     api
       .get("/getDashboardData", {

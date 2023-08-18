@@ -29,6 +29,7 @@ import { getDashboardData, getReviewsData } from "@/services";
 import DataContext from "@/contexts/DataContext";
 import SocialPages from "@/content/Dashboards/Tasks/SocialPagesTab/SocialPages";
 import CustomAlert from "@/components/CustomAlert";
+import { DashboardDataResponse, ReviewsDataResponse } from "@/models";
 
 const TabsContainerWrapper = styled(Box)(
   ({ theme }) => `
@@ -123,7 +124,7 @@ function DashboardTasks() {
   } = useContext(DataContext);
 
   const { client } = router.query;
-  const clientString = typeof client === "string" ? client : "";
+  const clientId = typeof client === "string" ? client : "";
 
   const tabs = [
     { value: "overview", label: "Overview" },
@@ -140,7 +141,7 @@ function DashboardTasks() {
   };
 
   const params = {
-    client: clientString,
+    client: clientId,
     per_page: limit,
     page: page + 1,
     sources: JSON.stringify(selectedSources),
@@ -150,7 +151,7 @@ function DashboardTasks() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await getReviewsData(params);
+        const response: ReviewsDataResponse = await getReviewsData(params);
 
         setDataState({
           reviewsData: response
@@ -175,7 +176,7 @@ function DashboardTasks() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await getDashboardData(clientString);
+        const response: DashboardDataResponse = await getDashboardData(clientId);
 
         setDataState({
           data: response,

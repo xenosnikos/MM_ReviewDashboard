@@ -19,6 +19,7 @@ import { filterProvider } from "@/helpers/constant";
 import DataContext from "@/contexts/DataContext";
 import { deleteClientSocialMediaLink, editClientSocialMediaLink } from "@/services";
 import CustomConfirm from "@/components/CustomConfirm";
+import { EditClientSocialMediaLink } from "@/models";
 
 function GetSocialPages() {
   const theme = useTheme();
@@ -57,7 +58,7 @@ function GetSocialPages() {
   }, [selectedLinkId]);
 
   const handleEditLink = useCallback(async () => {
-    const body = {
+    const body: EditClientSocialMediaLink = {
       id: selectedLinkId,
       url: editLinkValue
     };

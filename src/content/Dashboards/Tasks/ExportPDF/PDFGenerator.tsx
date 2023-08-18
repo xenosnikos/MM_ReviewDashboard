@@ -4,6 +4,7 @@ import { pdf } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
 import DocPDF from "./DocPDF";
 import { getReviewsData } from "@/services";
+import { ReviewsDataResponse } from "@/models";
 
 function PDFGenerator({
   clientName,
@@ -24,7 +25,7 @@ function PDFGenerator({
       saveAs(blob, `${clientName}.pdf`);
 
       try {
-        const response = await getReviewsData(params);
+        const response: ReviewsDataResponse = await getReviewsData(params);
 
         setDataState({
           reviewsData: response,

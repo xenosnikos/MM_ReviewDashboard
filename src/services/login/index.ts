@@ -1,4 +1,4 @@
-import { IFormData } from "@/content/Signin";
+import { IFormData } from "@/models";
 import api from "../api/index";
 
 export const postSignin = async (params: IFormData) => {
