@@ -1,24 +1,17 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import Head from 'next/head';
-import SidebarLayout from '@/layouts/SidebarLayout';
+import Head from "next/head";
+import SidebarLayout from "@/layouts/SidebarLayout";
 
-import TopBarContent from '@/content/Applications/Messenger/TopBarContent';
-import BottomBarContent from '@/content/Applications/Messenger/BottomBarContent';
-import SidebarContent from '@/content/Applications/Messenger/SidebarContent';
-import ChatContent from '@/content/Applications/Messenger/ChatContent';
-import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
+import TopBarContent from "@/content/Applications/Messenger/TopBarContent";
+import BottomBarContent from "@/content/Applications/Messenger/BottomBarContent";
+import SidebarContent from "@/content/Applications/Messenger/SidebarContent";
+import ChatContent from "@/content/Applications/Messenger/ChatContent";
+import MenuTwoToneIcon from "@mui/icons-material/MenuTwoTone";
 
-import Scrollbar from '@/components/Scrollbar';
+import Scrollbar from "@/components/Scrollbar";
 
-import {
-  Box,
-  styled,
-  Divider,
-  Drawer,
-  IconButton,
-  useTheme
-} from '@mui/material';
+import { Box, styled, Divider, Drawer, IconButton, useTheme } from "@mui/material";
 
 const RootWrapper = styled(Box)(
   ({ theme }) => `
@@ -90,10 +83,10 @@ function ApplicationsMessenger() {
       <RootWrapper className="Mui-FixedWrapper">
         <DrawerWrapperMobile
           sx={{
-            display: { lg: 'none', xs: 'inline-block' }
+            display: { lg: "none", xs: "inline-block" }
           }}
           variant="temporary"
-          anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+          anchor={theme.direction === "rtl" ? "right" : "left"}
           open={mobileOpen}
           onClose={handleDrawerToggle}
         >
@@ -103,7 +96,7 @@ function ApplicationsMessenger() {
         </DrawerWrapperMobile>
         <Sidebar
           sx={{
-            display: { xs: 'none', lg: 'inline-block' }
+            display: { xs: "none", lg: "inline-block" }
           }}
         >
           <Scrollbar>
@@ -113,12 +106,12 @@ function ApplicationsMessenger() {
         <ChatWindow>
           <ChatTopBar
             sx={{
-              display: { xs: 'flex', lg: 'inline-block' }
+              display: { xs: "flex", lg: "inline-block" }
             }}
           >
             <IconButtonToggle
               sx={{
-                display: { lg: 'none', xs: 'flex' },
+                display: { lg: "none", xs: "flex" },
                 mr: 2
               }}
               color="primary"
@@ -142,8 +135,6 @@ function ApplicationsMessenger() {
   );
 }
 
-ApplicationsMessenger.getLayout = (page) => (
-  <SidebarLayout>{page}</SidebarLayout>
-);
+ApplicationsMessenger.getLayout = (page) => <SidebarLayout>{page}</SidebarLayout>;
 
 export default ApplicationsMessenger;

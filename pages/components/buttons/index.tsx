@@ -1,7 +1,7 @@
-import Head from 'next/head';
-import SidebarLayout from '@/layouts/SidebarLayout';
-import PageTitle from '@/components/PageTitle';
-import PageTitleWrapper from '@/components/PageTitleWrapper';
+import Head from "next/head";
+import SidebarLayout from "@/layouts/SidebarLayout";
+import PageTitle from "@/components/PageTitle";
+import PageTitleWrapper from "@/components/PageTitleWrapper";
 import {
   Button,
   Container,
@@ -11,10 +11,10 @@ import {
   CardHeader,
   CardContent,
   Divider
-} from '@mui/material';
-import Footer from 'src/components/Footer';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+} from "@mui/material";
+import Footer from "src/components/Footer";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 function Buttons() {
   return (
@@ -48,11 +48,7 @@ function Buttons() {
                 <Button sx={{ margin: 1 }} variant="contained" color="primary">
                   Primary
                 </Button>
-                <Button
-                  sx={{ margin: 1 }}
-                  variant="contained"
-                  color="secondary"
-                >
+                <Button sx={{ margin: 1 }} variant="contained" color="secondary">
                   Secondary
                 </Button>
                 <Button sx={{ margin: 1 }} variant="contained" disabled>
@@ -188,11 +184,7 @@ function Buttons() {
                     </Button>
                   </div>
                   <div>
-                    <IconButton
-                      aria-label="delete"
-                      sx={{ margin: 1 }}
-                      size="small"
-                    >
+                    <IconButton aria-label="delete" sx={{ margin: 1 }} size="small">
                       <ArrowDownwardIcon fontSize="inherit" />
                     </IconButton>
                     <IconButton aria-label="delete" sx={{ margin: 1 }}>

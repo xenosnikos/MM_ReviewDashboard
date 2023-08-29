@@ -1,22 +1,15 @@
-import Head from 'next/head';
-import SidebarLayout from '@/layouts/SidebarLayout';
-import PageTitle from '@/components/PageTitle';
-import PageTitleWrapper from '@/components/PageTitleWrapper';
-import {
-  Container,
-  Grid,
-  Card,
-  CardHeader,
-  CardContent,
-  Divider
-} from '@mui/material';
-import { useState, SyntheticEvent } from 'react';
+import Head from "next/head";
+import SidebarLayout from "@/layouts/SidebarLayout";
+import PageTitle from "@/components/PageTitle";
+import PageTitleWrapper from "@/components/PageTitleWrapper";
+import { Container, Grid, Card, CardHeader, CardContent, Divider } from "@mui/material";
+import { useState, SyntheticEvent } from "react";
 
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Footer from 'src/components/Footer';
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Footer from "src/components/Footer";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -47,7 +40,7 @@ function TabPanel(props: TabPanelProps) {
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`
+    "aria-controls": `simple-tabpanel-${index}`
   };
 }
 
@@ -83,7 +76,7 @@ function TabsDemo() {
               <CardHeader title="Basic Example" />
               <Divider />
               <CardContent>
-                <Box sx={{ width: '100%' }}>
+                <Box sx={{ width: "100%" }}>
                   <Tabs
                     variant="scrollable"
                     scrollButtons="auto"

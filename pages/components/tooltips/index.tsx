@@ -1,19 +1,12 @@
-import Head from 'next/head';
-import SidebarLayout from '@/layouts/SidebarLayout';
-import PageTitle from '@/components/PageTitle';
-import PageTitleWrapper from '@/components/PageTitleWrapper';
-import {
-  Container,
-  Grid,
-  Card,
-  CardHeader,
-  CardContent,
-  Divider
-} from '@mui/material';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import Footer from 'src/components/Footer';
+import Head from "next/head";
+import SidebarLayout from "@/layouts/SidebarLayout";
+import PageTitle from "@/components/PageTitle";
+import PageTitleWrapper from "@/components/PageTitleWrapper";
+import { Container, Grid, Card, CardHeader, CardContent, Divider } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import Footer from "src/components/Footer";
 
 function Tooltips() {
   return (
@@ -40,7 +33,7 @@ function Tooltips() {
             <Card>
               <CardHeader title="Positioning" />
               <Divider />
-              <CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
+              <CardContent sx={{ display: "flex", justifyContent: "center" }}>
                 <Box sx={{ width: 500 }}>
                   <Grid container justifyContent="center">
                     <Grid item>
@@ -69,13 +62,7 @@ function Tooltips() {
                         <Button>left-end</Button>
                       </Tooltip>
                     </Grid>
-                    <Grid
-                      item
-                      container
-                      xs={6}
-                      alignItems="flex-end"
-                      direction="column"
-                    >
+                    <Grid item container xs={6} alignItems="flex-end" direction="column">
                       <Grid item>
                         <Tooltip arrow title="Add" placement="right-start">
                           <Button>right-start</Button>

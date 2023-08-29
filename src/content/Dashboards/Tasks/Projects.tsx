@@ -12,13 +12,13 @@ import {
   Badge,
   styled,
   useTheme
-} from '@mui/material';
-import MoreVertTwoToneIcon from '@mui/icons-material/MoreVertTwoTone';
-import Link from 'src/components/Link';
-import Text from 'src/components/Text';
-import CalendarTodayTwoToneIcon from '@mui/icons-material/CalendarTodayTwoTone';
-import CheckTwoToneIcon from '@mui/icons-material/CheckTwoTone';
-import StarTwoToneIcon from '@mui/icons-material/StarTwoTone';
+} from "@mui/material";
+import MoreVertTwoToneIcon from "@mui/icons-material/MoreVertTwoTone";
+import Link from "src/components/Link";
+import Text from "src/components/Text";
+import CalendarTodayTwoToneIcon from "@mui/icons-material/CalendarTodayTwoTone";
+import CheckTwoToneIcon from "@mui/icons-material/CheckTwoTone";
+import StarTwoToneIcon from "@mui/icons-material/StarTwoTone";
 
 const AvatarWrapperSuccess = styled(Avatar)(
   ({ theme }) => `
@@ -27,7 +27,7 @@ const AvatarWrapperSuccess = styled(Avatar)(
 `
 );
 
-const DotLegend = styled('span')(
+const DotLegend = styled("span")(
   ({ theme }) => `
     border-radius: 22px;
     width: ${theme.spacing(1.8)};
@@ -94,29 +94,25 @@ function Projects() {
               }
               title="Fix Urgent Mobile App Bugs"
               titleTypographyProps={{
-                variant: 'h5',
-                color: 'textPrimary'
+                variant: "h5",
+                color: "textPrimary"
               }}
             />
             <Box>
               <Typography variant="subtitle2" gutterBottom>
-                Tasks done:{' '}
+                Tasks done:{" "}
                 <Text color="black">
                   <b>25</b>
                 </Text>
                 <b> /100</b>
               </Typography>
-              <LinearProgressWrapper
-                value={25}
-                color="primary"
-                variant="determinate"
-              />
+              <LinearProgressWrapper value={25} color="primary" variant="determinate" />
             </Box>
             <Box
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between'
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between"
               }}
             >
               <AvatarGroup>
@@ -193,11 +189,7 @@ function Projects() {
                     <CalendarTodayTwoToneIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>
-                <Tooltip
-                  arrow
-                  title="Mark project as favourite"
-                  placement="top"
-                >
+                <Tooltip arrow title="Mark project as favourite" placement="top">
                   <IconButton
                     size="small"
                     sx={{
@@ -235,29 +227,25 @@ function Projects() {
               }
               title="Replace Placeholder Images"
               titleTypographyProps={{
-                variant: 'h5',
-                color: 'textPrimary'
+                variant: "h5",
+                color: "textPrimary"
               }}
             />
             <Box>
               <Typography variant="subtitle2" gutterBottom>
-                Tasks done:{' '}
+                Tasks done:{" "}
                 <Text color="black">
                   <b>80</b>
                 </Text>
                 <b> /100</b>
               </Typography>
-              <LinearProgressWrapper
-                value={80}
-                color="primary"
-                variant="determinate"
-              />
+              <LinearProgressWrapper value={80} color="primary" variant="determinate" />
             </Box>
             <Box
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between'
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between"
               }}
             >
               <AvatarGroup>
@@ -310,11 +298,7 @@ function Projects() {
                     <CalendarTodayTwoToneIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>
-                <Tooltip
-                  arrow
-                  title="Mark project as favourite"
-                  placement="top"
-                >
+                <Tooltip arrow title="Mark project as favourite" placement="top">
                   <IconButton
                     size="small"
                     sx={{
@@ -339,15 +323,13 @@ function Projects() {
               avatar={
                 <Badge
                   anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right'
+                    vertical: "bottom",
+                    horizontal: "right"
                   }}
                   overlap="circular"
                   badgeContent={
                     <Tooltip arrow placement="top" title="Online right now">
-                      <DotLegend
-                        style={{ background: `${theme.colors.success.main}` }}
-                      />
+                      <DotLegend style={{ background: `${theme.colors.success.main}` }} />
                     </Tooltip>
                   }
                 >
@@ -361,29 +343,25 @@ function Projects() {
               }
               title="BloomUI Redesign Project"
               titleTypographyProps={{
-                variant: 'h5',
-                color: 'textPrimary'
+                variant: "h5",
+                color: "textPrimary"
               }}
             />
             <Box>
               <Typography variant="subtitle2" gutterBottom>
-                Tasks done:{' '}
+                Tasks done:{" "}
                 <Text color="black">
                   <b>87</b>
                 </Text>
                 <b> /100</b>
               </Typography>
-              <LinearProgressWrapper
-                value={87}
-                color="primary"
-                variant="determinate"
-              />
+              <LinearProgressWrapper value={87} color="primary" variant="determinate" />
             </Box>
             <Box
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between'
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between"
               }}
             >
               <AvatarGroup>
@@ -448,11 +426,7 @@ function Projects() {
                     <CalendarTodayTwoToneIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>
-                <Tooltip
-                  arrow
-                  title="Mark project as favourite"
-                  placement="top"
-                >
+                <Tooltip arrow title="Mark project as favourite" placement="top">
                   <IconButton
                     size="small"
                     sx={{

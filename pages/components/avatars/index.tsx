@@ -1,22 +1,15 @@
-import Head from 'next/head';
-import SidebarLayout from '@/layouts/SidebarLayout';
-import PageTitle from '@/components/PageTitle';
-import PageTitleWrapper from '@/components/PageTitleWrapper';
-import {
-  Container,
-  Grid,
-  Card,
-  CardHeader,
-  CardContent,
-  Divider
-} from '@mui/material';
-import Footer from 'src/components/Footer';
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
-import { deepOrange, deepPurple, green, pink } from '@mui/material/colors';
-import FolderIcon from '@mui/icons-material/Folder';
-import PageviewIcon from '@mui/icons-material/Pageview';
-import AssignmentIcon from '@mui/icons-material/Assignment';
+import Head from "next/head";
+import SidebarLayout from "@/layouts/SidebarLayout";
+import PageTitle from "@/components/PageTitle";
+import PageTitleWrapper from "@/components/PageTitleWrapper";
+import { Container, Grid, Card, CardHeader, CardContent, Divider } from "@mui/material";
+import Footer from "src/components/Footer";
+import Avatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
+import { deepOrange, deepPurple, green, pink } from "@mui/material/colors";
+import FolderIcon from "@mui/icons-material/Folder";
+import PageviewIcon from "@mui/icons-material/Pageview";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 
 function stringToColor(string: string) {
   let hash = 0;
@@ -27,7 +20,7 @@ function stringToColor(string: string) {
     hash = string.charCodeAt(i) + ((hash << 5) - hash);
   }
 
-  let color = '#';
+  let color = "#";
 
   for (i = 0; i < 3; i += 1) {
     const value = (hash >> (i * 8)) & 0xff;
@@ -43,7 +36,7 @@ function stringAvatar(name: string) {
     sx: {
       bgcolor: stringToColor(name)
     },
-    children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`
+    children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`
   };
 }
 
@@ -75,14 +68,8 @@ function Avatars() {
               <CardContent>
                 <Stack direction="row" spacing={2}>
                   <Avatar alt="Remy Sharp" src="/static/images/avatars/1.jpg" />
-                  <Avatar
-                    alt="Travis Howard"
-                    src="/static/images/avatars/2.jpg"
-                  />
-                  <Avatar
-                    alt="Cindy Baker"
-                    src="/static/images/avatars/3.jpg"
-                  />
+                  <Avatar alt="Travis Howard" src="/static/images/avatars/2.jpg" />
+                  <Avatar alt="Cindy Baker" src="/static/images/avatars/3.jpg" />
                 </Stack>
               </CardContent>
             </Card>
@@ -99,9 +86,9 @@ function Avatars() {
                 </Stack>
                 <Divider sx={{ my: 5 }} />
                 <Stack direction="row" spacing={2}>
-                  <Avatar {...stringAvatar('Kent Dodds')} />
-                  <Avatar {...stringAvatar('Jed Watson')} />
-                  <Avatar {...stringAvatar('Tim Neutkens')} />
+                  <Avatar {...stringAvatar("Kent Dodds")} />
+                  <Avatar {...stringAvatar("Jed Watson")} />
+                  <Avatar {...stringAvatar("Tim Neutkens")} />
                 </Stack>
               </CardContent>
             </Card>

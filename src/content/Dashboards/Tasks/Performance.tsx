@@ -4,8 +4,9 @@ import {
   CardContent,
   Typography,
   useTheme,
-  styled, Rating
-} from '@mui/material';
+  styled,
+  Rating
+} from "@mui/material";
 
 const RootWrapper = styled(Card)(
   ({ theme }) => `

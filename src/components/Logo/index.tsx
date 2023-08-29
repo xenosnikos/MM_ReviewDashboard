@@ -1,5 +1,5 @@
-import { Box, styled, Tooltip } from '@mui/material';
-import Link from 'src/components/Link';
+import { Box, styled, Tooltip } from "@mui/material";
+import Link from "src/components/Link";
 
 const LogoWrapper = styled(Link)(
   ({ theme }) => `
@@ -111,7 +111,7 @@ function Logo() {
       <Box
         component="span"
         sx={{
-          display: { xs: 'none', sm: 'inline-block' }
+          display: { xs: "none", sm: "inline-block" }
         }}
       >
         <LogoTextWrapper>

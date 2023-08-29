@@ -1,22 +1,21 @@
-import { FC, useState, createContext, useEffect } from 'react';
-import { ThemeProvider } from '@mui/material';
-import { themeCreator } from './base';
-import { StylesProvider } from '@mui/styles';
+import { FC, useState, createContext, useEffect } from "react";
+import { ThemeProvider } from "@mui/material";
+import { themeCreator } from "./base";
+import { StylesProvider } from "@mui/styles";
 
 export const ThemeContext = createContext((_themeName: string): void => {});
 
 const ThemeProviderWrapper: FC = (props) => {
-  const [themeName, _setThemeName] = useState('NebulaFighterTheme');
+  const [themeName, _setThemeName] = useState("NebulaFighterTheme");
 
   useEffect(() => {
-    const curThemeName =
-      window.localStorage.getItem('appTheme') || 'NebulaFighterTheme';
+    const curThemeName = window.localStorage.getItem("appTheme") || "NebulaFighterTheme";
     _setThemeName(curThemeName);
   }, []);
 
   const theme = themeCreator(themeName);
   const setThemeName = (themeName: string): void => {
-    window.localStorage.setItem('appTheme', themeName);
+    window.localStorage.setItem("appTheme", themeName);
     _setThemeName(themeName);
   };
 

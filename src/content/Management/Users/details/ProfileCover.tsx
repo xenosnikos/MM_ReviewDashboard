@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import {
   Box,
   Typography,
@@ -8,16 +8,16 @@ import {
   CardMedia,
   Button,
   IconButton
-} from '@mui/material';
-import { styled } from '@mui/material/styles';
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
 
-import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
-import ArrowForwardTwoToneIcon from '@mui/icons-material/ArrowForwardTwoTone';
-import UploadTwoToneIcon from '@mui/icons-material/UploadTwoTone';
-import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
+import ArrowBackTwoToneIcon from "@mui/icons-material/ArrowBackTwoTone";
+import ArrowForwardTwoToneIcon from "@mui/icons-material/ArrowForwardTwoTone";
+import UploadTwoToneIcon from "@mui/icons-material/UploadTwoTone";
+import MoreHorizTwoToneIcon from "@mui/icons-material/MoreHorizTwoTone";
 
-const Input = styled('input')({
-  display: 'none'
+const Input = styled("input")({
+  display: "none"
 });
 
 const AvatarWrapper = styled(Card)(
@@ -136,7 +136,7 @@ const ProfileCover = ({ user }) => {
           {user.jobtitle} | {user.location} | {user.followers} followers
         </Typography>
         <Box
-          display={{ xs: 'block', md: 'flex' }}
+          display={{ xs: "block", md: "flex" }}
           alignItems="center"
           justifyContent="space-between"
         >

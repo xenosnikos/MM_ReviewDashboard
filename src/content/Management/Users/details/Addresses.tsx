@@ -1,14 +1,6 @@
-import {
-  Box,
-  Button,
-  Typography,
-  Card,
-  CardHeader,
-  Divider,
-  Grid
-} from '@mui/material';
+import { Box, Button, Typography, Card, CardHeader, Divider, Grid } from "@mui/material";
 
-import { ArrowForwardTwoTone } from '@mui/icons-material';
+import { ArrowForwardTwoTone } from "@mui/icons-material";
 
 function Addresses() {
   const addresses = {
@@ -28,7 +20,7 @@ function Addresses() {
         <Card>
           <CardHeader
             title="Delivery Addresses"
-            subheader={addresses.delivery + ' saved addresses'}
+            subheader={addresses.delivery + " saved addresses"}
           />
           <Divider />
           <Box p={2}>
@@ -44,11 +36,7 @@ function Addresses() {
                 348 W. Goldfield Street Bethel Park, PA 15102
               </Typography>
             </Box>
-            <Button
-              fullWidth
-              variant="outlined"
-              endIcon={<ArrowForwardTwoTone />}
-            >
+            <Button fullWidth variant="outlined" endIcon={<ArrowForwardTwoTone />}>
               Manage
             </Button>
           </Box>
@@ -58,7 +46,7 @@ function Addresses() {
         <Card>
           <CardHeader
             title="Shipping Addresses"
-            subheader={addresses.shipping + ' saved addresses'}
+            subheader={addresses.shipping + " saved addresses"}
           />
           <Divider />
           <Box p={2}>
@@ -74,11 +62,7 @@ function Addresses() {
                 10 E. Wrangler Avenue Sioux Falls, SD 57103
               </Typography>
             </Box>
-            <Button
-              fullWidth
-              variant="outlined"
-              endIcon={<ArrowForwardTwoTone />}
-            >
+            <Button fullWidth variant="outlined" endIcon={<ArrowForwardTwoTone />}>
               Manage
             </Button>
           </Box>

@@ -1,9 +1,4 @@
-import {
-  Card,
-  Typography,
-  useTheme,
-  styled
-} from '@mui/material';
+import { Card, Typography, useTheme, styled } from "@mui/material";
 
 const RootWrapper = styled(Card)(
   ({ theme }) => `
@@ -46,7 +41,7 @@ function TotalReviews({ amount }) {
           color: `${theme.colors.alpha.white[100]}`
         }}
       >
-        {amount}
+        {amount || 0}
       </Typography>
     </RootWrapper>
   );

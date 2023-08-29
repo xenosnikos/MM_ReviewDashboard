@@ -1,8 +1,8 @@
-import Head from 'next/head';
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import PageHeader from '@/content/Dashboards/Tasks/PageHeader';
-import Footer from '@/components/Footer';
+import Head from "next/head";
+import { ChangeEvent, useContext, useEffect } from "react";
+import { useRouter } from "next/router";
+import PageHeader from "@/content/Dashboards/Tasks/MainHeader/MainHeader";
+import Footer from "@/components/Footer";
 import {
   Grid,
   Tab,
@@ -12,20 +12,24 @@ import {
   Box,
   useTheme,
   styled,
-} from '@mui/material';
-import PageTitleWrapper from '@/components/PageTitleWrapper';
+  AlertColor
+} from "@mui/material";
+import PageTitleWrapper from "@/components/PageTitleWrapper";
 
-import AverageStartRating from '@/content/Dashboards/Tasks/AverageStartRating';
-import TotalReviews from '@/content/Dashboards/Tasks/TotalReviews';
-import ReviewGrowth from '@/content/Dashboards/Tasks/ReviewGrowth';
-import StarRatingBreakDown from '@/content/Dashboards/Tasks/StarRatingBreakDown';
-import ReviewSourceBreakDown from '@/content/Dashboards/Tasks/ReviewSourceBreakDown';
-import ReviewsTable from '@/content/Dashboards/Tasks/ReviewsTable';
-import SourceGraph from '@/content/Dashboards/Tasks/SourceGraph';
-import SourceTable from '@/content/Dashboards/Tasks/SourceTable';
+import AverageStartRating from "@/content/Dashboards/Tasks/OverviewTab/AverageStartRating";
+import TotalReviews from "@/content/Dashboards/Tasks/OverviewTab/TotalReviews";
+import ReviewGrowth from "@/content/Dashboards/Tasks/OverviewTab/ReviewGrowth";
+import StarRatingBreakDown from "@/content/Dashboards/Tasks/OverviewTab/StarRatingBreakDown";
+import ReviewSourceBreakDown from "@/content/Dashboards/Tasks/OverviewTab/ReviewSourceBreakDown";
+import ReviewsTable from "@/content/Dashboards/Tasks/ReviewsTab/ReviewsTable";
+import SourceGraph from "@/content/Dashboards/Tasks/SourcesTab/SourceGraph";
+import SourceTable from "@/content/Dashboards/Tasks/SourcesTab/SourceTable";
 
-import { getDashboardData, getReviewsData } from '@/services';
-import DataContext from '@/contexts/DataContext';
+import { getDashboardData, getReviewsData } from "@/services";
+import DataContext from "@/contexts/DataContext";
+import SocialPages from "@/content/Dashboards/Tasks/SocialPagesTab/SocialPages";
+import CustomAlert from "@/components/CustomAlert";
+import { DashboardDataResponse, ReviewsDataResponse } from "@/models";
 
 const TabsContainerWrapper = styled(Box)(
   ({ theme }) => `
@@ -36,10 +40,6 @@ const TabsContainerWrapper = styled(Box)(
       .MuiTabs-root {
         height: 44px;
         min-height: 44px;
-      }
-
-      .MuiTabs-scrollableX {
-        overflow-x: auto !important;
       }
 
       .MuiTabs-indicator {
@@ -113,74 +113,97 @@ function DashboardTasks() {
   const router = useRouter();
   const theme = useTheme();
   const {
+    currentTab,
     data,
-    setData,
     selectedSources,
     selectedRatings,
     page,
-    setPage,
     limit,
-    reviewsData,
-    setReviewsData,
-    setDisabledButton } = useContext(DataContext);
+    setDataState,
+    reviewsData
+  } = useContext(DataContext);
 
   const { client } = router.query;
-  const clientString = typeof client === 'string' ? client : '';
-
-  const [currentTab, setCurrentTab] = useState<string>('overview');
+  const clientId = typeof client === "string" ? client : "";
 
   const tabs = [
-    { value: 'overview', label: 'Overview' },
-    { value: 'reviews', label: 'Reviews' },
-    { value: 'sources', label: 'Sources' }
+    { value: "overview", label: "Overview" },
+    { value: "reviews", label: "Reviews" },
+    { value: "sources", label: "Sources" },
+    { value: "social_pages", label: "Social Pages" }
   ];
 
   const handleTabsChange = (_event: ChangeEvent<{}>, value: string): void => {
-    setCurrentTab(value);
-    setPage(1);
+    setDataState({
+      currentTab: value,
+      page: 0
+    });
   };
 
   const params = {
-    client: clientString,
+    client: clientId,
     per_page: limit,
-    page: page,
+    page: page + 1,
     sources: JSON.stringify(selectedSources),
     ratings: JSON.stringify(selectedRatings)
-  }  
+  };
 
   useEffect(() => {
     const getData = async () => {
-      await getReviewsData(params)
-        .then(response => setReviewsData(response))
-        .catch(error => console.log(error));
-    }
+      try {
+        const response: ReviewsDataResponse = await getReviewsData(params);
 
-    if (typeof client === 'string') {
+        setDataState({
+          reviewsData: response
+        });
+      } catch (error) {
+        const errorMessage = "Could not load reviews, please try again later.";
+        const severity: AlertColor = "error";
+
+        setDataState({
+          alertMessage: errorMessage,
+          alertSeverity: severity,
+          isAlertOpen: true
+        });
+      }
+    };
+
+    if (typeof client === "string") {
       getData();
     }
   }, [page, limit, selectedSources, selectedRatings, client]);
 
   useEffect(() => {
     const getData = async () => {
-      await getDashboardData(clientString)
-      .then(response => {
-        setData(response);
-        setDisabledButton(false);
-      })
-      .catch(error => {
-        console.log(error);
-        setDisabledButton(false);
-      });
-    }
-    if (typeof client === 'string') {
+      try {
+        const response: DashboardDataResponse = await getDashboardData(clientId);
+
+        setDataState({
+          data: response,
+          disabledButton: false
+        });
+      } catch (error) {
+        const errorMessage = "Could not load data, please try again later.";
+        const severity: AlertColor = "error";
+
+        setDataState({
+          disabledButton: false,
+          alertMessage: errorMessage,
+          alertSeverity: severity,
+          isAlertOpen: true
+        });
+      }
+    };
+
+    if (typeof client === "string") {
       getData();
     }
   }, [client]);
 
   useEffect(() => {
     console.log(data);
-    console.log(reviewsData)
-  }, [data]);
+    console.log(reviewsData);
+  }, [data, reviewsData]);
 
   return (
     <>
@@ -214,16 +237,16 @@ function DashboardTasks() {
               alignItems="stretch"
               spacing={4}
             >
-              {currentTab === 'overview' && (
+              {currentTab === "overview" && (
                 <>
                   <Grid item xs={4}>
                     <Box display="flex" flexDirection="column" gap={2}>
                       <AverageStartRating
-                        rating={data?.averageRating ? parseFloat(data.averageRating) : null}
+                        rating={
+                          data?.averageRating ? parseFloat(data.averageRating) : null
+                        }
                       />
-                      <TotalReviews
-                        amount={data?.totalReviews}
-                      />
+                      <TotalReviews amount={data?.totalReviews} />
                     </Box>
                   </Grid>
                   <Grid item xs={8}>
@@ -233,46 +256,41 @@ function DashboardTasks() {
                         background: `${theme.colors.alpha.black[5]}`
                       }}
                     >
-                      <ReviewGrowth
-                        /* data={data?.reviewGrowth} */
-                        params={params}                        
-                      />
+                      <ReviewGrowth />
                     </Box>
                   </Grid>
                   <Grid item xs={6}>
-                    <StarRatingBreakDown
-                      data={data?.starRatingBreakdown}
-                    />
+                    <StarRatingBreakDown data={data?.starRatingBreakdown} />
                   </Grid>
                   <Grid item xs={6}>
-                    <ReviewSourceBreakDown
-                      data={data?.reviewSourceBreakDown}
-                    />
+                    <ReviewSourceBreakDown data={data?.reviewSourceBreakDown} />
                   </Grid>
                 </>
               )}
-              {currentTab === 'reviews' && (
+              {currentTab === "reviews" && (
                 <Grid item xs={12}>
                   <ReviewsTable />
                 </Grid>
               )}
-              {currentTab === 'sources' && (
+              {currentTab === "sources" && (
                 <>
                   <Grid item xs={12}>
-                    <SourceGraph
-                      data={data?.sourcesGraphData?.series}
-                    />
+                    <SourceGraph data={data?.sourcesGraphData?.series} />
                   </Grid>
                   <Grid item xs={12}>
-                    <SourceTable
-                      data={data?.sourceTableData}
-                    />
+                    <SourceTable data={data?.sourceTableData} />
                   </Grid>
                 </>
+              )}
+              {currentTab === "social_pages" && (
+                <Grid item xs={12}>
+                  <SocialPages />
+                </Grid>
               )}
             </Grid>
           </Box>
         </Card>
+        <CustomAlert />
       </Container>
       <Footer />
     </>

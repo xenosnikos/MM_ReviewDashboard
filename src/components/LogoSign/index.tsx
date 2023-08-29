@@ -6,8 +6,8 @@ import {
   tooltipClasses,
   styled,
   useTheme
-} from '@mui/material';
-import Link from 'src/components/Link';
+} from "@mui/material";
+import Link from "src/components/Link";
 
 const LogoWrapper = styled(Link)(
   ({ theme }) => `
@@ -84,10 +84,9 @@ const TooltipWrapper = styled(({ className, ...props }: TooltipProps) => (
     backgroundColor: theme.colors.alpha.trueWhite[100],
     color: theme.palette.getContrastText(theme.colors.alpha.trueWhite[100]),
     fontSize: theme.typography.pxToRem(12),
-    fontWeight: 'bold',
+    fontWeight: "bold",
     borderRadius: theme.general.borderRadiusSm,
-    boxShadow:
-      '0 .2rem .8rem rgba(7,9,25,.18), 0 .08rem .15rem rgba(7,9,25,.15)'
+    boxShadow: "0 .2rem .8rem rgba(7,9,25,.18), 0 .08rem .15rem rgba(7,9,25,.15)"
   },
   [`& .${tooltipClasses.arrow}`]: {
     color: theme.colors.alpha.trueWhite[100]
@@ -98,14 +97,11 @@ function Logo() {
   const theme = useTheme();
 
   return (
-    <TooltipWrapper
-      title="Tokyo Free Black Next.js Typescript Admin Dashboard"
-      arrow
-    >
+    <TooltipWrapper title="Tokyo Free Black Next.js Typescript Admin Dashboard" arrow>
       <LogoWrapper href="/">
         <Badge
           sx={{
-            '.MuiBadge-badge': {
+            ".MuiBadge-badge": {
               fontSize: theme.typography.pxToRem(11),
               right: -2,
               top: 8

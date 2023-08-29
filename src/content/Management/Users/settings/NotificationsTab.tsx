@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from "react";
 import {
   Box,
   Typography,
@@ -9,7 +9,7 @@ import {
   ListItemText,
   Divider,
   Switch
-} from '@mui/material';
+} from "@mui/material";
 
 function NotificationsTab() {
   const [state, setState] = useState({
@@ -39,9 +39,9 @@ function NotificationsTab() {
           <List>
             <ListItem sx={{ p: 3 }}>
               <ListItemText
-                primaryTypographyProps={{ variant: 'h5', gutterBottom: true }}
+                primaryTypographyProps={{ variant: "h5", gutterBottom: true }}
                 secondaryTypographyProps={{
-                  variant: 'subtitle2',
+                  variant: "subtitle2",
                   lineHeight: 1
                 }}
                 primary="Widthdraw Activity"
@@ -57,9 +57,9 @@ function NotificationsTab() {
             <Divider component="li" />
             <ListItem sx={{ p: 3 }}>
               <ListItemText
-                primaryTypographyProps={{ variant: 'h5', gutterBottom: true }}
+                primaryTypographyProps={{ variant: "h5", gutterBottom: true }}
                 secondaryTypographyProps={{
-                  variant: 'subtitle2',
+                  variant: "subtitle2",
                   lineHeight: 1
                 }}
                 primary="Weekly Report"
@@ -86,9 +86,9 @@ function NotificationsTab() {
           <List>
             <ListItem sx={{ p: 3 }}>
               <ListItemText
-                primaryTypographyProps={{ variant: 'h5', gutterBottom: true }}
+                primaryTypographyProps={{ variant: "h5", gutterBottom: true }}
                 secondaryTypographyProps={{
-                  variant: 'subtitle2',
+                  variant: "subtitle2",
                   lineHeight: 1
                 }}
                 primary="Failed Payment"
@@ -104,9 +104,9 @@ function NotificationsTab() {
             <Divider component="li" />
             <ListItem sx={{ p: 3 }}>
               <ListItemText
-                primaryTypographyProps={{ variant: 'h5', gutterBottom: true }}
+                primaryTypographyProps={{ variant: "h5", gutterBottom: true }}
                 secondaryTypographyProps={{
-                  variant: 'subtitle2',
+                  variant: "subtitle2",
                   lineHeight: 1
                 }}
                 primary="Order Status Update"

@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef } from "react";
 
 import {
   Box,
@@ -9,11 +9,11 @@ import {
   ListItem,
   List,
   Typography
-} from '@mui/material';
-import { styled } from '@mui/material/styles';
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
 
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import MoreVertTwoToneIcon from '@mui/icons-material/MoreVertTwoTone';
+import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
+import MoreVertTwoToneIcon from "@mui/icons-material/MoreVertTwoTone";
 
 const ButtonError = styled(Button)(
   ({ theme }) => `
@@ -53,12 +53,7 @@ function BulkActions() {
             Delete
           </ButtonError>
         </Box>
-        <IconButton
-          color="primary"
-          onClick={openMenu}
-          ref={moreRef}
-          sx={{ ml: 2, p: 1 }}
-        >
+        <IconButton color="primary" onClick={openMenu} ref={moreRef} sx={{ ml: 2, p: 1 }}>
           <MoreVertTwoToneIcon />
         </IconButton>
       </Box>
@@ -69,12 +64,12 @@ function BulkActions() {
         open={onMenuOpen}
         onClose={closeMenu}
         anchorOrigin={{
-          vertical: 'center',
-          horizontal: 'center'
+          vertical: "center",
+          horizontal: "center"
         }}
         transformOrigin={{
-          vertical: 'center',
-          horizontal: 'center'
+          vertical: "center",
+          horizontal: "center"
         }}
       >
         <List sx={{ p: 1 }} component="nav">

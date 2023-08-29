@@ -1,27 +1,21 @@
-import {
-  Typography,
-  Box,
-  Card,
-  Container,
-  Button,
-  styled
-} from '@mui/material';
-import type { ReactElement } from 'react';
-import BaseLayout from 'src/layouts/BaseLayout';
+import { Box, Container, Divider, styled, Typography, useTheme } from "@mui/material";
+import type { ReactElement } from "react";
+import BaseLayout from "src/layouts/BaseLayout";
 
-import Link from 'src/components/Link';
-import Head from 'next/head';
+import Head from "next/head";
 
-import Logo from 'src/components/LogoSign';
-import Hero from 'src/content/Overview/Hero';
+import Signin from "@/content/Signin";
 
-const HeaderWrapper = styled(Card)(
+import Footer from "src/components/Footer";
+
+const HeaderWrapper = styled(Box)(
   ({ theme }) => `
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   height: ${theme.spacing(10)};
-  margin-bottom: ${theme.spacing(10)};
+  background-color: ${theme.colors.alpha.black[5]};
 `
 );
 
@@ -35,49 +29,32 @@ const OverviewWrapper = styled(Box)(
 );
 
 function Overview() {
+  const theme = useTheme();
+
   return (
     <OverviewWrapper>
       <Head>
-        <title>Tokyo Free Black NextJS Typescript Admin Dashboard</title>
+        <title>Sign in</title>
       </Head>
       <HeaderWrapper>
         <Container maxWidth="lg">
-          <Box display="flex" alignItems="center">
-            <Logo />
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-              flex={1}
+          <Box>
+            <Typography
+              variant="h1"
+              sx={{
+                textAlign: "center",
+                fontSize: `${theme.typography.pxToRem(30)}`,
+                color: `${theme.colors.alpha.black[100]}`
+              }}
             >
-              <Box />
-              <Box>
-                <Button
-                  component={Link}
-                  href="/dashboards/tasks"
-                  variant="contained"
-                  sx={{ ml: 2 }}
-                >
-                  Live Preview
-                </Button>
-              </Box>
-            </Box>
+              MaxxMedia
+            </Typography>
           </Box>
         </Container>
       </HeaderWrapper>
-      <Hero />
-      <Container maxWidth="lg" sx={{ mt: 8 }}>
-        <Typography textAlign="center" variant="subtitle1">
-          Crafted by{' '}
-          <Link
-            href="https://bloomui.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            BloomUI.com
-          </Link>
-        </Typography>
-      </Container>
+      <Divider sx={{ mb: `${theme.spacing(6)}` }} />
+      <Signin />
+      <Footer />
     </OverviewWrapper>
   );
 }

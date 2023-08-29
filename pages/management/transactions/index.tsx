@@ -1,11 +1,11 @@
-import Head from 'next/head';
-import SidebarLayout from '@/layouts/SidebarLayout';
-import PageHeader from '@/content/Management/Transactions/PageHeader';
-import PageTitleWrapper from '@/components/PageTitleWrapper';
-import { Grid, Container } from '@mui/material';
-import Footer from '@/components/Footer';
+import Head from "next/head";
+import SidebarLayout from "@/layouts/SidebarLayout";
+import PageHeader from "@/content/Management/Transactions/PageHeader";
+import PageTitleWrapper from "@/components/PageTitleWrapper";
+import { Grid, Container } from "@mui/material";
+import Footer from "@/components/Footer";
 
-import RecentOrders from '@/content/Management/Transactions/RecentOrders';
+import RecentOrders from "@/content/Management/Transactions/RecentOrders";
 
 function ApplicationsTransactions() {
   return (
@@ -34,8 +34,6 @@ function ApplicationsTransactions() {
   );
 }
 
-ApplicationsTransactions.getLayout = (page) => (
-  <SidebarLayout>{page}</SidebarLayout>
-);
+ApplicationsTransactions.getLayout = (page) => <SidebarLayout>{page}</SidebarLayout>;
 
 export default ApplicationsTransactions;

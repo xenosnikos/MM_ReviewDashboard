@@ -4,8 +4,9 @@ import {
   CardContent,
   Typography,
   useTheme,
-  styled, Rating
-} from '@mui/material';
+  styled,
+  Rating
+} from "@mui/material";
 
 const RootWrapper = styled(Card)(
   ({ theme }) => `
@@ -20,7 +21,10 @@ function AverageStartRating({ rating }) {
   return (
     <RootWrapper
       sx={{
-        p: 1
+        p: 1,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
       }}
     >
       <Typography
@@ -50,7 +54,7 @@ function AverageStartRating({ rating }) {
               marginBottom: 2
             }}
           >
-            {rating}
+            {rating || 0}
           </Typography>
           <Rating value={rating} defaultValue={5} precision={0.1} readOnly />
         </Box>

@@ -1,16 +1,8 @@
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemText,
-  Menu,
-  MenuItem,
-  styled
-} from '@mui/material';
-import { useRef, useState } from 'react';
-import Link from 'src/components/Link';
+import { Box, List, ListItem, ListItemText, Menu, MenuItem, styled } from "@mui/material";
+import { useRef, useState } from "react";
+import Link from "src/components/Link";
 
-import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
+import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
 
 const ListWrapper = styled(Box)(
   ({ theme }) => `
@@ -19,7 +11,7 @@ const ListWrapper = styled(Box)(
         }
         
         .MuiListItem-root {
-            transition: ${theme.transitions.create(['color', 'fill'])};
+            transition: ${theme.transitions.create(["color", "fill"])};
             
             &.MuiListItem-indicators {
                 padding: ${theme.spacing(1, 2)};
@@ -80,36 +72,30 @@ function HeaderMenu() {
       <ListWrapper
         sx={{
           display: {
-            xs: 'none',
-            md: 'block'
+            xs: "none",
+            md: "block"
           }
         }}
       >
         <List disablePadding component={Box} display="flex">
           <ListItem
-            classes={{ root: 'MuiListItem-indicators' }}
+            classes={{ root: "MuiListItem-indicators" }}
             button
             component={Link}
             href="/components/buttons"
           >
-            <ListItemText
-              primaryTypographyProps={{ noWrap: true }}
-              primary="Buttons"
-            />
+            <ListItemText primaryTypographyProps={{ noWrap: true }} primary="Buttons" />
           </ListItem>
           <ListItem
-            classes={{ root: 'MuiListItem-indicators' }}
+            classes={{ root: "MuiListItem-indicators" }}
             button
             component={Link}
             href="/components/forms"
           >
-            <ListItemText
-              primaryTypographyProps={{ noWrap: true }}
-              primary="Forms"
-            />
+            <ListItemText primaryTypographyProps={{ noWrap: true }} primary="Forms" />
           </ListItem>
           <ListItem
-            classes={{ root: 'MuiListItem-indicators' }}
+            classes={{ root: "MuiListItem-indicators" }}
             button
             ref={ref}
             onClick={handleOpen}

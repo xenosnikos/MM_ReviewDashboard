@@ -1,35 +1,29 @@
-import { Document, Page, Text, View, Image } from '@react-pdf/renderer';
-import { styles } from './styles';
+import { Document, Page, Text, View, Image } from "@react-pdf/renderer";
+import { styles } from "./styles";
 import {
-  googleLogo,
-  yelpLogo,
-  yellowPagesLogo,
-  carGurusLogo,
-  carsLogo,
-  dealerLogo,
-  facebookLogo,
-  star,
-  positiveIcon,
-  neutralIcon,
+  logo,
   negativeIcon,
-  reviewIcon
-} from './icons';
+  neutralIcon,
+  positiveIcon,
+  reviewIcon,
+  star
+} from "@/components/ReviewIcons/icons";
 
-function ExportPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
-  const reviewsReverse = reviewsData?.data?.reverse();
+function DocPDF({ data, reviewsData, chartURI, donutURI, donut2URI, chartTitle }) {
+  const reviews = reviewsData?.data;
 
   const { positive, neutral, negative } = (data?.sourcesGraphData?.series || []).reduce(
     (acc, value) => {
       switch (value.name) {
-        case '5 Stars':
-        case '4 Stars':
+        case "5 Stars":
+        case "4 Stars":
           acc.positive += value.data.reduce((prev, curr) => prev + curr, 0);
           break;
-        case '3 Stars':
+        case "3 Stars":
           acc.neutral += value.data.reduce((prev, curr) => prev + curr, 0);
           break;
-        case '2 Stars':
-        case '1 Stars':
+        case "2 Stars":
+        case "1 Stars":
           acc.negative += value.data.reduce((prev, curr) => prev + curr, 0);
           break;
         default:
@@ -39,16 +33,6 @@ function ExportPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
     },
     { positive: 0, neutral: 0, negative: 0 }
   );
-
-  const logo = (type: string) => {
-    if (type === 'Google') return googleLogo;
-    if (type === 'Yelp') return yelpLogo;
-    if (type === 'Yellow Pages') return yellowPagesLogo;
-    if (type === 'CarGurus') return carGurusLogo;
-    if (type === 'Cars') return carsLogo;
-    if (type === 'Dealer') return dealerLogo;
-    if (type === 'Facebook') return facebookLogo;
-  };
 
   const backStyle = (index: number) => {
     if (index % 2 === 0) return styles.backColor;
@@ -97,7 +81,15 @@ function ExportPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
         <View style={styles.sectionAverage}>
           <Text style={styles.title}>Average Rating</Text>
         </View>
-        <View style={[styles.subSectionAverage, styles.borderBottom, styles.borderTop, styles.borderLeft, styles.borderRight]}>
+        <View
+          style={[
+            styles.subSectionAverage,
+            styles.borderBottom,
+            styles.borderTop,
+            styles.borderLeft,
+            styles.borderRight
+          ]}
+        >
           <Text style={styles.valueAverage}>{data?.averageRating}</Text>
           <View style={styles.sourceBreakdown}>
             {data?.reviewSourceBreakDown.map((value: any, index: number) => (
@@ -109,12 +101,19 @@ function ExportPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
           </View>
         </View>
         <View style={[styles.sectionAverage, styles.paddingTopChart]}>
-          <Text style={styles.title}>Review Growth</Text>
+          <Text style={styles.title}>{chartTitle}</Text>
         </View>
         <View style={[styles.center, styles.borderTop]}>
           <Image src={chartURI} style={styles.chartImage} />
         </View>
-        <View style={[styles.sectionAverage, styles.donutsCharts, styles.paddingTopChart, styles.borderTop]}>
+        <View
+          style={[
+            styles.sectionAverage,
+            styles.donutsCharts,
+            styles.paddingTopChart,
+            styles.borderTop
+          ]}
+        >
           <Text style={styles.title}>Star Rating Breakdown</Text>
           <Text style={styles.title}>Review Source Breakdown</Text>
         </View>
@@ -173,29 +172,44 @@ function ExportPDF({ data, reviewsData, chartURI, donutURI, donut2URI }) {
             </View>
           ))}
         </View>
-        <View style={[styles.sectionAverage, styles.borderTop, styles.borderBottom, styles.paddingTop]}>
+        <View
+          style={[
+            styles.sectionAverage,
+            styles.borderTop,
+            styles.borderBottom,
+            styles.paddingTop
+          ]}
+        >
           <Text style={styles.title}>Reviews</Text>
         </View>
-        {reviewsReverse.map((value: any, index: number) => (
-          <View key={index} wrap={false} style={[styles.reviewBox, styles.borderBottom, backStyle(index)]} >
+        {reviews.map((review: any, index: number) => (
+          <View
+            key={index}
+            wrap={false}
+            style={[styles.reviewBox, styles.borderBottom, backStyle(index)]}
+          >
             <View style={styles.sectionReview}>
               <View style={styles.sectionLogo}>
-                <Image src={logo(value.type)} style={styles.logo} />
+                <Image src={logo(review.type)} style={styles.logo} />
               </View>
-              <Text style={styles.textDate}>{value.date} - {data.clientName}</Text>
+              <Text style={styles.textDate}>
+                {review.date} - {data.clientName}
+              </Text>
             </View>
             <View style={styles.sectionReview}>
-              <Text style={styles.textReviewer}>Review by {value.author}:</Text>
-              {rating(value.rating)}
+              <Text style={styles.textReviewer}>Review by {review.author}:</Text>
+              {rating(review.rating)}
             </View>
             <View style={styles.sectionReview}>
-              <Text style={styles.textComment}>{value.review ? value.review : '(No comments)'}</Text>
+              <Text style={styles.textComment}>
+                {review.review ? review.review : "(No comments)"}
+              </Text>
             </View>
           </View>
         ))}
       </Page>
     </Document>
   );
-};
+}
 
-export default ExportPDF;
+export default DocPDF;

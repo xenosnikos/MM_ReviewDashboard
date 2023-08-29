@@ -1,13 +1,7 @@
-import { Box, Avatar, Typography, Card, styled, Divider } from '@mui/material';
+import { Box, Avatar, Typography, Card, styled, Divider } from "@mui/material";
 
-import {
-  formatDistance,
-  format,
-  subDays,
-  subHours,
-  subMinutes
-} from 'date-fns';
-import ScheduleTwoToneIcon from '@mui/icons-material/ScheduleTwoTone';
+import { formatDistance, format, subDays, subHours, subMinutes } from "date-fns";
+import ScheduleTwoToneIcon from "@mui/icons-material/ScheduleTwoTone";
 
 const DividerWrapper = styled(Divider)(
   ({ theme }) => `
@@ -47,22 +41,15 @@ const CardWrapperSecondary = styled(Card)(
 
 function ChatContent() {
   const user = {
-    name: 'Catherine Pike',
-    avatar: '/static/images/avatars/1.jpg'
+    name: "Catherine Pike",
+    avatar: "/static/images/avatars/1.jpg"
   };
 
   return (
     <Box p={3}>
-      <DividerWrapper>
-        {format(subDays(new Date(), 3), 'MMMM dd yyyy')}
-      </DividerWrapper>
+      <DividerWrapper>{format(subDays(new Date(), 3), "MMMM dd yyyy")}</DividerWrapper>
 
-      <Box
-        display="flex"
-        alignItems="flex-start"
-        justifyContent="flex-start"
-        py={3}
-      >
+      <Box display="flex" alignItems="flex-start" justifyContent="flex-start" py={3}>
         <Avatar
           variant="rounded"
           sx={{
@@ -86,8 +73,8 @@ function ChatContent() {
             variant="subtitle1"
             sx={{
               pt: 1,
-              display: 'flex',
-              alignItems: 'center'
+              display: "flex",
+              alignItems: "center"
             }}
           >
             <ScheduleTwoToneIcon
@@ -103,12 +90,7 @@ function ChatContent() {
         </Box>
       </Box>
 
-      <Box
-        display="flex"
-        alignItems="flex-start"
-        justifyContent="flex-end"
-        py={3}
-      >
+      <Box display="flex" alignItems="flex-start" justifyContent="flex-end" py={3}>
         <Box
           display="flex"
           alignItems="flex-end"
@@ -117,15 +99,15 @@ function ChatContent() {
           mr={2}
         >
           <CardWrapperPrimary>
-            Yes, I'll email them right now. I'll let you know once the remaining
-            invoices are done.
+            Yes, I'll email them right now. I'll let you know once the remaining invoices
+            are done.
           </CardWrapperPrimary>
           <Typography
             variant="subtitle1"
             sx={{
               pt: 1,
-              display: 'flex',
-              alignItems: 'center'
+              display: "flex",
+              alignItems: "center"
             }}
           >
             <ScheduleTwoToneIcon
@@ -149,16 +131,9 @@ function ChatContent() {
           src={user.avatar}
         />
       </Box>
-      <DividerWrapper>
-        {format(subDays(new Date(), 5), 'MMMM dd yyyy')}
-      </DividerWrapper>
+      <DividerWrapper>{format(subDays(new Date(), 5), "MMMM dd yyyy")}</DividerWrapper>
 
-      <Box
-        display="flex"
-        alignItems="flex-start"
-        justifyContent="flex-end"
-        py={3}
-      >
+      <Box display="flex" alignItems="flex-start" justifyContent="flex-end" py={3}>
         <Box
           display="flex"
           alignItems="flex-end"
@@ -178,8 +153,8 @@ function ChatContent() {
             variant="subtitle1"
             sx={{
               pt: 1,
-              display: 'flex',
-              alignItems: 'center'
+              display: "flex",
+              alignItems: "center"
             }}
           >
             <ScheduleTwoToneIcon
@@ -204,12 +179,7 @@ function ChatContent() {
         />
       </Box>
       <DividerWrapper>Today</DividerWrapper>
-      <Box
-        display="flex"
-        alignItems="flex-start"
-        justifyContent="flex-start"
-        py={3}
-      >
+      <Box display="flex" alignItems="flex-start" justifyContent="flex-start" py={3}>
         <Avatar
           variant="rounded"
           sx={{
@@ -238,8 +208,8 @@ function ChatContent() {
             variant="subtitle1"
             sx={{
               pt: 1,
-              display: 'flex',
-              alignItems: 'center'
+              display: "flex",
+              alignItems: "center"
             }}
           >
             <ScheduleTwoToneIcon
@@ -254,12 +224,7 @@ function ChatContent() {
           </Typography>
         </Box>
       </Box>
-      <Box
-        display="flex"
-        alignItems="flex-start"
-        justifyContent="flex-end"
-        py={3}
-      >
+      <Box display="flex" alignItems="flex-start" justifyContent="flex-end" py={3}>
         <Box
           display="flex"
           alignItems="flex-end"
@@ -268,8 +233,7 @@ function ChatContent() {
           mr={2}
         >
           <CardWrapperPrimary>
-            Hello, I just got my Amazon order shipped and I’m very happy about
-            that.
+            Hello, I just got my Amazon order shipped and I’m very happy about that.
           </CardWrapperPrimary>
           <CardWrapperPrimary
             sx={{
@@ -282,8 +246,8 @@ function ChatContent() {
             variant="subtitle1"
             sx={{
               pt: 1,
-              display: 'flex',
-              alignItems: 'center'
+              display: "flex",
+              alignItems: "center"
             }}
           >
             <ScheduleTwoToneIcon

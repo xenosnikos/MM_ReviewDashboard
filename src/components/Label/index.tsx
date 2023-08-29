@@ -1,21 +1,14 @@
-import { FC, ReactNode } from 'react';
-import PropTypes from 'prop-types';
-import { styled } from '@mui/material/styles';
+import { FC, ReactNode } from "react";
+import PropTypes from "prop-types";
+import { styled } from "@mui/material/styles";
 
 interface LabelProps {
   className?: string;
-  color?:
-    | 'primary'
-    | 'black'
-    | 'secondary'
-    | 'error'
-    | 'warning'
-    | 'success'
-    | 'info';
+  color?: "primary" | "black" | "secondary" | "error" | "warning" | "success" | "info";
   children?: ReactNode;
 }
 
-const LabelWrapper = styled('span')(
+const LabelWrapper = styled("span")(
   ({ theme }) => `
       background-color: ${theme.colors.alpha.black[5]};
       padding: ${theme.spacing(0.5, 1)};
@@ -65,14 +58,9 @@ const LabelWrapper = styled('span')(
 `
 );
 
-const Label: FC<LabelProps> = ({
-  className,
-  color = 'secondary',
-  children,
-  ...rest
-}) => {
+const Label: FC<LabelProps> = ({ className, color = "secondary", children, ...rest }) => {
   return (
-    <LabelWrapper className={'MuiLabel-' + color} {...rest}>
+    <LabelWrapper className={"MuiLabel-" + color} {...rest}>
       {children}
     </LabelWrapper>
   );
@@ -82,13 +70,13 @@ Label.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   color: PropTypes.oneOf([
-    'primary',
-    'black',
-    'secondary',
-    'error',
-    'warning',
-    'success',
-    'info'
+    "primary",
+    "black",
+    "secondary",
+    "error",
+    "warning",
+    "success",
+    "info"
   ])
 };
 

@@ -1,9 +1,9 @@
 {
   "bracketSpacing": true,
-  "printWidth": 80,
-  "singleQuote": true,
+  "printWidth": 90,
   "trailingComma": "none",
   "tabWidth": 2,
   "useTabs": false,
-  "bracketSameLine": false
+  "bracketSameLine": false,
+  "singleQuote": false
 }

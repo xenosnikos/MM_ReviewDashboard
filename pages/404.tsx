@@ -9,11 +9,11 @@ import {
   OutlinedInput,
   InputAdornment,
   styled
-} from '@mui/material';
-import Head from 'next/head';
-import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
-import type { ReactElement } from 'react';
-import BaseLayout from 'src/layouts/BaseLayout';
+} from "@mui/material";
+import Head from "next/head";
+import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
+import type { ReactElement } from "react";
+import BaseLayout from "src/layouts/BaseLayout";
 
 const MainContent = styled(Box)(
   () => `
@@ -67,12 +67,12 @@ function Status404() {
                 fontWeight="normal"
                 sx={{ mb: 4 }}
               >
-                It's on us, we moved the content to a different page. The search
-                below should help!
+                It's on us, we moved the content to a different page. The search below
+                should help!
               </Typography>
             </Box>
             <Container maxWidth="sm">
-              <Card sx={{ textAlign: 'center', mt: 3, p: 4 }}>
+              <Card sx={{ textAlign: "center", mt: 3, p: 4 }}>
                 <FormControl variant="outlined" fullWidth>
                   <OutlinedInputWrapper
                     type="text"

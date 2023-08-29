@@ -10,10 +10,10 @@ import {
   List,
   Avatar,
   useTheme
-} from '@mui/material';
-import PhoneTwoToneIcon from '@mui/icons-material/PhoneTwoTone';
-import EmailTwoToneIcon from '@mui/icons-material/EmailTwoTone';
-import MessageTwoToneIcon from '@mui/icons-material/MessageTwoTone';
+} from "@mui/material";
+import PhoneTwoToneIcon from "@mui/icons-material/PhoneTwoTone";
+import EmailTwoToneIcon from "@mui/icons-material/EmailTwoTone";
+import MessageTwoToneIcon from "@mui/icons-material/MessageTwoTone";
 
 function Profile() {
   const theme = useTheme();
@@ -22,7 +22,7 @@ function Profile() {
     <Box>
       <Avatar
         sx={{
-          mx: 'auto',
+          mx: "auto",
           mb: 1.5,
           width: theme.spacing(12),
           height: theme.spacing(12)
@@ -95,7 +95,7 @@ function Profile() {
         >
           <ListItemText
             primary="Join Date"
-            primaryTypographyProps={{ variant: 'subtitle2' }}
+            primaryTypographyProps={{ variant: "subtitle2" }}
           />
           <Typography variant="subtitle2" color="text.primary">
             22 January 2021
@@ -109,7 +109,7 @@ function Profile() {
         >
           <ListItemText
             primary="Company"
-            primaryTypographyProps={{ variant: 'subtitle2' }}
+            primaryTypographyProps={{ variant: "subtitle2" }}
           />
           <Typography variant="subtitle2" color="text.primary">
             Google Inc.
@@ -123,13 +123,9 @@ function Profile() {
         >
           <ListItemText
             primary="Tasks"
-            primaryTypographyProps={{ variant: 'subtitle2' }}
+            primaryTypographyProps={{ variant: "subtitle2" }}
           />
-          <Typography
-            variant="subtitle2"
-            color="text.primary"
-            fontWeight="bold"
-          >
+          <Typography variant="subtitle2" color="text.primary" fontWeight="bold">
             67 active
           </Typography>
         </ListItem>

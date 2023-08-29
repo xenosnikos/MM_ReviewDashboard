@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState } from "react";
 import {
   Button,
   Card,
@@ -20,13 +20,13 @@ import {
   MenuItem,
   styled,
   useTheme
-} from '@mui/material';
-import { formatDistance, subMonths, subDays } from 'date-fns';
-import TodayTwoToneIcon from '@mui/icons-material/TodayTwoTone';
-import Link from 'src/components/Link';
-import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
-import Text from 'src/components/Text';
-import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
+} from "@mui/material";
+import { formatDistance, subMonths, subDays } from "date-fns";
+import TodayTwoToneIcon from "@mui/icons-material/TodayTwoTone";
+import Link from "src/components/Link";
+import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
+import Text from "src/components/Text";
+import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
 
 const OutlinedInputWrapper = styled(OutlinedInput)(
   ({ theme }) => `
@@ -44,20 +44,20 @@ function TaskSearch() {
 
   const periods = [
     {
-      value: 'popular',
-      text: 'Most popular'
+      value: "popular",
+      text: "Most popular"
     },
     {
-      value: 'recent',
-      text: 'Recent tasks'
+      value: "recent",
+      text: "Recent tasks"
     },
     {
-      value: 'updated',
-      text: 'Latest updated tasks'
+      value: "updated",
+      text: "Latest updated tasks"
     },
     {
-      value: 'oldest',
-      text: 'Oldest tasks first'
+      value: "oldest",
+      text: "Oldest tasks first"
     }
   ];
 
@@ -85,15 +85,10 @@ function TaskSearch() {
           }
         />
       </FormControl>
-      <Box
-        py={3}
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-      >
+      <Box py={3} display="flex" alignItems="center" justifyContent="space-between">
         <Box>
           <Typography variant="subtitle2">
-            Showing{' '}
+            Showing{" "}
             <Text color="black">
               <b>57 tasks</b>
             </Text>
@@ -123,12 +118,12 @@ function TaskSearch() {
             onClose={() => setOpenMenuPeriod(false)}
             open={openPeriod}
             anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'right'
+              vertical: "bottom",
+              horizontal: "right"
             }}
             transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right'
+              vertical: "top",
+              horizontal: "right"
             }}
           >
             {periods.map((_period) => (
@@ -192,9 +187,9 @@ function TaskSearch() {
               }}
               color="text.secondary"
             >
-              It is a long established fact that a reader will be distracted by
-              the readable content of a page when looking at its layout beatae
-              vitae dicta sunt explicabo.
+              It is a long established fact that a reader will be distracted by the
+              readable content of a page when looking at its layout beatae vitae dicta
+              sunt explicabo.
             </Typography>
             <Button size="small" variant="contained">
               View task
@@ -206,16 +201,12 @@ function TaskSearch() {
             />
             <CardActions
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between'
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between"
               }}
             >
-              <Typography
-                display="flex"
-                alignItems="center"
-                variant="subtitle2"
-              >
+              <Typography display="flex" alignItems="center" variant="subtitle2">
                 <TodayTwoToneIcon
                   sx={{
                     mr: 1
@@ -226,7 +217,7 @@ function TaskSearch() {
                 })}
               </Typography>
               <AvatarGroup>
-                <Tooltip arrow title={`$"View profile for')} Remy Sharp`}>
+                <Tooltip arrow title={"$\"View profile for')} Remy Sharp"}>
                   <Avatar
                     sx={{
                       width: 30,
@@ -300,9 +291,8 @@ function TaskSearch() {
               }}
               color="text.secondary"
             >
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-              quae ab illo.
+              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+              doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo.
             </Typography>
             <Button size="small" variant="contained">
               View task
@@ -314,16 +304,12 @@ function TaskSearch() {
             />
             <CardActions
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between'
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between"
               }}
             >
-              <Typography
-                display="flex"
-                alignItems="center"
-                variant="subtitle2"
-              >
+              <Typography display="flex" alignItems="center" variant="subtitle2">
                 <TodayTwoToneIcon
                   sx={{
                     mr: 1
@@ -420,9 +406,9 @@ function TaskSearch() {
               }}
               color="text.secondary"
             >
-              Nemo enim ipsam voluptatem quia accusantium doloremque laudantium
-              voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur
-              magni dolores eos qui ratione.
+              Nemo enim ipsam voluptatem quia accusantium doloremque laudantium voluptas
+              sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos
+              qui ratione.
             </Typography>
             <Button size="small" variant="contained">
               View task
@@ -434,16 +420,12 @@ function TaskSearch() {
             />
             <CardActions
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between'
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between"
               }}
             >
-              <Typography
-                display="flex"
-                alignItems="center"
-                variant="subtitle2"
-              >
+              <Typography display="flex" alignItems="center" variant="subtitle2">
                 <TodayTwoToneIcon
                   sx={{
                     mr: 1
