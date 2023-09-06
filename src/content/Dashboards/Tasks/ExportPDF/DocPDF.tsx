@@ -9,7 +9,15 @@ import {
   star
 } from "@/components/ReviewIcons/icons";
 
-function DocPDF({ data, reviewsData, chartURI, donutURI, donut2URI, chartTitle }) {
+function DocPDF({
+  data,
+  reviewsData,
+  chartURI,
+  donutURI,
+  donut2URI,
+  chartTitle,
+  selectedSources
+}) {
   const reviews = reviewsData?.data;
 
   const { positive, neutral, negative } = (data?.sourcesGraphData?.series || []).reduce(
@@ -48,6 +56,10 @@ function DocPDF({ data, reviewsData, chartURI, donutURI, donut2URI, chartTitle }
       </View>
     );
   };
+
+  const filteredSourceTableData = data?.sourceTableData.filter((value) =>
+    selectedSources.includes(value.type)
+  );
 
   return (
     <Document>
@@ -149,7 +161,7 @@ function DocPDF({ data, reviewsData, chartURI, donutURI, donut2URI, chartTitle }
               <Text style={styles.title}>Total Count</Text>
             </View>
           </View>
-          {data?.sourceTableData.map((value: any, index: number) => (
+          {filteredSourceTableData.map((value: any, index: number) => (
             <View key={index} style={[styles.tableData, styles.borderTop]}>
               <View style={styles.section20}>
                 <Text style={styles.title}>{value.type}:</Text>
