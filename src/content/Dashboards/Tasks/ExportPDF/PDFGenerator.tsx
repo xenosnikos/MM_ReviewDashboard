@@ -5,6 +5,7 @@ import { saveAs } from "file-saver";
 import DocPDF from "./DocPDF";
 import { getReviewsData } from "@/services";
 import { ReviewsDataResponse } from "@/models";
+import { providers } from "@/helpers/constant";
 
 function PDFGenerator({
   clientName,
@@ -13,6 +14,7 @@ function PDFGenerator({
   data,
   refreshPDF,
   chartTitle,
+  selectedSources,
   setDataState
 }) {
   useEffect(() => {
@@ -29,6 +31,7 @@ function PDFGenerator({
 
         setDataState({
           reviewsData: response,
+          selectedSources: providers,
           disabledButton: false
         });
       } catch (error) {
@@ -75,7 +78,8 @@ function PDFGenerator({
       chartURI,
       donutURI,
       donut2URI,
-      chartTitle
+      chartTitle,
+      selectedSources
     };
   };
 

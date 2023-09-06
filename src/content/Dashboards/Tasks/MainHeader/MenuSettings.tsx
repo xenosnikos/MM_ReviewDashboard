@@ -76,7 +76,8 @@ function MenuSettings({ clientName, params }) {
     endDate,
     setDataState,
     chartTitle,
-    clientId
+    clientId,
+    selectedSources
   } = useContext(DataContext);
 
   const user = {
@@ -274,6 +275,7 @@ function MenuSettings({ clientName, params }) {
           data={data}
           refreshPDF={refreshPDF}
           chartTitle={chartTitle}
+          selectedSources={selectedSources}
           setDataState={setDataState}
         />
       )}

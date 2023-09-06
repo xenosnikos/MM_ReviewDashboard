@@ -64,9 +64,6 @@ function DocConfirm({ open, onClose, onConfirm }) {
 
   const handleConfirm = () => {
     onConfirm(selectedSources);
-    setDataState({
-      selectedSources: providers
-    });
     onClose();
   };
 

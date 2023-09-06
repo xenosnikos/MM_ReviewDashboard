@@ -4,7 +4,7 @@ export const providers = [
   "Yellow Pages",
   "CarGurus",
   "Cars",
-  "Dealer Rater",
+  "Dealer",
   "Facebook"
 ];
 export const selectProvider = [...providers.filter((item) => item !== "Cars")];

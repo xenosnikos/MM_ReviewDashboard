@@ -18,7 +18,6 @@ const getClientSocialMediaLink = async (
         }
       })
       .then((response) => {
-        console.log(response.data.data);
         if (response?.data?.status === "success") resolve(response.data.data);
         else reject("Something went wrong");
       })
