@@ -1,17 +1,17 @@
-const googleLogo = "http://localhost:3000/static/images/reviewslogo/google-logo.png";
-const yelpLogo = "http://localhost:3000/static/images/reviewslogo/yelp-logo.png";
+const googleLogo = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/reviewslogo/google-logo.png`;
+const yelpLogo = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/reviewslogo/yelp-logo.png`;
 const yellowPagesLogo =
-  "http://localhost:3000/static/images/reviewslogo/yellow-pages-logo.png";
-const carGurusLogo = "http://localhost:3000/static/images/reviewslogo/cargurus-logo.png";
-const carsLogo = "http://localhost:3000/static/images/reviewslogo/carslogo.png";
-const dealerLogo = "http://localhost:3000/static/images/reviewslogo/dealer-logo.png";
-const facebookLogo = "http://localhost:3000/static/images/reviewslogo/facebook-logo.png";
+  `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/reviewslogo/yellow-pages-logo.png`;
+const carGurusLogo = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/reviewslogo/cargurus-logo.png`;
+const carsLogo = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/reviewslogo/carslogo.png`;
+const dealerLogo = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/reviewslogo/dealer-logo.png`;
+const facebookLogo = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/reviewslogo/facebook-logo.png`;
 
-const star = "http://localhost:3000/static/images/icons/yellow-star.png";
-const positiveIcon = "http://localhost:3000/static/images/icons/positive.png";
-const neutralIcon = "http://localhost:3000/static/images/icons/neutral.png";
-const negativeIcon = "http://localhost:3000/static/images/icons/negative.png";
-const reviewIcon = "http://localhost:3000/static/images/icons/reviews.png";
+const star = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/icons/yellow-star.png`;
+const positiveIcon = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/icons/positive.png`;
+const neutralIcon = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/icons/neutral.png`;
+const negativeIcon = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/icons/negative.png`;
+const reviewIcon = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/icons/reviews.png`;
 
 export const logo = (type: string) => {
   if (type === "Google") return googleLogo;

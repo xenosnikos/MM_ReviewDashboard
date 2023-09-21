@@ -227,12 +227,13 @@ function ReviewsTable() {
                         </Box>
                       </TableCell>
                       <TableCell>
+                        <a href={review.viewlink} target="_blank">
                         <Button
                           variant="outlined"
-                          onClick={() => handleViewReview(review.reviewid)}
                         >
                           View
                         </Button>
+                        </a>
                       </TableCell>
                     </TableRow>
                   );

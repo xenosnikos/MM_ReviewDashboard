@@ -4,11 +4,12 @@ import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
 import type { ApexOptions } from "apexcharts";
 import DataContext from "@/contexts/DataContext";
 import { Chart } from "@/components/Chart";
+import CustomDatePicker from "@/components/CustomDatepicker/CustomDatePicker";
 
 function ReviewGrowth() {
   const theme = useTheme();
   const { data, chartTitle, setDataState } = useContext(DataContext);
-
+  const [customDateModal, setCustomteModal] = useState(false)
   const labelsInit = useMemo(
     () => [
       "Jan",
@@ -154,6 +155,10 @@ function ReviewGrowth() {
       {
         value: "current_year",
         text: "Current Year"
+      },
+      {
+        value: "custom_date",
+        text: "Custom Date"
       }
     ],
     []
@@ -168,6 +173,7 @@ function ReviewGrowth() {
     const currentDate = new Date();
     const currentYear = currentDate.getUTCFullYear();
     const currentMonth = currentDate.getUTCMonth() + 1;
+
 
     const lastDayOfMonth = new Date(currentYear, currentMonth, 0).getUTCDate();
     const monthDays = Array.from({ length: lastDayOfMonth }, (_, index) => index + 1);
@@ -292,6 +298,10 @@ function ReviewGrowth() {
     if (period === "Current Year") {
       updateChartData("current_year");
     }
+    if (period === "Custom Date") {
+      updateChartData("current_year");
+      setCustomteModal(true)
+    }
   }, [data, period]);
 
   return (
@@ -343,7 +353,9 @@ function ReviewGrowth() {
         type="bar"
         height={270}
       />
+      <CustomDatePicker open={customDateModal} handleClose={() => { setCustomteModal(false) }} />
     </Box>
+
   );
 }
 
