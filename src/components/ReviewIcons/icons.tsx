@@ -1,12 +1,10 @@
 const googleLogo = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/reviewslogo/google-logo.png`;
 const yelpLogo = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/reviewslogo/yelp-logo.png`;
-const yellowPagesLogo =
-  `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/reviewslogo/yellow-pages-logo.png`;
+const yellowPagesLogo = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/reviewslogo/yellow-pages-logo.png`;
 const carGurusLogo = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/reviewslogo/cargurus-logo.png`;
 const carsLogo = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/reviewslogo/carslogo.png`;
 const dealerLogo = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/reviewslogo/dealer-logo.png`;
 const facebookLogo = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/reviewslogo/facebook-logo.png`;
-
 const star = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/icons/yellow-star.png`;
 const positiveIcon = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/icons/positive.png`;
 const neutralIcon = `${process.env.NEXT_PUBLIC_BACKEND_LOGO_URL}/static/images/icons/neutral.png`;
