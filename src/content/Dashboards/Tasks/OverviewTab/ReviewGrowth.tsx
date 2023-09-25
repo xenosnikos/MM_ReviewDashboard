@@ -9,6 +9,7 @@ import CustomDatePicker from "@/components/CustomDatepicker/CustomDatePicker";
 function ReviewGrowth() {
   const theme = useTheme();
   const { data, chartTitle, setDataState } = useContext(DataContext);
+  const [value, setValue] = useState<any>()
   const [customDateModal, setCustomteModal] = useState(false)
   const labelsInit = useMemo(
     () => [
@@ -46,6 +47,21 @@ function ReviewGrowth() {
 
     return lastYearData;
   };
+
+  const customDateData = (data) => {
+    if (value) {
+      const { startDate, endDate } = value[0];
+      const initialDate = new Date(startDate);
+      const end_date = new Date(endDate);
+
+      const filteredData = data.filter((item) => {
+        const itemDate = new Date(item.date);
+        console.log(itemDate)
+        return itemDate >= initialDate && itemDate <= end_date;
+      });
+      return filteredData;
+    }
+  }
 
   const initOptions = useMemo<ApexOptions>(() => {
     const lastYearData = getLastYearData(data?.reviewGrowth || []);
@@ -205,7 +221,7 @@ function ReviewGrowth() {
     const selectedData =
       selectedOption === "current_month"
         ? getCurrentMonthData(data?.reviewGrowth || [])
-        : getLastYearData(data?.reviewGrowth || []);
+        : selectedOption === "current_year" ? getLastYearData(data?.reviewGrowth || []) : customDateData(data?.reviewGrowth || []);
 
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
@@ -235,13 +251,14 @@ function ReviewGrowth() {
 
       for (let day = 1; day <= lastDayOfMonth; day++) {
         const reviewDay = selectedData.find((item) => item.dayNumber === day - 1);
+        console.log(reviewDay)
         if (reviewDay) {
           const dayWithSuffix = `${day}${getDaySuffix(day)}`;
           labels.push(dayWithSuffix);
           seriesData.push(reviewDay.count);
         }
       }
-    } else {
+    } else if (selectedOption === "current_year") {
       const monthCounts = selectedData.reduce((acc, item) => {
         const [itemYear, itemMonth, itemDay] = item.date.split("-");
         const itemDate = new Date(Date.UTC(itemYear, itemMonth - 1, itemDay, 0, 0, 0, 0));
@@ -249,7 +266,6 @@ function ReviewGrowth() {
         acc[month] = (acc[month] || 0) + item.count;
         return acc;
       }, {});
-
       for (let i = 0; i < 12; i++) {
         const month = i + 1;
         const monthLabel = labelsInit[new Date(currentYear, month - 1).getMonth()];
@@ -258,6 +274,28 @@ function ReviewGrowth() {
       }
 
       setDataState({ chartTitle: `Review Growth: ${currentYear - 1} - ${currentYear}` });
+    } else {
+      if (value) {
+        const { startDate, endDate } = value[0]
+        const toDate = (arg) => {
+          const date = new Date(arg)
+          return date.toDateString()
+        };
+        const monthCounts = selectedData.reduce((acc, item) => {
+          const [itemYear, itemMonth, itemDay] = item.date.split("-");
+          const itemDate = new Date(Date.UTC(itemYear, itemMonth - 1, itemDay, 0, 0, 0, 0));
+          const month = itemDate.getUTCMonth();
+          acc[month] = (acc[month] || 0) + item.count;
+          return acc;
+        }, {});
+        for (let i = 0; i < 12; i++) {
+          const month = i + 1;
+          const monthLabel = labelsInit[new Date(currentYear, month - 1).getMonth()];
+          labels.push(monthLabel);
+          seriesData.push(monthCounts[month - 1] || 0);
+        }
+        setDataState({ chartTitle: `Review Growth: ${toDate(startDate)} - ${toDate(endDate)}` })
+      }
     }
 
     setOptions((prevOptions) => ({
@@ -298,12 +336,18 @@ function ReviewGrowth() {
     if (period === "Current Year") {
       updateChartData("current_year");
     }
-    if (period === "Custom Date") {
-      updateChartData("current_year");
-      setCustomteModal(true)
+    if (!customDateModal) {
+      if (period === "Custom Date") {
+        setCustomteModal(true)
+      }
     }
   }, [data, period]);
 
+  useEffect(() => {
+    if (period === "Custom Date") {
+      updateChartData("custom_date");
+    }
+  }, [value, customDateModal])
   return (
     <Box>
       <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
@@ -336,9 +380,14 @@ function ReviewGrowth() {
             <MenuItem
               key={_period.value}
               onClick={() => {
-                setPeriod(_period.text);
-                setOpenMenuPeriod(false);
-                updateChartData(_period.value);
+                if (period === "custom_date") {
+                  setPeriod(_period.text);
+                  setCustomteModal(true)
+                } else {
+                  setPeriod(_period.text);
+                  setOpenMenuPeriod(false);
+                  updateChartData(_period.value);
+                }
               }}
             >
               {_period.text}
@@ -353,7 +402,7 @@ function ReviewGrowth() {
         type="bar"
         height={270}
       />
-      <CustomDatePicker open={customDateModal} handleClose={() => { setCustomteModal(false) }} />
+      <CustomDatePicker open={customDateModal} handleClose={() => { setCustomteModal(false) }} setValue={setValue} />
     </Box>
 
   );

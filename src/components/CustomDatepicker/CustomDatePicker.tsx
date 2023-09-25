@@ -20,16 +20,21 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function CustomDatePicker({ open, handleClose }) {
+export default function CustomDatePicker({ open, handleClose, setValue }) {
   const [state, setState] = useState([
     {
       startDate: null,
-      endDate: new Date(),
+      endDate: null,
       key: "selection",
       moveRangeOnFirstSelection: false,
       retainEndDateOnFirstSelection: false
     }
   ]);
+
+  const handleSelect = async () => {
+    await handleClose();
+    setValue(state);
+  };
   return (
     <div>
       <Box bgcolor={"white"}>
@@ -47,7 +52,9 @@ export default function CustomDatePicker({ open, handleClose }) {
               <DateRange
                 className="DatePicker"
                 editableDateInputs={true}
-                onChange={(item) => setState([item.selection])}
+                onChange={(item) => {
+                  setState([item.selection]);
+                }}
                 moveRangeOnFirstSelection={false}
                 ranges={state}
                 maxDate={new Date()}
@@ -56,7 +63,7 @@ export default function CustomDatePicker({ open, handleClose }) {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleClose}>Select</Button>
+            <Button onClick={handleSelect}>Select</Button>
           </DialogActions>
         </Dialog>
       </Box>
