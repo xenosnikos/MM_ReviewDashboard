@@ -177,7 +177,6 @@ function DashboardTasks() {
     const getData = async () => {
       try {
         const response: DashboardDataResponse = await getDashboardData(clientId);
-
         setDataState({
           data: response,
           disabledButton: false
@@ -200,10 +199,7 @@ function DashboardTasks() {
     }
   }, [client]);
 
-  useEffect(() => {
-    console.log(data);
-    console.log(reviewsData);
-  }, [data, reviewsData]);
+  useEffect(() => {}, [data, reviewsData]);
 
   return (
     <>

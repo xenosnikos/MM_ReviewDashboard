@@ -20,7 +20,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function CustomDatePicker({ open, handleClose, setValue }) {
+export default function CustomDatePicker({ open, handleClose, setValue, setRest }) {
   const [state, setState] = useState([
     {
       startDate: null,
@@ -34,6 +34,7 @@ export default function CustomDatePicker({ open, handleClose, setValue }) {
   const handleSelect = async () => {
     await handleClose();
     setValue(state);
+    setRest(true);
   };
   return (
     <div>

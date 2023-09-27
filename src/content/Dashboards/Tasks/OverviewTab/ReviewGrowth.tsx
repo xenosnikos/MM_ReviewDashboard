@@ -1,16 +1,29 @@
 import { useContext, useEffect, useRef, useState, useMemo } from "react";
-import { Button, Box, Menu, alpha, MenuItem, Typography, useTheme } from "@mui/material";
+import {
+  Button,
+  Box,
+  Menu,
+  alpha,
+  MenuItem,
+  Typography,
+  useTheme,
+  AlertColor
+} from "@mui/material";
 import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
 import type { ApexOptions } from "apexcharts";
 import DataContext from "@/contexts/DataContext";
 import { Chart } from "@/components/Chart";
 import CustomDatePicker from "@/components/CustomDatepicker/CustomDatePicker";
+import { getDashboardData, getDashboardDateData } from "@/services";
+import { useRouter } from "next/router";
+import { DashboardDataResponse } from "@/models";
 
 function ReviewGrowth() {
   const theme = useTheme();
   const { data, chartTitle, setDataState } = useContext(DataContext);
   const [value, setValue] = useState<any>();
   const [customDateModal, setCustomteModal] = useState(false);
+  const [rest, setRest] = useState<Boolean>(false);
   const labelsInit = useMemo(
     () => [
       "Jan",
@@ -28,6 +41,9 @@ function ReviewGrowth() {
     ],
     []
   );
+  const router = useRouter();
+  const { client } = router.query;
+  const clientId = typeof client === "string" ? client : "";
 
   const getLastYearData = (data) => {
     const currentDate = new Date();
@@ -44,17 +60,16 @@ function ReviewGrowth() {
         (currentYear === itemYear && itemMonth <= currentMonth)
       );
     });
-
     return lastYearData;
   };
 
-  const customDateData = (data) => {
+  const customDateData =  (data) => {
     if (value) {
       const { startDate, endDate } = value[0];
       const initialDate = new Date(startDate);
       const end_date = new Date(endDate);
-
-      const filteredData = data.filter((item) => {
+      console.log(initialDate, "startDAte");
+      const filteredData =  data.filter((item) => {
         const itemDate = new Date(item.date);
         console.log(itemDate);
         return itemDate >= initialDate && itemDate <= end_date;
@@ -184,6 +199,32 @@ function ReviewGrowth() {
   const [openPeriod, setOpenMenuPeriod] = useState<boolean>(false);
   const [period, setPeriod] = useState<string>(periods[1].text);
   const [options, setOptions] = useState<ApexOptions>(initOptions);
+
+  const restDashBoardData = () => {
+    const getData = async () => {
+      try {
+        const response: DashboardDataResponse = await getDashboardData(clientId);
+        setDataState({
+          data: response,
+          disabledButton: false
+        });
+      } catch (error) {
+        const errorMessage = "Could not load data, please try again later.";
+        const severity: AlertColor = "error";
+
+        setDataState({
+          disabledButton: false,
+          alertMessage: errorMessage,
+          alertSeverity: severity,
+          isAlertOpen: true
+        });
+      }
+    };
+
+    if (typeof client === "string") {
+      getData();
+    }
+  };
 
   const getCurrentMonthData = (data) => {
     const currentDate = new Date();
@@ -332,27 +373,86 @@ function ReviewGrowth() {
         return "th";
     }
   };
+  const handleChange = (item) => {
+    console.log(item);
+
+    if (item === "Custom Date") {
+      setCustomteModal(true);
+      setPeriod(item);
+      setOpenMenuPeriod(false);
+    } else {
+      setPeriod(item);
+      setOpenMenuPeriod(false);
+    }
+  };
 
   useEffect(() => {
     if (period === "Current Month") {
       updateChartData("current_month");
+      setRest(false);
     }
-
     if (period === "Current Year") {
       updateChartData("current_year");
+      setRest(false);
+    }
+    if (!customDateModal) {
+      if (period === "Custom Date") {
+        setRest(false);
+      }
+    }
+  }, [data]);
+  useEffect(() => {
+    if (period === "Current Month") {
+      restDashBoardData();
+      updateChartData("current_month");
+      setRest(false);
+    }
+    if (period === "Current Year") {
+      restDashBoardData();
+      updateChartData("current_year");
+      setRest(false);
     }
     if (!customDateModal) {
       if (period === "Custom Date") {
         setCustomteModal(true);
+        setRest(false);
       }
     }
-  }, [data, period]);
+  }, [period]);
 
   useEffect(() => {
-    if (period === "Custom Date") {
+    if (rest) {
+      if (period === "Custom Date") {
+        const getData = async () => {
+          try {
+            const response: DashboardDataResponse = await getDashboardDateData(
+              clientId,
+              value
+            );
+           await  setDataState({
+              data: response,
+              disabledButton: false
+            });
+          } catch (error) {
+            const errorMessage = "Could not load data, please try again later.";
+            const severity: AlertColor = "error";
+
+           await setDataState({
+              disabledButton: false,
+              alertMessage: errorMessage,
+              alertSeverity: severity,
+              isAlertOpen: true
+            });
+          }
+        };
+        
+        if (typeof client === "string") {
+          getData();
+        }
+      }
       updateChartData("custom_date");
     }
-  }, [value, customDateModal]);
+  }, [rest]);
   return (
     <Box>
       <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
@@ -385,14 +485,7 @@ function ReviewGrowth() {
             <MenuItem
               key={_period.value}
               onClick={() => {
-                if (period === "custom_date") {
-                  setPeriod(_period.text);
-                  setCustomteModal(true);
-                } else {
-                  setPeriod(_period.text);
-                  setOpenMenuPeriod(false);
-                  updateChartData(_period.value);
-                }
+                handleChange(_period.text);
               }}
             >
               {_period.text}
@@ -413,6 +506,7 @@ function ReviewGrowth() {
           setCustomteModal(false);
         }}
         setValue={setValue}
+        setRest={setRest}
       />
     </Box>
   );
