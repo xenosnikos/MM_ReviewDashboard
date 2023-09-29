@@ -40,7 +40,7 @@ export const getDashboardDateData = async (
   client: string,
   value : Date
 ): Promise<DashboardDataResponse> => {
-
+    console.log(value)
     const startdate = formatDate(value[0]?.startDate)
     const enddate = formatDate(value[0]?.endDate)
 

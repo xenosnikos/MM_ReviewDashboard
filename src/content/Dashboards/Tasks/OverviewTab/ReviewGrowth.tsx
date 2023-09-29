@@ -18,7 +18,7 @@ import { getDashboardData, getDashboardDateData } from "@/services";
 import { useRouter } from "next/router";
 import { DashboardDataResponse } from "@/models";
 
-function ReviewGrowth() {
+function ReviewGrowth({ setMonth }) {
   const theme = useTheme();
   const { data, chartTitle, setDataState } = useContext(DataContext);
   const [value, setValue] = useState<any>();
@@ -63,13 +63,13 @@ function ReviewGrowth() {
     return lastYearData;
   };
 
-  const customDateData =  (data) => {
+  const customDateData = (data) => {
     if (value) {
       const { startDate, endDate } = value[0];
       const initialDate = new Date(startDate);
       const end_date = new Date(endDate);
       console.log(initialDate, "startDAte");
-      const filteredData =  data.filter((item) => {
+      const filteredData = data.filter((item) => {
         const itemDate = new Date(item.date);
         console.log(itemDate);
         return itemDate >= initialDate && itemDate <= end_date;
@@ -230,13 +230,10 @@ function ReviewGrowth() {
     const currentDate = new Date();
     const currentYear = currentDate.getUTCFullYear();
     const currentMonth = currentDate.getUTCMonth() + 1;
-
     const lastDayOfMonth = new Date(currentYear, currentMonth, 0).getUTCDate();
     const monthDays = Array.from({ length: lastDayOfMonth }, (_, index) => index + 1);
-
     const currentMonthData = monthDays.map((day) => {
       const itemDate = new Date(Date.UTC(currentYear, currentMonth - 1, day, 0, 0, 0, 0));
-
       const reviewDay = data.find((item) => {
         const [itemYear, itemMonth, itemDay] = item.date.split("-");
         const reviewDate = new Date(
@@ -290,16 +287,17 @@ function ReviewGrowth() {
       ];
 
       setDataState({ chartTitle: `Review Growth: ${monthNames[currentMonth - 1]}` });
-
+      let count = 0
       for (let day = 1; day <= lastDayOfMonth; day++) {
         const reviewDay = selectedData.find((item) => item.dayNumber === day - 1);
-        console.log(reviewDay);
         if (reviewDay) {
           const dayWithSuffix = `${day}${getDaySuffix(day)}`;
           labels.push(dayWithSuffix);
           seriesData.push(reviewDay.count);
+          count += reviewDay.count
         }
       }
+      setMonth(count);
     } else if (selectedOption === "current_year") {
       const monthCounts = selectedData.reduce((acc, item) => {
         const [itemYear, itemMonth, itemDay] = item.date.split("-");
@@ -323,7 +321,7 @@ function ReviewGrowth() {
           const date = new Date(arg);
           return date.toDateString();
         };
-        const monthCounts = selectedData.reduce((acc, item) => {
+        const monthCounts = data?.reviewGrowth?.reduce((acc, item) => {
           const [itemYear, itemMonth, itemDay] = item.date.split("-");
           const itemDate = new Date(
             Date.UTC(itemYear, itemMonth - 1, itemDay, 0, 0, 0, 0)
@@ -343,7 +341,6 @@ function ReviewGrowth() {
         });
       }
     }
-
     setOptions((prevOptions) => ({
       ...prevOptions,
       labels: labels,
@@ -397,6 +394,7 @@ function ReviewGrowth() {
     }
     if (!customDateModal) {
       if (period === "Custom Date") {
+        updateChartData("custom_date");
         setRest(false);
       }
     }
@@ -410,11 +408,13 @@ function ReviewGrowth() {
     if (period === "Current Year") {
       restDashBoardData();
       updateChartData("current_year");
+      setMonth(0);
       setRest(false);
     }
     if (!customDateModal) {
       if (period === "Custom Date") {
         setCustomteModal(true);
+        setMonth(0);
         setRest(false);
       }
     }
@@ -429,7 +429,7 @@ function ReviewGrowth() {
               clientId,
               value
             );
-           await  setDataState({
+            await setDataState({
               data: response,
               disabledButton: false
             });
@@ -437,7 +437,7 @@ function ReviewGrowth() {
             const errorMessage = "Could not load data, please try again later.";
             const severity: AlertColor = "error";
 
-           await setDataState({
+            await setDataState({
               disabledButton: false,
               alertMessage: errorMessage,
               alertSeverity: severity,
@@ -445,7 +445,7 @@ function ReviewGrowth() {
             });
           }
         };
-        
+
         if (typeof client === "string") {
           getData();
         }

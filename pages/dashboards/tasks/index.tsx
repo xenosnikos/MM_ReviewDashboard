@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { ChangeEvent, useContext, useEffect } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import PageHeader from "@/content/Dashboards/Tasks/MainHeader/MainHeader";
 import Footer from "@/components/Footer";
@@ -123,6 +123,7 @@ function DashboardTasks() {
     reviewsData
   } = useContext(DataContext);
 
+  const [monthReview, setMonthReview] = useState(0);
   const { client } = router.query;
   const clientId = typeof client === "string" ? client : "";
 
@@ -242,7 +243,9 @@ function DashboardTasks() {
                           data?.averageRating ? parseFloat(data.averageRating) : null
                         }
                       />
-                      <TotalReviews amount={data?.totalReviews} />
+                      <TotalReviews
+                        amount={monthReview > 0 ? monthReview : data?.totalReviews}
+                      />
                     </Box>
                   </Grid>
                   <Grid item xs={8}>
@@ -252,7 +255,7 @@ function DashboardTasks() {
                         background: `${theme.colors.alpha.black[5]}`
                       }}
                     >
-                      <ReviewGrowth />
+                      <ReviewGrowth setMonth={setMonthReview} />
                     </Box>
                   </Grid>
                   <Grid item xs={6}>
