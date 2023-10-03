@@ -134,7 +134,7 @@ function DocConfirm({ open, onClose, onConfirm }) {
                   label="Select date range"
                 />
               </Box>
-              <Grid spacing={2} alignItems="center" sx={{ marginTop: "8px" }}>
+              {selectedDateOption != "all" ? <Grid spacing={2} alignItems="center" sx={{ marginTop: "8px" }}>
                 <Grid item>
                   <Typography
                     variant="subtitle2"
@@ -171,7 +171,7 @@ function DocConfirm({ open, onClose, onConfirm }) {
                     disabled={disabledDate}
                   />
                 </Grid>
-              </Grid>
+              </Grid> : ""}
             </FormControl>
           </Grid>
         </Grid>
