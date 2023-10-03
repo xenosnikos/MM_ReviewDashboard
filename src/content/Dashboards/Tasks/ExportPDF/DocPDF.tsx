@@ -16,7 +16,9 @@ function DocPDF({
   donutURI,
   donut2URI,
   chartTitle,
-  selectedSources
+  selectedSources,
+  startDate,
+  endDate
 }) {
   const reviews = reviewsData?.data;
 
@@ -61,9 +63,20 @@ function DocPDF({
     selectedSources.includes(value.type)
   );
 
+  console.log(startDate , endDate)
+
+  const toDate = (time) =>{
+    const d = new Date(time)
+    return d.toLocaleDateString()
+  }
+
   return (
     <Document>
       <Page size="A4" style={styles.body}>
+      <View style={[styles.header, styles.borderTop]}>
+          <Text style={styles.textHeader}>Date </Text>
+          <Text style={styles.clientName}>{toDate(startDate)} to {toDate(endDate)}</Text>
+        </View>
         <View style={[styles.header, styles.borderTop]}>
           <Text style={styles.textHeader}>Review Report - </Text>
           <Text style={styles.clientName}>{data?.clientName}</Text>
