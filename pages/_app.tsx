@@ -15,7 +15,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import { DataProvider } from "@/contexts/DataContext";
 import PrivatePage from "@/components/PrivatePage";
-import "../index.css"
+import "../index.css";
 const clientSideEmotionCache = createEmotionCache();
 
 type NextPageWithLayout = NextPage & {

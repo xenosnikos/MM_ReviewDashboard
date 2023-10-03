@@ -7,8 +7,8 @@ const FooterWrapper = styled(Container)(
 );
 
 function Footer() {
-  const currentdata = new Date()
-  const currentYear = currentdata.getFullYear()
+  const currentdata = new Date();
+  const currentYear = currentdata.getFullYear();
   return (
     <FooterWrapper className="footer-wrapper">
       <Box
