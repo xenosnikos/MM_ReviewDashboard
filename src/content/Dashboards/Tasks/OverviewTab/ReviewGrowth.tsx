@@ -1,14 +1,29 @@
 import { useContext, useEffect, useRef, useState, useMemo } from "react";
-import { Button, Box, Menu, alpha, MenuItem, Typography, useTheme } from "@mui/material";
+import {
+  Button,
+  Box,
+  Menu,
+  alpha,
+  MenuItem,
+  Typography,
+  useTheme,
+  AlertColor
+} from "@mui/material";
 import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
 import type { ApexOptions } from "apexcharts";
 import DataContext from "@/contexts/DataContext";
 import { Chart } from "@/components/Chart";
+import CustomDatePicker from "@/components/CustomDatepicker/CustomDatePicker";
+import { getDashboardData, getDashboardDateData } from "@/services";
+import { useRouter } from "next/router";
+import { DashboardDataResponse } from "@/models";
 
-function ReviewGrowth() {
+function ReviewGrowth({ setMonth }) {
   const theme = useTheme();
   const { data, chartTitle, setDataState } = useContext(DataContext);
-
+  const [value, setValue] = useState<any>();
+  const [customDateModal, setCustomteModal] = useState(false);
+  const [rest, setRest] = useState<Boolean>(false);
   const labelsInit = useMemo(
     () => [
       "Jan",
@@ -26,6 +41,9 @@ function ReviewGrowth() {
     ],
     []
   );
+  const router = useRouter();
+  const { client } = router.query;
+  const clientId = typeof client === "string" ? client : "";
 
   const getLastYearData = (data) => {
     const currentDate = new Date();
@@ -42,8 +60,22 @@ function ReviewGrowth() {
         (currentYear === itemYear && itemMonth <= currentMonth)
       );
     });
-
     return lastYearData;
+  };
+
+  const customDateData = (data) => {
+    if (value) {
+      const { startDate, endDate } = value[0];
+      const initialDate = new Date(startDate);
+      const end_date = new Date(endDate);
+      console.log(initialDate, "startDAte");
+      const filteredData = data.filter((item) => {
+        const itemDate = new Date(item.date);
+        console.log(itemDate);
+        return itemDate >= initialDate && itemDate <= end_date;
+      });
+      return filteredData;
+    }
   };
 
   const initOptions = useMemo<ApexOptions>(() => {
@@ -154,6 +186,10 @@ function ReviewGrowth() {
       {
         value: "current_year",
         text: "Current Year"
+      },
+      {
+        value: "custom_date",
+        text: "Custom Date"
       }
     ],
     []
@@ -164,17 +200,40 @@ function ReviewGrowth() {
   const [period, setPeriod] = useState<string>(periods[1].text);
   const [options, setOptions] = useState<ApexOptions>(initOptions);
 
+  const restDashBoardData = () => {
+    const getData = async () => {
+      try {
+        const response: DashboardDataResponse = await getDashboardData(clientId);
+        setDataState({
+          data: response,
+          disabledButton: false
+        });
+      } catch (error) {
+        const errorMessage = "Could not load data, please try again later.";
+        const severity: AlertColor = "error";
+
+        setDataState({
+          disabledButton: false,
+          alertMessage: errorMessage,
+          alertSeverity: severity,
+          isAlertOpen: true
+        });
+      }
+    };
+
+    if (typeof client === "string") {
+      getData();
+    }
+  };
+
   const getCurrentMonthData = (data) => {
     const currentDate = new Date();
     const currentYear = currentDate.getUTCFullYear();
     const currentMonth = currentDate.getUTCMonth() + 1;
-
     const lastDayOfMonth = new Date(currentYear, currentMonth, 0).getUTCDate();
     const monthDays = Array.from({ length: lastDayOfMonth }, (_, index) => index + 1);
-
     const currentMonthData = monthDays.map((day) => {
       const itemDate = new Date(Date.UTC(currentYear, currentMonth - 1, day, 0, 0, 0, 0));
-
       const reviewDay = data.find((item) => {
         const [itemYear, itemMonth, itemDay] = item.date.split("-");
         const reviewDate = new Date(
@@ -199,7 +258,9 @@ function ReviewGrowth() {
     const selectedData =
       selectedOption === "current_month"
         ? getCurrentMonthData(data?.reviewGrowth || [])
-        : getLastYearData(data?.reviewGrowth || []);
+        : selectedOption === "current_year"
+        ? getLastYearData(data?.reviewGrowth || [])
+        : customDateData(data?.reviewGrowth || []);
 
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
@@ -226,16 +287,18 @@ function ReviewGrowth() {
       ];
 
       setDataState({ chartTitle: `Review Growth: ${monthNames[currentMonth - 1]}` });
-
+      let count = 0
       for (let day = 1; day <= lastDayOfMonth; day++) {
         const reviewDay = selectedData.find((item) => item.dayNumber === day - 1);
         if (reviewDay) {
           const dayWithSuffix = `${day}${getDaySuffix(day)}`;
           labels.push(dayWithSuffix);
           seriesData.push(reviewDay.count);
+          count += reviewDay.count
         }
       }
-    } else {
+      setMonth(count);
+    } else if (selectedOption === "current_year") {
       const monthCounts = selectedData.reduce((acc, item) => {
         const [itemYear, itemMonth, itemDay] = item.date.split("-");
         const itemDate = new Date(Date.UTC(itemYear, itemMonth - 1, itemDay, 0, 0, 0, 0));
@@ -243,7 +306,6 @@ function ReviewGrowth() {
         acc[month] = (acc[month] || 0) + item.count;
         return acc;
       }, {});
-
       for (let i = 0; i < 12; i++) {
         const month = i + 1;
         const monthLabel = labelsInit[new Date(currentYear, month - 1).getMonth()];
@@ -252,8 +314,33 @@ function ReviewGrowth() {
       }
 
       setDataState({ chartTitle: `Review Growth: ${currentYear - 1} - ${currentYear}` });
+    } else {
+      if (value) {
+        const { startDate, endDate } = value[0];
+        const toDate = (arg) => {
+          const date = new Date(arg);
+          return date.toDateString();
+        };
+        const monthCounts = data?.reviewGrowth?.reduce((acc, item) => {
+          const [itemYear, itemMonth, itemDay] = item.date.split("-");
+          const itemDate = new Date(
+            Date.UTC(itemYear, itemMonth - 1, itemDay, 0, 0, 0, 0)
+          );
+          const month = itemDate.getUTCMonth();
+          acc[month] = (acc[month] || 0) + item.count;
+          return acc;
+        }, {});
+        for (let i = 0; i < 12; i++) {
+          const month = i + 1;
+          const monthLabel = labelsInit[new Date(currentYear, month - 1).getMonth()];
+          labels.push(monthLabel);
+          seriesData.push(monthCounts[month - 1] || 0);
+        }
+        setDataState({
+          chartTitle: `Review Growth: ${toDate(startDate)} - ${toDate(endDate)}`
+        });
+      }
     }
-
     setOptions((prevOptions) => ({
       ...prevOptions,
       labels: labels,
@@ -283,17 +370,89 @@ function ReviewGrowth() {
         return "th";
     }
   };
+  const handleChange = (item) => {
+    console.log(item);
+
+    if (item === "Custom Date") {
+      setCustomteModal(true);
+      setPeriod(item);
+      setOpenMenuPeriod(false);
+    } else {
+      setPeriod(item);
+      setOpenMenuPeriod(false);
+    }
+  };
 
   useEffect(() => {
     if (period === "Current Month") {
       updateChartData("current_month");
+      setRest(false);
     }
-
     if (period === "Current Year") {
       updateChartData("current_year");
+      setRest(false);
     }
-  }, [data, period]);
+    if (!customDateModal) {
+      if (period === "Custom Date") {
+        updateChartData("custom_date");
+        setRest(false);
+      }
+    }
+  }, [data]);
+  useEffect(() => {
+    if (period === "Current Month") {
+      restDashBoardData();
+      updateChartData("current_month");
+      setRest(false);
+    }
+    if (period === "Current Year") {
+      restDashBoardData();
+      updateChartData("current_year");
+      setMonth(0);
+      setRest(false);
+    }
+    if (!customDateModal) {
+      if (period === "Custom Date") {
+        setCustomteModal(true);
+        setMonth(0);
+        setRest(false);
+      }
+    }
+  }, [period]);
 
+  useEffect(() => {
+    if (rest) {
+      if (period === "Custom Date") {
+        const getData = async () => {
+          try {
+            const response: DashboardDataResponse = await getDashboardDateData(
+              clientId,
+              value
+            );
+            await setDataState({
+              data: response,
+              disabledButton: false
+            });
+          } catch (error) {
+            const errorMessage = "Could not load data, please try again later.";
+            const severity: AlertColor = "error";
+
+            await setDataState({
+              disabledButton: false,
+              alertMessage: errorMessage,
+              alertSeverity: severity,
+              isAlertOpen: true
+            });
+          }
+        };
+
+        if (typeof client === "string") {
+          getData();
+        }
+      }
+      updateChartData("custom_date");
+    }
+  }, [rest]);
   return (
     <Box>
       <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
@@ -326,9 +485,7 @@ function ReviewGrowth() {
             <MenuItem
               key={_period.value}
               onClick={() => {
-                setPeriod(_period.text);
-                setOpenMenuPeriod(false);
-                updateChartData(_period.value);
+                handleChange(_period.text);
               }}
             >
               {_period.text}
@@ -342,6 +499,14 @@ function ReviewGrowth() {
         series={options.series}
         type="bar"
         height={270}
+      />
+      <CustomDatePicker
+        open={customDateModal}
+        handleClose={() => {
+          setCustomteModal(false);
+        }}
+        setValue={setValue}
+        setRest={setRest}
       />
     </Box>
   );

@@ -3,7 +3,6 @@ import { ApexOptions } from "apexcharts";
 import { Chart } from "@/components/Chart";
 import { useEffect, useState } from "react";
 import { providers } from "@/helpers/constant";
-
 const initOptions: ApexOptions = {
   chart: {
     id: "review-donut",

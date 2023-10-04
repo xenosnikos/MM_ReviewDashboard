@@ -14,6 +14,7 @@ export const getReviewsData = async (params: {
         params
       })
       .then((response) => {
+        console.log(response)
         if (response?.data?.status === "success" && response?.data?.data)
           resolve(response.data.data);
         else reject("Something went wrong");

@@ -1,6 +1,9 @@
 {
   "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
   "rules": {
+    "prettier/prettier": ["error",{
+      "endOfLine": "auto"}
+    ],
     "@next/next/no-img-element": "off",
     "jsx-a11y/alt-text": "off",
     "react/display-name": "off",
@@ -8,6 +11,7 @@
     "react-hooks/exhaustive-deps": "off",
     "react/no-unescaped-entities": "off",
     "quotes": ["error", "double"],
+    //  "linebreak-style": ["error", "windows"],
     "linebreak-style": ["error", "unix"],
     "semi": ["error", "always"],
     "react/jsx-max-props-per-line": [
@@ -17,5 +21,6 @@
         "when": "multiline"
       }
     ]
+    
   }
 }

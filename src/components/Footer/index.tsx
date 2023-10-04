@@ -7,6 +7,8 @@ const FooterWrapper = styled(Container)(
 );
 
 function Footer() {
+  const currentdata = new Date();
+  const currentYear = currentdata.getFullYear();
   return (
     <FooterWrapper className="footer-wrapper">
       <Box
@@ -18,7 +20,7 @@ function Footer() {
       >
         <Box>
           <Typography variant="subtitle1">
-            &copy; 2022 - &nbsp;
+            &copy; {currentYear} - &nbsp;
             <Link href={"http://gopinion.ca"} target="_blank" rel="noopener noreferrer">
               Gopinion.ca
             </Link>

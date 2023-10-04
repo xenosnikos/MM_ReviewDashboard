@@ -31,14 +31,6 @@ function ReviewsTable() {
   const [showReviewDetails, setShowReviewDetails] = useState(false);
   const [selectedReview, setSelectedReview] = useState(null);
 
-  const handleViewReview = (reviewId: number) => {
-    const selectedReview = reviewsData?.data?.find(
-      (review) => review.reviewid === reviewId
-    );
-    setSelectedReview(selectedReview);
-    setShowReviewDetails(true);
-  };
-
   const isAllSelectedSources =
     providers.length > 0 && selectedSources.length === providers.length;
   const isAllSelectedRatings =
@@ -227,12 +219,13 @@ function ReviewsTable() {
                         </Box>
                       </TableCell>
                       <TableCell>
+                        <a href={review.viewlink} target="_blank">
                         <Button
                           variant="outlined"
-                          onClick={() => handleViewReview(review.reviewid)}
                         >
                           View
                         </Button>
+                        </a>
                       </TableCell>
                     </TableRow>
                   );

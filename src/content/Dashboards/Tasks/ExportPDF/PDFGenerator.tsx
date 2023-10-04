@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import ApexCharts from "apexcharts";
 import { pdf } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
@@ -6,6 +6,7 @@ import DocPDF from "./DocPDF";
 import { getReviewsData } from "@/services";
 import { ReviewsDataResponse } from "@/models";
 import { providers } from "@/helpers/constant";
+import DataContext from "@/contexts/DataContext";
 
 function PDFGenerator({
   clientName,
@@ -17,6 +18,7 @@ function PDFGenerator({
   selectedSources,
   setDataState
 }) {
+  const {startDate , endDate } = useContext(DataContext)
   useEffect(() => {
     const generatePDF = async () => {
       const props = await getProps();
@@ -79,7 +81,9 @@ function PDFGenerator({
       donutURI,
       donut2URI,
       chartTitle,
-      selectedSources
+      selectedSources,
+      startDate,
+      endDate
     };
   };
 
