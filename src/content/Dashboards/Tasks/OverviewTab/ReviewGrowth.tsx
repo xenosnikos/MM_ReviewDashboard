@@ -371,18 +371,17 @@ function ReviewGrowth({ setMonth }) {
     }
   };
   const handleChange = (item) => {
-    console.log(item);
-
     if (item === "Custom Date") {
       setCustomteModal(true);
       setPeriod(item);
+      setRest(false)
       setOpenMenuPeriod(false);
     } else {
       setPeriod(item);
+      setRest(false)
       setOpenMenuPeriod(false);
     }
   };
-
   useEffect(() => {
     if (period === "Current Month") {
       updateChartData("current_month");
@@ -399,6 +398,7 @@ function ReviewGrowth({ setMonth }) {
       }
     }
   }, [data]);
+
   useEffect(() => {
     if (period === "Current Month") {
       restDashBoardData();
@@ -413,8 +413,8 @@ function ReviewGrowth({ setMonth }) {
     }
     if (!customDateModal) {
       if (period === "Custom Date") {
-        setCustomteModal(true);
         setMonth(0);
+        setCustomteModal(true);
         setRest(false);
       }
     }
@@ -423,6 +423,7 @@ function ReviewGrowth({ setMonth }) {
   useEffect(() => {
     if (rest) {
       if (period === "Custom Date") {
+        setMonth(0)
         const getData = async () => {
           try {
             const response: DashboardDataResponse = await getDashboardDateData(
@@ -445,7 +446,6 @@ function ReviewGrowth({ setMonth }) {
             });
           }
         };
-
         if (typeof client === "string") {
           getData();
         }
