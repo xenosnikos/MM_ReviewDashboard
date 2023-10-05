@@ -11,8 +11,8 @@
     "react-hooks/exhaustive-deps": "off",
     "react/no-unescaped-entities": "off",
     "quotes": ["error", "double"],
-     "linebreak-style": ["error", "windows"],
-    // "linebreak-style": ["error", "unix"],
+    //  "linebreak-style": ["error", "windows"],
+    "linebreak-style": ["error", "unix"],
     "semi": ["error", "always"],
     "react/jsx-max-props-per-line": [
       1,
