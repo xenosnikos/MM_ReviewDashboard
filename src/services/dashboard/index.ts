@@ -21,34 +21,46 @@ export const getDashboardData = async (
   });
 };
 
-
 function formatDate(date) {
   var d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
 
-  if (month.length < 2) 
-      month = '0' + month;
-  if (day.length < 2) 
-      day = '0' + day;
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
 
-  return [year, month, day].join('-');
+  return [year, month, day].join("-");
 }
 
 export const getDashboardDateData = async (
   client: string,
-  value : Date
+  value: Date,
+  currentMonth: Boolean
 ): Promise<DashboardDataResponse> => {
-    console.log(value)
-    const startdate = formatDate(value[0]?.startDate)
-    const enddate = formatDate(value[0]?.endDate)
+  let startdate, enddate;
+
+  if (currentMonth) {
+    // Calculate the start and end dates for the current month
+    var date = new Date();
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    console.log(firstDay);
+    startdate = formatDate(firstDay);
+    enddate = formatDate(lastDay);
+  } else {
+    // Use the provided date values
+    startdate = formatDate(value[0]?.startDate);
+    enddate = formatDate(value[0]?.endDate);
+  }
 
   return await new Promise((resolve, reject) => {
     api
-      .get(`/getDashboardDateData?client=${client}&startdate=${startdate}&enddate=${enddate}`,)
+      .get(
+        `/getDashboardDateData?client=${client}&startdate=${startdate}&enddate=${enddate}`
+      )
       .then((response) => {
-        console.log(response)
+        console.log(response);
         if (response?.data?.status === "success" && response?.data?.data)
           resolve(response.data.data);
         else reject("Something went wrong");
