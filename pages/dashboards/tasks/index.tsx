@@ -119,8 +119,7 @@ function DashboardTasks() {
     selectedRatings,
     page,
     limit,
-    setDataState,
-    reviewsData
+    setDataState
   } = useContext(DataContext);
 
   const [monthReview, setMonthReview] = useState(0);
@@ -200,8 +199,6 @@ function DashboardTasks() {
     }
   }, [client]);
 
-  useEffect(() => {}, [data, reviewsData]);
-
   return (
     <>
       <Head>
@@ -259,7 +256,10 @@ function DashboardTasks() {
                     </Box>
                   </Grid>
                   <Grid item xs={6}>
-                    <StarRatingBreakDown data={data?.starRatingBreakdown} />
+                    <StarRatingBreakDown
+                      data={data?.starRatingBreakdown}
+                      total={monthReview > 0 ? monthReview : data?.totalReviews}
+                    />
                   </Grid>
                   <Grid item xs={6}>
                     <ReviewSourceBreakDown data={data?.reviewSourceBreakDown} />

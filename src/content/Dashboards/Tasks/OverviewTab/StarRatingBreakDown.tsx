@@ -25,7 +25,7 @@ const initOptions: ApexOptions = {
   },
   legend: {
     formatter: function (val, opts) {
-      return opts.w.globals.series[opts.seriesIndex] + "% " + val;
+      return opts.w.globals.series[opts.seriesIndex] + " " + val;
     }
   },
   responsive: [
@@ -44,23 +44,22 @@ const initOptions: ApexOptions = {
   series: [0, 0, 0, 0, 0]
 };
 
-function StarRatingBreakDown({ data }) {
+function StarRatingBreakDown({ data , total }) {
   const theme = useTheme();
   const [options, setOptions] = useState<ApexOptions>(initOptions);
 
   useEffect(() => {
     if (data) {
       const newSeries = [];
-
       for (let i = 5; i > 0; i--) {
         const index = data.findIndex((item) => item.rating === i);
         if (index > -1 && data[index].count) {
-          newSeries.push(parseFloat(data[index].count));
+          let da = (data[index].count / 100) * total
+          newSeries.push(Math.round(da));
         } else {
           newSeries.push(0);
         }
       }
-
       setOptions({ ...options, series: newSeries });
     }
   }, [data]);
@@ -85,7 +84,7 @@ function StarRatingBreakDown({ data }) {
         type="donut"
         width={500}
         options={options}
-        series={options.series}
+        series={options.series} 
       />
     </Box>
   );
