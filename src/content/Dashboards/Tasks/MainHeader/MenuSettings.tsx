@@ -24,7 +24,7 @@ import { getDashboardDateData, getReviewsData } from "@/services";
 import SignOut from "./SignOut";
 import dynamic from "next/dynamic";
 import DocConfirm from "./DocConfirm";
-import { DashboardDataResponse, ReviewsDataResponse } from "@/models";
+import {  ReviewsDataResponse } from "@/models";
 const PDFGenerator = dynamic(() => import("../ExportPDF/PDFGenerator"), {
   ssr: false
 });
@@ -126,7 +126,7 @@ function MenuSettings({ clientName, params }) {
     setConfirmationDialogOpen(false);
   };
 
-  const handlePDF = async (dd: any, selectedDate: any) => {
+  const handlePDF = async (selectedDate: any) => {
     setDataState({
       disabledButton: true
     });

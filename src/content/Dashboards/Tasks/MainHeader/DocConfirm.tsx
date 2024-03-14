@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -67,6 +67,7 @@ function DocConfirm({ open, onClose, onConfirm }) {
   };
 
   const handleConfirm = () => {
+    console.log(disabledDate)
     onConfirm(selectedSources , state);
     onClose();
   };
