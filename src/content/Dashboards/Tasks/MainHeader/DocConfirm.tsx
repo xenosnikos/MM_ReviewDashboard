@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -12,24 +12,28 @@ import {
   ListItemIcon,
   ListItemText,
   FormControlLabel,
-  TextField,
-  Typography,
   Grid,
   Box
 } from "@mui/material";
 import { providers } from "@/helpers/constant";
 import DataContext from "@/contexts/DataContext";
-import { MobileDatePicker } from "@mui/lab";
-
+import { DateRange } from "react-date-range";
 function DocConfirm({ open, onClose, onConfirm }) {
-  const { selectedSources, selectedDateOption, startDate, endDate, setDataState } =
+  const { selectedSources, selectedDateOption, setDataState } =
     useContext(DataContext);
   const [disabledDate, setDisabledDate] = useState(true);
-
+  const [state, setState] = useState([
+    {
+      startDate: null,
+      endDate: null,
+      key: "selection",
+      moveRangeOnFirstSelection: false,
+      retainEndDateOnFirstSelection: false
+    }
+  ]);
   const handleChangeOption = (event) => {
     const value = event.target.value;
     setDataState({ selectedDateOption: value });
-
     if (value === "all") {
       setDataState({ startDate: null, endDate: null });
       setDisabledDate(true);
@@ -63,7 +67,7 @@ function DocConfirm({ open, onClose, onConfirm }) {
   };
 
   const handleConfirm = () => {
-    onConfirm(selectedSources);
+    onConfirm(selectedSources , state);
     onClose();
   };
 
@@ -135,7 +139,7 @@ function DocConfirm({ open, onClose, onConfirm }) {
                 />
               </Box>
               {selectedDateOption != "all" ? <Grid spacing={2} alignItems="center" sx={{ marginTop: "8px" }}>
-                <Grid item>
+                {/* <Grid item>
                   <Typography
                     variant="subtitle2"
                     color={disabledDate ? "" : "textPrimary"}
@@ -170,7 +174,17 @@ function DocConfirm({ open, onClose, onConfirm }) {
                     renderInput={(params) => <TextField {...params} />}
                     disabled={disabledDate}
                   />
-                </Grid>
+                </Grid> */}
+                <DateRange
+                  className="DatePicker"
+                  editableDateInputs={true}
+                  onChange={(item) => {
+                    setState([item.selection]);
+                  }}
+                  moveRangeOnFirstSelection={false}
+                  ranges={state}
+                  maxDate={new Date()}
+                />
               </Grid> : ""}
             </FormControl>
           </Grid>

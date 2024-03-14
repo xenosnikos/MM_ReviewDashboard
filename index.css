@@ -2,3 +2,13 @@
     color: rgb(184, 175, 175) !important;
     font-size: 14px !important;
 } 
+
+.rdrCalendarWrapper{
+    background-color: rgb(8, 11, 25) !important;
+}
+.rdrDateDisplayWrapper{
+    background-color: rgb(8, 11, 25) !important;
+}
+.rdrDayDisabled{
+    background-color: rgb(8, 11, 25) !important;
+}

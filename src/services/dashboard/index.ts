@@ -40,6 +40,7 @@ export const getDashboardDateData = async (
 ): Promise<DashboardDataResponse> => {
   let startdate, enddate;
 
+  console.log(value)
   if (currentMonth) {
     // Calculate the start and end dates for the current month
     var date = new Date();
@@ -54,13 +55,9 @@ export const getDashboardDateData = async (
     enddate = formatDate(value[0]?.endDate);
   }
 
+  
   return await new Promise((resolve, reject) => {
-    api
-      .get(
-        `/getDashboardDateData?client=${client}&startdate=${startdate}&enddate=${enddate}`
-      )
-      .then((response) => {
-        console.log(response);
+    api.get(`/getDashboardDateData?client=${client}&startdate=${startdate}&enddate=${enddate}`).then((response) => {
         if (response?.data?.status === "success" && response?.data?.data)
           resolve(response.data.data);
         else reject("Something went wrong");

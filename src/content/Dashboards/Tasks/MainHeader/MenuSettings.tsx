@@ -20,11 +20,11 @@ import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
 import AccountTreeTwoToneIcon from "@mui/icons-material/AccountTreeTwoTone";
 import SettingsTwoToneIcon from "@mui/icons-material/SettingsTwoTone";
 import DataContext from "@/contexts/DataContext";
-import { getReviewsData } from "@/services";
+import { getDashboardDateData, getReviewsData } from "@/services";
 import SignOut from "./SignOut";
 import dynamic from "next/dynamic";
 import DocConfirm from "./DocConfirm";
-import { ReviewsDataResponse } from "@/models";
+import { DashboardDataResponse, ReviewsDataResponse } from "@/models";
 const PDFGenerator = dynamic(() => import("../ExportPDF/PDFGenerator"), {
   ssr: false
 });
@@ -126,22 +126,23 @@ function MenuSettings({ clientName, params }) {
     setConfirmationDialogOpen(false);
   };
 
-  const handlePDF = async () => {
+  const handlePDF = async (dd: any, selectedDate: any) => {
     setDataState({
       disabledButton: true
     });
 
     try {
-      const response: ReviewsDataResponse = await getReviewsData({
-        ...params,
-        per_page: totalReviews
-      });
 
       if (selectedDateOption !== "all") {
-        if (typeof response === "object" && response !== null && "data" in response) {
+        const data: any = await getDashboardDateData(
+          clientId,
+          selectedDate,
+          false
+        );
+        if (data) {
           const filteredResponse = {
-            ...response,
-            data: (response.data as Array<any>).filter((review) => {
+            ...data,
+            data: (data.reviewGrowth as Array<any>).filter((review) => {
               const reviewDate = new Date(
                 review.date.replace(/\b(\d+)(st|nd|rd|th)\b/g, "$1")
               );
@@ -173,21 +174,26 @@ function MenuSettings({ clientName, params }) {
               return reviewDateUTC >= startDateUTC && reviewDateUTC <= endDateUTC;
             })
           };
-
           setDataState({
+            data : data,
             reviewsData: filteredResponse,
             refreshPDF: true
           });
         }
-
         handleConfirmationDialogClose();
         return;
+      } else {
+        const response: ReviewsDataResponse = await getReviewsData({
+          ...params,
+          per_page: totalReviews
+        });
+
+        setDataState({
+          reviewsData: response,
+          refreshPDF: true
+        });
       }
 
-      setDataState({
-        reviewsData: response,
-        refreshPDF: true
-      });
 
       handleConfirmationDialogClose();
     } catch (error) {
