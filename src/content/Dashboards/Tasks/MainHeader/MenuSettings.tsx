@@ -20,11 +20,11 @@ import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
 import AccountTreeTwoToneIcon from "@mui/icons-material/AccountTreeTwoTone";
 import SettingsTwoToneIcon from "@mui/icons-material/SettingsTwoTone";
 import DataContext from "@/contexts/DataContext";
-import { getReviewsData } from "@/services";
+import { getDashboardData, getDashboardDateData, getReviewsData } from "@/services";
 import SignOut from "./SignOut";
 import dynamic from "next/dynamic";
 import DocConfirm from "./DocConfirm";
-import { ReviewsDataResponse } from "@/models";
+import { DashboardDataResponse, ReviewsDataResponse } from "@/models";
 const PDFGenerator = dynamic(() => import("../ExportPDF/PDFGenerator"), {
   ssr: false
 });
@@ -87,7 +87,7 @@ function MenuSettings({ clientName, params }) {
 
   const ref = useRef<any>(null);
   const [isOpen, setOpen] = useState<boolean>(false);
-
+  const [customdateData, setcustomdateData] = useState<any>();
   const handleOpen = (): void => {
     setOpen(true);
   };
@@ -104,7 +104,6 @@ function MenuSettings({ clientName, params }) {
     if (!clientId) {
       const errorMessage = "Please select a client before proceeding.";
       const severity: AlertColor = "warning";
-
       setDataState({
         alertMessage: errorMessage,
         alertSeverity: severity,
@@ -136,8 +135,25 @@ function MenuSettings({ clientName, params }) {
         ...params,
         per_page: totalReviews
       });
+      const selectedDate = [
+        {
+          startDate: startDate,
+          endDate: endDate
+        }
+      ];
 
       if (selectedDateOption !== "all") {
+        const data2: any = await getDashboardDateData(clientId, selectedDate, false);
+        await setDataState({
+          data: data2
+        });
+
+        await setcustomdateData(data2);
+        const response2: DashboardDataResponse = await getDashboardData(clientId);
+        setDataState({
+          data: response2
+        });
+
         if (typeof response === "object" && response !== null && "data" in response) {
           const filteredResponse = {
             ...response,
@@ -173,18 +189,18 @@ function MenuSettings({ clientName, params }) {
               return reviewDateUTC >= startDateUTC && reviewDateUTC <= endDateUTC;
             })
           };
-
           setDataState({
             reviewsData: filteredResponse,
             refreshPDF: true
           });
         }
-
         handleConfirmationDialogClose();
         return;
       }
 
-      setDataState({
+      await setcustomdateData(data);
+      await setDataState({
+        data: data,
         reviewsData: response,
         refreshPDF: true
       });
@@ -272,7 +288,7 @@ function MenuSettings({ clientName, params }) {
           clientName={clientName}
           params={params}
           reviewsData={reviewsData}
-          data={data}
+          data={customdateData}
           refreshPDF={refreshPDF}
           chartTitle={chartTitle}
           selectedSources={selectedSources}

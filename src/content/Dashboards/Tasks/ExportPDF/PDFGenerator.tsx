@@ -18,7 +18,7 @@ function PDFGenerator({
   selectedSources,
   setDataState
 }) {
-  const {startDate , endDate } = useContext(DataContext)
+  const { startDate, endDate } = useContext(DataContext);
   useEffect(() => {
     const generatePDF = async () => {
       const props = await getProps();
@@ -30,7 +30,6 @@ function PDFGenerator({
 
       try {
         const response: ReviewsDataResponse = await getReviewsData(params);
-
         setDataState({
           reviewsData: response,
           selectedSources: providers,

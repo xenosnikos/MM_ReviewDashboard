@@ -35,7 +35,7 @@ function formatDate(date) {
 
 export const getDashboardDateData = async (
   client: string,
-  value: Date,
+  value: any,
   currentMonth: Boolean
 ): Promise<DashboardDataResponse> => {
   let startdate, enddate;
