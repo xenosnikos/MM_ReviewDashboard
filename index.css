@@ -1,4 +1,23 @@
-.apexcharts-legend-text{
-    color: rgb(184, 175, 175) !important;
-    font-size: 14px !important;
-} 
+.apexcharts-legend-text {
+  color: rgb(184, 175, 175) !important;
+  font-size: 14px !important;
+}
+
+.rdrDateDisplayWrapper {
+  background-color: #080b19 !important;
+}
+
+.rdrMonthAndYearWrapper {
+  align-items: center;
+  height: 60px;
+  padding-top: 10px;
+  background-color: #080b19 !important;
+}
+
+.rdrMonth {
+  padding: 0 0.833em 1.666em 0.833em;
+  background-color: #080b19 !important;
+}
+.rdrDayDisabled {
+  background-color: #080b19 !important;
+}

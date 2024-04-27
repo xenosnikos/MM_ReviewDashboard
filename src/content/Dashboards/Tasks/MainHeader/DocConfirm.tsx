@@ -12,19 +12,26 @@ import {
   ListItemIcon,
   ListItemText,
   FormControlLabel,
-  TextField,
-  Typography,
   Grid,
   Box
 } from "@mui/material";
 import { providers } from "@/helpers/constant";
 import DataContext from "@/contexts/DataContext";
-import { MobileDatePicker } from "@mui/lab";
-
+import "react-date-range/dist/styles.css"; // main css file
+import "react-date-range/dist/theme/default.css"; // theme css file
+import { DateRange } from "react-date-range";
 function DocConfirm({ open, onClose, onConfirm }) {
-  const { selectedSources, selectedDateOption, startDate, endDate, setDataState } =
-    useContext(DataContext);
-  const [disabledDate, setDisabledDate] = useState(true);
+  const { selectedSources, selectedDateOption, setDataState } = useContext(DataContext);
+  // const [disabledDate, setDisabledDate] = useState(true);
+  const [state, setState] = useState([
+    {
+      startDate: null,
+      endDate: null,
+      key: "selection",
+      moveRangeOnFirstSelection: false,
+      retainEndDateOnFirstSelection: false
+    }
+  ]);
 
   const handleChangeOption = (event) => {
     const value = event.target.value;
@@ -32,11 +39,8 @@ function DocConfirm({ open, onClose, onConfirm }) {
 
     if (value === "all") {
       setDataState({ startDate: null, endDate: null });
-      setDisabledDate(true);
       return;
     }
-
-    setDisabledDate(false);
   };
 
   const isAllSelectedSources =
@@ -62,7 +66,11 @@ function DocConfirm({ open, onClose, onConfirm }) {
     onClose();
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
+    await setDataState({
+      startDate: state[0].startDate,
+      endDate: state[0].endDate
+    });
     onConfirm(selectedSources);
     onClose();
   };
@@ -134,44 +142,58 @@ function DocConfirm({ open, onClose, onConfirm }) {
                   label="Select date range"
                 />
               </Box>
-              {selectedDateOption != "all" ? <Grid spacing={2} alignItems="center" sx={{ marginTop: "8px" }}>
-                <Grid item>
-                  <Typography
-                    variant="subtitle2"
-                    color={disabledDate ? "" : "textPrimary"}
-                  >
-                    From the:
-                  </Typography>
-                </Grid>
-                <Grid item sx={{ marginTop: "10px" }}>
-                  <MobileDatePicker
-                    label="Start Date"
-                    inputFormat="dd/MM/yyyy"
-                    value={startDate}
-                    onChange={(date) => setDataState({ startDate: date })}
-                    renderInput={(params) => <TextField {...params} />}
-                    disabled={disabledDate}
-                  />
-                </Grid>
-                <Grid item sx={{ marginTop: "10px" }}>
-                  <Typography
-                    variant="subtitle2"
-                    color={disabledDate ? "" : "textPrimary"}
-                  >
-                    To the:
-                  </Typography>
-                </Grid>
-                <Grid item sx={{ marginTop: "10px" }}>
-                  <MobileDatePicker
-                    label="End Date"
-                    inputFormat="dd/MM/yyyy"
-                    value={endDate}
-                    onChange={(date) => setDataState({ endDate: date })}
-                    renderInput={(params) => <TextField {...params} />}
-                    disabled={disabledDate}
-                  />
-                </Grid>
-              </Grid> : ""}
+              {selectedDateOption != "all" ? (
+                <DateRange
+                  className="DatePicker"
+                  editableDateInputs={true}
+                  onChange={(item) => {
+                    setState([item.selection]);
+                  }}
+                  moveRangeOnFirstSelection={false}
+                  ranges={state}
+                  maxDate={new Date()}
+                />
+              ) : (
+                // <Grid spacing={2} alignItems="center" sx={{ marginTop: "8px" }}>
+                //   <Grid item>
+                //     <Typography
+                //       variant="subtitle2"
+                //       color={disabledDate ? "" : "textPrimary"}
+                //     >
+                //       From the:
+                //     </Typography>
+                //   </Grid>
+                //   <Grid item sx={{ marginTop: "10px" }}>
+                //     <MobileDatePicker
+                //       label="Start Date"
+                //       inputFormat="dd/MM/yyyy"
+                //       value={startDate}
+                //       onChange={(date) => setDataState({ startDate: date })}
+                //       renderInput={(params) => <TextField {...params} />}
+                //       disabled={disabledDate}
+                //     />
+                //   </Grid>
+                //   <Grid item sx={{ marginTop: "10px" }}>
+                //     <Typography
+                //       variant="subtitle2"
+                //       color={disabledDate ? "" : "textPrimary"}
+                //     >
+                //       To the:
+                //     </Typography>
+                //   </Grid>
+                //   <Grid item sx={{ marginTop: "10px" }}>
+                //     <MobileDatePicker
+                //       label="End Date"
+                //       inputFormat="dd/MM/yyyy"
+                //       value={endDate}
+                //       onChange={(date) => setDataState({ endDate: date })}
+                //       renderInput={(params) => <TextField {...params} />}
+                //       disabled={disabledDate}
+                //     />
+                //   </Grid>
+                // </Grid>
+                ""
+              )}
             </FormControl>
           </Grid>
         </Grid>
