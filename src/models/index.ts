@@ -121,3 +121,22 @@ export interface EditClientSocialMediaLink {
   id: number;
   url: string;
 }
+
+export interface CreateClientEmail {
+  clientid: number;
+  email: string;
+}
+
+export interface EditClientReminderEmail {
+  id: number;
+  email: string;
+}
+
+export interface ClientEmail {
+  clientId: number;
+  created_at: string | null;
+  email: string;
+  email_send: number;
+  id: number;
+  updated_at: string | null;
+}
