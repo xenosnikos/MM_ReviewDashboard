@@ -30,6 +30,7 @@ import DataContext from "@/contexts/DataContext";
 import SocialPages from "@/content/Dashboards/Tasks/SocialPagesTab/SocialPages";
 import CustomAlert from "@/components/CustomAlert";
 import { DashboardDataResponse, ReviewsDataResponse } from "@/models";
+import ClientEmailPage from "@/content/Dashboards/Tasks/ClientsEmail/ClientEmailPage";
 
 const TabsContainerWrapper = styled(Box)(
   ({ theme }) => `
@@ -130,7 +131,8 @@ function DashboardTasks() {
     { value: "overview", label: "Overview" },
     { value: "reviews", label: "Reviews" },
     { value: "sources", label: "Sources" },
-    { value: "social_pages", label: "Social Pages" }
+    { value: "social_pages", label: "Social Pages" },
+    { value: "clients_email", label: "Clients Email" }
   ];
 
   const handleTabsChange = (_event: ChangeEvent<{}>, value: string): void => {
@@ -284,6 +286,11 @@ function DashboardTasks() {
               {currentTab === "social_pages" && (
                 <Grid item xs={12}>
                   <SocialPages />
+                </Grid>
+              )}
+              {currentTab === "clients_email" && (
+                <Grid item xs={12}>
+                  <ClientEmailPage />
                 </Grid>
               )}
             </Grid>
