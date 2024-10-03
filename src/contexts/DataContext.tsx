@@ -46,7 +46,7 @@ const initialDataState = {
   endDate: null,
   chartTitle: "",
   clientId: clientId(),
-  emails : []
+  emails: []
 };
 
 type DataState = typeof initialDataState;

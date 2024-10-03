@@ -1,6 +1,5 @@
 export const providers = [
   "Google",
-  "Yelp",
   "Yellow Pages",
   "CarGurus",
   "Cars",

@@ -27,8 +27,8 @@ function AddEmailPage() {
     }
 
     const body: CreateClientEmail = {
-      clientid: clientId,
-      email: email,
+      clientId: clientId,
+      email: email
     };
 
     try {

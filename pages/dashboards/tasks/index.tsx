@@ -29,8 +29,10 @@ import { getDashboardData, getReviewsData } from "@/services";
 import DataContext from "@/contexts/DataContext";
 import SocialPages from "@/content/Dashboards/Tasks/SocialPagesTab/SocialPages";
 import CustomAlert from "@/components/CustomAlert";
-import { DashboardDataResponse, ReviewsDataResponse } from "@/models";
 import ClientEmailPage from "@/content/Dashboards/Tasks/ClientsEmail/ClientEmailPage";
+import { getUserRole } from "@/services/login/index";
+import PageLoader from "@/components/Loader/index";
+import ClientsPage from "@/content/Dashboards/Tasks/Clients/ClientsPage";
 
 const TabsContainerWrapper = styled(Box)(
   ({ theme }) => `
@@ -123,7 +125,9 @@ function DashboardTasks() {
     setDataState
   } = useContext(DataContext);
 
+  const [userRole, setUserRole] = useState<number | null>(null);
   const [monthReview, setMonthReview] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const { client } = router.query;
   const clientId = typeof client === "string" ? client : "";
 
@@ -131,8 +135,13 @@ function DashboardTasks() {
     { value: "overview", label: "Overview" },
     { value: "reviews", label: "Reviews" },
     { value: "sources", label: "Sources" },
-    { value: "social_pages", label: "Social Pages" },
-    { value: "clients_email", label: "Clients Email" }
+    ...(userRole !== 3
+      ? [
+          { value: "social_pages", label: "Social Pages" },
+          { value: "clients_email", label: "Clients Email" },
+          { value: "clients", label: "Clients" }
+        ]
+      : [])
   ];
 
   const handleTabsChange = (_event: ChangeEvent<{}>, value: string): void => {
@@ -151,38 +160,23 @@ function DashboardTasks() {
   };
 
   useEffect(() => {
-    const getData = async () => {
+    const loadData = async () => {
       try {
-        const response: ReviewsDataResponse = await getReviewsData(params);
+        const role = getUserRole();
+        setUserRole(role);
 
-        setDataState({
-          reviewsData: response
-        });
-      } catch (error) {
-        const errorMessage = "Could not load reviews, please try again later.";
-        const severity: AlertColor = "error";
+        if (typeof client === "string") {
+          const [reviewsResponse, dashboardResponse] = await Promise.all([
+            getReviewsData(params),
+            getDashboardData(clientId)
+          ]);
 
-        setDataState({
-          alertMessage: errorMessage,
-          alertSeverity: severity,
-          isAlertOpen: true
-        });
-      }
-    };
-
-    if (typeof client === "string") {
-      getData();
-    }
-  }, [page, limit, selectedSources, selectedRatings, client]);
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response: DashboardDataResponse = await getDashboardData(clientId);
-        setDataState({
-          data: response,
-          disabledButton: false
-        });
+          setDataState({
+            reviewsData: reviewsResponse,
+            data: dashboardResponse,
+            disabledButton: false
+          });
+        }
       } catch (error) {
         const errorMessage = "Could not load data, please try again later.";
         const severity: AlertColor = "error";
@@ -193,13 +187,17 @@ function DashboardTasks() {
           alertSeverity: severity,
           isAlertOpen: true
         });
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    if (typeof client === "string") {
-      getData();
-    }
-  }, [client]);
+    loadData();
+  }, [client, page, limit, selectedSources, selectedRatings]);
+
+  if (isLoading) {
+    return <PageLoader />;
+  }
 
   return (
     <>
@@ -283,14 +281,19 @@ function DashboardTasks() {
                   </Grid>
                 </>
               )}
-              {currentTab === "social_pages" && (
+              {currentTab === "social_pages" && userRole !== 3 && (
                 <Grid item xs={12}>
                   <SocialPages />
                 </Grid>
               )}
-              {currentTab === "clients_email" && (
+              {currentTab === "clients_email" && userRole !== 3 && (
                 <Grid item xs={12}>
                   <ClientEmailPage />
+                </Grid>
+              )}
+              {currentTab === "clients" && userRole !== 3 && (
+                <Grid item xs={12}>
+                  <ClientsPage />
                 </Grid>
               )}
             </Grid>

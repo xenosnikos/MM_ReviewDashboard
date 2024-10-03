@@ -1,11 +1,12 @@
 import { useRouter } from "next/router";
-import { AlertColor, Box, TextField } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
-import { getClient } from "@/services";
-import DataContext from "@/contexts/DataContext";
+import { Box, TextField } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import { styled, lighten, darken } from "@mui/system";
+import React, { useContext, useEffect, useState } from "react";
+import { getClient } from "@/services";
 import { Client } from "@/models";
+import DataContext from "@/contexts/DataContext";
+import { getCurrentUser } from "@/services/login/index";
 
 const GroupHeader = styled("div")(({ theme }) => ({
   position: "sticky",
@@ -28,15 +29,16 @@ const SelectClient = () => {
   const [clients, setClients] = useState<Client[]>([]);
   const [selectedClient, setSelectedClient] = useState<string>(() => {
     if (typeof window !== "undefined") {
-      const selectedClient = localStorage.getItem("selectedClient");
-      if (selectedClient) {
-        return selectedClient;
+      const storedClient = localStorage.getItem("selectedClient");
+      if (storedClient) {
+        return storedClient;
       }
     }
     return "";
   });
+
   const options = clients.map((option) => {
-    const firstLetter = option.name[0].toUpperCase();
+    const firstLetter = option.client_name[0].toUpperCase();
     return {
       firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
       ...option
@@ -45,16 +47,17 @@ const SelectClient = () => {
 
   const handleGetClients = async (): Promise<void> => {
     try {
-      const response: Client[] = await getClient();
-
+      const user = getCurrentUser();
+      if (!user || !user.id) {
+        throw new Error("User not logged in");
+      }
+      const response: Client[] = await getClient(user.id);
       setClients(response);
     } catch (error) {
-      const errorMessage = "Could not load clients, please try again later.";
-      const severity: AlertColor = "error";
-
+      console.error("Error fetching clients:", error);
       setDataState({
-        alertMessage: errorMessage,
-        alertSeverity: severity,
+        alertMessage: "Could not load clients, please try again later.",
+        alertSeverity: "error",
         isAlertOpen: true
       });
     }
@@ -62,14 +65,13 @@ const SelectClient = () => {
 
   const handleChange = (_event: React.ChangeEvent<{}>, value: any) => {
     if (value) {
-      setSelectedClient(value);
-
-      setDataState({ clientId: value.id.toString() });
+      setSelectedClient(value.client_name);
+      setDataState({ clientId: value.client_id.toString() });
 
       if (typeof window !== "undefined") {
-        localStorage.setItem("selectedClient", value.name);
-        localStorage.setItem("clientId", value.id.toString());
-        router.push(`/dashboards/tasks?client=${value.id}`);
+        localStorage.setItem("selectedClient", value.client_name);
+        localStorage.setItem("clientId", value.client_id.toString());
+        router.push(`/dashboards/tasks?client=${value.client_id}`);
       }
     }
   };
@@ -79,17 +81,14 @@ const SelectClient = () => {
   }, []);
 
   return (
-    <Box
-      sx={{
-        marginLeft: "10px",
-        width: "250px"
-      }}
-    >
+    <Box sx={{ marginLeft: "10px", width: "250px" }}>
       <Autocomplete
         id="select-client"
         options={options.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
         groupBy={(option) => option.firstLetter}
-        getOptionLabel={(client) => (typeof client === "string" ? client : client.name)}
+        getOptionLabel={(client) =>
+          typeof client === "string" ? client : client.client_name
+        }
         value={selectedClient}
         onChange={handleChange}
         renderInput={(params) => (

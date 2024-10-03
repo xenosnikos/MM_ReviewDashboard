@@ -42,7 +42,7 @@ function CustomConfirm({ onConfirm }) {
             id="alert-dialog-description"
             sx={{ fontSize: 18, textAlign: "center" }}
           >
-            Do you want to proceed with the action?
+            Do you want to proceed with this action?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

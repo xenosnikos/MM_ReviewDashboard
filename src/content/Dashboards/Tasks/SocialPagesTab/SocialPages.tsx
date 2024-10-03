@@ -1,5 +1,5 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import DataContext from "@/contexts/DataContext";
 import { getClientSocialMediaLink } from "@/services";
 import AddSocialPage from "./AddSocialPage";
@@ -9,6 +9,7 @@ import { ClientSocialMediaLink } from "@/models";
 function SocialPages() {
   const theme = useTheme();
   const { clientId, filter, refresh, setDataState } = useContext(DataContext);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (typeof clientId === "string") getClientSocialMediaData();
@@ -18,6 +19,7 @@ function SocialPages() {
     const title = filter === "All Social Media" ? null : filter;
 
     try {
+      setLoading(true);
       const response: ClientSocialMediaLink[] = await getClientSocialMediaLink(
         clientId,
         title
@@ -27,7 +29,10 @@ function SocialPages() {
 
       throw new Error("Invalid response data.");
     } catch (error) {
+      console.error("Error fetching social media links:", error);
       setDataState({ links: [] });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -45,7 +50,7 @@ function SocialPages() {
           Social Pages
         </Typography>
         <AddSocialPage />
-        <GetSocialPages />
+        <GetSocialPages loading={loading} />
       </Box>
     </>
   );

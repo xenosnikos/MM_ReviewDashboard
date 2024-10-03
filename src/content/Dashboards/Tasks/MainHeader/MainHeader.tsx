@@ -1,6 +1,6 @@
 import { Typography, Box } from "@mui/material";
 import SelectClient from "./SelectClient";
-import EmailNotification from "./EmailNotification";
+// import EmailNotification from "./EmailNotification";
 import MenuSettings from "./MenuSettings";
 
 function MainHeader({ clientName, params }) {
@@ -25,7 +25,7 @@ function MainHeader({ clientName, params }) {
         </Box>
       </Box>
       <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
-        <EmailNotification />
+        {/* <EmailNotification /> */}
         <MenuSettings clientName={clientName} params={params} />
       </Box>
     </Box>

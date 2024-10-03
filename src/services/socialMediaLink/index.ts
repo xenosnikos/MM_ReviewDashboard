@@ -1,7 +1,8 @@
 import {
   ClientSocialMediaLink,
   CreateClientSocialMediaLink,
-  EditClientSocialMediaLink
+  EditClientSocialMediaLink,
+  DeleteClientSocialMediaLink
 } from "@/models";
 import api from "../api/index";
 
@@ -45,17 +46,23 @@ const createClientSocialMediaLink = async (params: CreateClientSocialMediaLink) 
   });
 };
 
-const deleteClientSocialMediaLink = async (id: number) => {
+const deleteClientSocialMediaLink = async (params: DeleteClientSocialMediaLink) => {
   return await new Promise((resolve, reject) => {
     api
-      .post("/deleteClientSocialmedialink", { id })
+      .post("/deleteClientSocialmedialink", params)
       .then((response) => {
-        if (response?.data?.status === "success") resolve("success");
-        else reject("Something went wrong");
+        if (response?.data?.status === "success") {
+          resolve(response.data.message);
+        } else {
+          reject(response?.data?.message || "Failed to delete social media link");
+        }
       })
       .catch((error) => {
-        if (error?.message) reject(error.message);
-        else reject("Something went wrong");
+        reject(
+          error?.response?.data?.message ||
+            error?.message ||
+            "An error occurred while deleting the social media link"
+        );
       });
   });
 };
@@ -65,12 +72,18 @@ const editClientSocialMediaLink = async (params: EditClientSocialMediaLink) => {
     api
       .post("/editClientSocialmedialink", params)
       .then((response) => {
-        if (response?.data?.status === "success") resolve("success");
-        else reject("Something went wrong");
+        if (response?.data?.status === "success") {
+          resolve(response.data.data);
+        } else {
+          reject(response?.data?.message || "Failed to update social media link");
+        }
       })
       .catch((error) => {
-        if (error?.message) reject(error.message);
-        else reject("Something went wrong");
+        reject(
+          error?.response?.data?.message ||
+            error?.message ||
+            "An error occurred while updating the social media link"
+        );
       });
   });
 };

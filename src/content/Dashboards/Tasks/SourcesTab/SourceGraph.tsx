@@ -36,23 +36,23 @@ const initOptions: ApexOptions = {
   series: [
     {
       name: "1 Star",
-      data: [0, 0, 0]
+      data: new Array(providers.length).fill(0)
     },
     {
       name: "2 Stars",
-      data: [0, 0, 0]
+      data: new Array(providers.length).fill(0)
     },
     {
       name: "3 Stars",
-      data: [0, 0, 0]
+      data: new Array(providers.length).fill(0)
     },
     {
       name: "4 Stars",
-      data: [0, 0, 0]
+      data: new Array(providers.length).fill(0)
     },
     {
       name: "5 Stars",
-      data: [0, 0, 0]
+      data: new Array(providers.length).fill(0)
     }
   ]
 };
@@ -62,7 +62,14 @@ function SourceGraph({ data }) {
 
   useEffect(() => {
     if (data) {
-      setOptions({ ...options, series: data });
+      setOptions((prevOptions) => ({
+        ...prevOptions,
+        xaxis: { ...prevOptions.xaxis, categories: providers },
+        series: data.map((item) => ({
+          ...item,
+          data: providers.map((provider) => item.data[providers.indexOf(provider)] || 0)
+        }))
+      }));
     }
   }, [data]);
 

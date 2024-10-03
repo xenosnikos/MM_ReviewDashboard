@@ -19,7 +19,7 @@ function AddSocialPage() {
     const { socialLink, socialPage } = data;
 
     const body: CreateClientSocialMediaLink = {
-      clientid: clientId,
+      clientId: clientId,
       title: socialPage,
       url: socialLink
     };
