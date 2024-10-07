@@ -70,7 +70,6 @@ function ReviewGrowth({ setMonth }) {
       const end_date = new Date(endDate);
       const filteredData = data.filter((item) => {
         const itemDate = new Date(item.date);
-        console.log(itemDate);
         return itemDate >= initialDate && itemDate <= end_date;
       });
       return filteredData;
@@ -279,7 +278,6 @@ function ReviewGrowth({ setMonth }) {
       }, {});
       for (let i = 0; i < 12; i++) {
         const month = i + 1;
-        console.log(month);
         const monthLabel = labelsInit[new Date(currentYear, month - 1).getMonth()];
         labels.push(monthLabel);
         seriesData.push(monthCounts[month - 1] || 0);
