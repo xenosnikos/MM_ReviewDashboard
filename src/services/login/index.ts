@@ -20,7 +20,8 @@ export const postSignin = async (params: IFormData): Promise<IUserData> => {
             remember_token: "cd4db1885dfaf939a6684f968a8c2f755f3f38b9d" // added makeshift token for login
           };
 
-          if (userData.roleid === 4) {
+          // Employees and Reporters cannot sign in
+          if (userData.roleid === 4 || userData.roleid === 5) {
             reject("Access denied. Your role does not have permission to sign in.");
             return;
           }
