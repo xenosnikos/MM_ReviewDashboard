@@ -21,7 +21,7 @@ export interface IFormData {
 
 export interface Client {
   id: number;
-  name: string;
+  client_name: string;
   firstLetter?: string;
 }
 
@@ -104,26 +104,32 @@ export interface DashboardDataResponse {
 }
 
 export interface ClientSocialMediaLink {
-  clientId: number;
   id: number;
+  clientId: number;
   link: string;
   socialMediaLinkId: number;
   title: string;
 }
 
 export interface CreateClientSocialMediaLink {
-  clientid: number;
+  clientId: number;
   title: string;
   url: string;
 }
 
+export interface DeleteClientSocialMediaLink {
+  id: number;
+  title: string;
+}
+
 export interface EditClientSocialMediaLink {
   id: number;
+  title: string;
   url: string;
 }
 
 export interface CreateClientEmail {
-  clientid: number;
+  clientId: number;
   email: string;
 }
 
@@ -139,4 +145,11 @@ export interface ClientEmail {
   email_send: number;
   id: number;
   updated_at: string | null;
+}
+
+export interface GopinionClient {
+  id: number;
+  name: string;
+  urlKey: string;
+  is_available: boolean;
 }

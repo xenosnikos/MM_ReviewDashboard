@@ -1,5 +1,4 @@
-import { useContext, useRef, useState } from "react";
-import NextLink from "next/link";
+import { useContext, useRef, useState, useEffect } from "react";
 import {
   AlertColor,
   Box,
@@ -17,7 +16,6 @@ import {
 import DocumentScannerTwoToneIcon from "@mui/icons-material/DocumentScannerTwoTone";
 import { styled } from "@mui/material/styles";
 import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
-import AccountTreeTwoToneIcon from "@mui/icons-material/AccountTreeTwoTone";
 import SettingsTwoToneIcon from "@mui/icons-material/SettingsTwoTone";
 import DataContext from "@/contexts/DataContext";
 import { getDashboardData, getDashboardDateData, getReviewsData } from "@/services";
@@ -25,6 +23,8 @@ import SignOut from "./SignOut";
 import dynamic from "next/dynamic";
 import DocConfirm from "./DocConfirm";
 import { DashboardDataResponse, ReviewsDataResponse } from "@/models";
+import { getCurrentUser } from "@/services/login/index";
+
 const PDFGenerator = dynamic(() => import("../ExportPDF/PDFGenerator"), {
   ssr: false
 });
@@ -80,9 +80,18 @@ function MenuSettings({ clientName, params }) {
     selectedSources
   } = useContext(DataContext);
 
+  const [username, setUsername] = useState<string>("");
+
+  useEffect(() => {
+    const user = getCurrentUser();
+    if (user) {
+      setUsername(user.username);
+    }
+  }, []);
+
   const user = {
-    title: "Menu Settings",
-    subtitle: "MaxxMedia"
+    title: "Account",
+    subtitle: username
   };
 
   const ref = useRef<any>(null);
@@ -268,12 +277,6 @@ function MenuSettings({ clientName, params }) {
               ""
             )}
           </ListItem>
-          <NextLink href="/account-settings" passHref>
-            <ListItem button>
-              <AccountTreeTwoToneIcon fontSize="small" />
-              <ListItemText primary="Account Settings" />
-            </ListItem>
-          </NextLink>
         </List>
         <Divider />
         <SignOut />

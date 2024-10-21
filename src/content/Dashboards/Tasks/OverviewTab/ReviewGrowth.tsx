@@ -20,7 +20,7 @@ import { DashboardDataResponse } from "@/models";
 
 function ReviewGrowth({ setMonth }) {
   const theme = useTheme();
-  const { data, chartTitle, setDataState  } = useContext(DataContext);
+  const { data, chartTitle, setDataState } = useContext(DataContext);
   const [value, setValue] = useState<any>();
   const [customDateModal, setCustomteModal] = useState(false);
   const [rest, setRest] = useState<Boolean>(false);
@@ -70,7 +70,6 @@ function ReviewGrowth({ setMonth }) {
       const end_date = new Date(endDate);
       const filteredData = data.filter((item) => {
         const itemDate = new Date(item.date);
-        console.log(itemDate);
         return itemDate >= initialDate && itemDate <= end_date;
       });
       return filteredData;
@@ -279,7 +278,6 @@ function ReviewGrowth({ setMonth }) {
       }, {});
       for (let i = 0; i < 12; i++) {
         const month = i + 1;
-        console.log(month)
         const monthLabel = labelsInit[new Date(currentYear, month - 1).getMonth()];
         labels.push(monthLabel);
         seriesData.push(monthCounts[month - 1] || 0);
@@ -448,7 +446,7 @@ function ReviewGrowth({ setMonth }) {
               disabledButton: false
             });
           } catch (error) {
-            console.log(error)
+            console.log(error);
             const errorMessage = "Could not load data, please try again later.";
             const severity: AlertColor = "error";
 
@@ -469,9 +467,9 @@ function ReviewGrowth({ setMonth }) {
     }
   }, [rest]);
 
-  useEffect(()=>{
-    setPeriod(periods[1].text)
-  },[clientId])
+  useEffect(() => {
+    setPeriod(periods[1].text);
+  }, [clientId]);
   return (
     <Box>
       <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">

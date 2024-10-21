@@ -19,9 +19,14 @@ import { filterProvider } from "@/helpers/constant";
 import DataContext from "@/contexts/DataContext";
 import { deleteClientSocialMediaLink, editClientSocialMediaLink } from "@/services";
 import CustomConfirm from "@/components/CustomConfirm";
-import { EditClientSocialMediaLink } from "@/models";
+import { EditClientSocialMediaLink, DeleteClientSocialMediaLink } from "@/models";
+import PageLoader from "@/components/Loader/index";
 
-function GetSocialPages() {
+interface GetClientSocialPageProps {
+  loading: boolean;
+}
+
+function GetSocialPages({ loading }: GetClientSocialPageProps) {
   const theme = useTheme();
   const { links, filter, refresh, setDataState } = useContext(DataContext);
   const [selectedLinkId, setSelectedLinkId] = useState(null);
@@ -30,7 +35,18 @@ function GetSocialPages() {
 
   const handleDeleteLink = useCallback(async () => {
     try {
-      await deleteClientSocialMediaLink(+selectedLinkId);
+      const selectedLink = links.find((link) => link.id === selectedLinkId);
+
+      if (!selectedLink) {
+        throw new Error("Selected link not found");
+      }
+
+      const body: DeleteClientSocialMediaLink = {
+        id: selectedLink.clientId,
+        title: selectedLink.title
+      };
+
+      await deleteClientSocialMediaLink(body);
 
       const successMessage = "Social media link successfully deleted!";
       const successSeverity: AlertColor = "success";
@@ -46,7 +62,8 @@ function GetSocialPages() {
         refresh: !refresh
       });
     } catch (error) {
-      const errorMessage = "Something went wrong, please try again later.";
+      const errorMessage =
+        error.message || "Failed to delete social media link. Please try again.";
       const errorSeverity: AlertColor = "error";
 
       setDataState({
@@ -55,11 +72,18 @@ function GetSocialPages() {
         isAlertOpen: true
       });
     }
-  }, [selectedLinkId]);
+  }, [selectedLinkId, links, setDataState, refresh]);
 
   const handleEditLink = useCallback(async () => {
+    const selectedLink = links.find((link) => link.id === selectedLinkId);
+
+    if (!selectedLink) {
+      throw new Error("Selected link not found");
+    }
+
     const body: EditClientSocialMediaLink = {
-      id: selectedLinkId,
+      id: selectedLink.clientId,
+      title: selectedLink.title,
       url: editLinkValue
     };
 
@@ -82,7 +106,8 @@ function GetSocialPages() {
         refresh: !refresh
       });
     } catch (error) {
-      const errorMessage = "Something went wrong, please try again later.";
+      const errorMessage =
+        error.message || "Failed to update social media link. Please try again.";
       const errorSeverity: AlertColor = "error";
 
       setDataState({
@@ -91,7 +116,7 @@ function GetSocialPages() {
         isAlertOpen: true
       });
     }
-  }, [selectedLinkId, editLinkValue]);
+  }, [selectedLinkId, editLinkValue, links, setDataState, refresh]);
 
   const handleCancelEdit = () => {
     setSelectedLinkId(null);
@@ -104,6 +129,10 @@ function GetSocialPages() {
     setEditLinkValue(linkObj.link);
     setEditMode(true);
   };
+
+  if (loading) {
+    return <PageLoader />;
+  }
 
   return (
     <>

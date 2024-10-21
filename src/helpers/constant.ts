@@ -1,13 +1,12 @@
 export const providers = [
   "Google",
-  "Yelp",
   "Yellow Pages",
   "CarGurus",
   "Cars",
   "Dealer",
   "Facebook"
 ];
-export const selectProvider = [...providers.filter((item) => item !== "Cars")];
+export const selectProvider = [...providers.filter((item) => item)];
 
 export const filterProvider = ["All Social Media", ...selectProvider];
 

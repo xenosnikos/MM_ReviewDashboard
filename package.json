@@ -1,7 +1,7 @@
 {
   "name": "tokyo-free-black-nextjs-admin-dashboard",
   "version": "1.0.0",
-  "title": "Tokyo Free Black NextJS Typescript Admin Dashboard",
+  "title": "Maxxmedia Dashboard",
   "description": "High performance React template built with lots of powerful MUI (Material-UI) components across multiple product niches for fast & perfect apps development processes",
   "author": {
     "name": "BloomUI.com",
@@ -31,6 +31,7 @@
     "clsx": "1.1.1",
     "context-api": "0.0.2",
     "file-saver": "^2.0.5",
+    "lodash": "^4.17.21",
     "next": "12.1.6",
     "next-images": "1.8.4",
     "nprogress": "0.2.0",

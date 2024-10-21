@@ -3,7 +3,6 @@ import { Chart } from "@/components/Chart";
 import type { ApexOptions } from "apexcharts";
 import { useEffect, useState } from "react";
 
-
 const initOptions: ApexOptions = {
   chart: {
     id: "star-donut",
@@ -44,7 +43,7 @@ const initOptions: ApexOptions = {
   series: [0, 0, 0, 0, 0]
 };
 
-function StarRatingBreakDown({ data , total }) {
+function StarRatingBreakDown({ data, total }) {
   const theme = useTheme();
   const [options, setOptions] = useState<ApexOptions>(initOptions);
 
@@ -54,7 +53,7 @@ function StarRatingBreakDown({ data , total }) {
       for (let i = 5; i > 0; i--) {
         const index = data.findIndex((item) => item.rating === i);
         if (index > -1 && data[index].count) {
-          let da = (data[index].count / 100) * total
+          let da = (data[index].count / 100) * total;
           newSeries.push(Math.round(da));
         } else {
           newSeries.push(0);
@@ -84,7 +83,7 @@ function StarRatingBreakDown({ data , total }) {
         type="donut"
         width={500}
         options={options}
-        series={options.series} 
+        series={options.series}
       />
     </Box>
   );

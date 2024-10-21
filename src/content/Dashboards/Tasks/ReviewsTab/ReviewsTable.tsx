@@ -219,12 +219,8 @@ function ReviewsTable() {
                         </Box>
                       </TableCell>
                       <TableCell>
-                        <a href={review.viewlink} target="_blank">
-                        <Button
-                          variant="outlined"
-                        >
-                          View
-                        </Button>
+                        <a href={review.viewlink} target="_blank" rel="noreferrer">
+                          <Button variant="outlined">View</Button>
                         </a>
                       </TableCell>
                     </TableRow>

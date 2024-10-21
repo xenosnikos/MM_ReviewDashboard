@@ -13,13 +13,14 @@ function AddSocialPage() {
   const theme = useTheme();
   const formRef = useRef<FormHandles>(null);
   const [page, setPage] = useState(selectProvider[0]);
+  const [socialLink, setSocialLink] = useState("");
   const { clientId, refresh, setDataState } = useContext(DataContext);
 
   const handleSubmit = async (data) => {
     const { socialLink, socialPage } = data;
 
     const body: CreateClientSocialMediaLink = {
-      clientid: clientId,
+      clientId: clientId,
       title: socialPage,
       url: socialLink
     };
@@ -27,8 +28,8 @@ function AddSocialPage() {
     try {
       await createClientSocialMediaLink(body);
 
-      formRef.current.setFieldValue("socialLink", "");
-      formRef.current.setFieldValue("socialPage", "Google");
+      setPage("Google");
+      setSocialLink("");
       const errorMessage = "Social media link successfully added!";
       const severity: AlertColor = "success";
 
@@ -42,8 +43,8 @@ function AddSocialPage() {
         refresh: !refresh
       });
     } catch (error) {
-      formRef.current.setFieldValue("socialLink", "");
-      formRef.current.setFieldValue("socialPage", "Google");
+      setPage("Google");
+      setSocialLink("");
       let errorMessage = "Something went wrong, please try again later.";
       let severity: AlertColor = "error";
 
@@ -61,8 +62,8 @@ function AddSocialPage() {
   };
 
   useEffect(() => {
-    formRef.current.setData({ socialPage: page });
-  }, [page]);
+    formRef.current.setFieldValue("socialPage", "Google");
+  }, []);
 
   return (
     <Box
@@ -88,6 +89,8 @@ function AddSocialPage() {
             <VTextField
               id="social-link"
               name="socialLink"
+              value={socialLink}
+              onChange={(e) => setSocialLink(e.target.value)}
               margin="normal"
               type="url"
               InputProps={{ style: { height: "35px" } }}
@@ -111,7 +114,10 @@ function AddSocialPage() {
                 }
               }}
               InputLabelProps={{ style: { marginTop: "15px", marginLeft: "10px" } }}
-              onChange={(e) => setPage(e.target.value)}
+              onChange={(e) => {
+                setPage(e.target.value);
+                formRef.current.setFieldValue("socialPage", e.target.value);
+              }}
             >
               {selectProvider.map((option, index) => (
                 <MenuItem key={index} value={option}>

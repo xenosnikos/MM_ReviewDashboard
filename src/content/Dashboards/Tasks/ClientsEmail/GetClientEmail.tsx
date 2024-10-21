@@ -15,15 +15,22 @@ import { useCallback, useContext, useState } from "react";
 import DataContext from "@/contexts/DataContext";
 import CustomConfirm from "@/components/CustomConfirm";
 import { EditClientReminderEmail } from "@/models";
-import { deleteClientReminderEmail, editClientReminderEmail } from "@/services/clientEmail";
+import {
+  deleteClientReminderEmail,
+  editClientReminderEmail
+} from "@/services/clientEmail";
+import PageLoader from "@/components/Loader/index";
 
-function GetEmails() {
+interface GetClientEmailPageProps {
+  loading: boolean;
+}
+
+function GetEmails({ loading }: GetClientEmailPageProps) {
   const theme = useTheme();
   const { emails, refresh, setDataState } = useContext(DataContext);
   const [selectedEmailId, setSelectedEmailId] = useState<number | null>(null);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editEmailValue, setEditEmailValue] = useState<string>("");
-  
 
   const handleDeleteEmail = useCallback(async () => {
     if (selectedEmailId === null) return;
@@ -113,6 +120,10 @@ function GetEmails() {
     setEditEmailValue(emailObj.email);
     setEditMode(true);
   };
+
+  if (loading) {
+    return <PageLoader />;
+  }
 
   return (
     <>

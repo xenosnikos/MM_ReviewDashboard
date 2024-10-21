@@ -51,13 +51,32 @@ function ReviewSourceBreakDown({ data }) {
     if (!data) return;
 
     const newSeries = [];
+    const newLabels = [];
+
     providers.forEach((provider) => {
       const index = data.findIndex((item) => item.type === provider);
-      if (index > -1 && data[index].count) newSeries.push(parseFloat(data[index].count));
-      else newSeries.push(0);
+      if (index > -1 && data[index].count && parseFloat(data[index].count) > 0) {
+        newSeries.push(parseFloat(data[index].count));
+        newLabels.push(provider);
+      }
     });
 
-    setOptions({ ...options, series: newSeries });
+    setOptions({
+      ...options,
+      series: newSeries,
+      labels: newLabels,
+      legend: {
+        ...options.legend,
+        formatter: function (_val, opts) {
+          return (
+            newLabels[opts.seriesIndex] +
+            " - " +
+            opts.w.globals.series[opts.seriesIndex] +
+            "%"
+          );
+        }
+      }
+    });
   }, [data]);
 
   return (
@@ -78,7 +97,7 @@ function ReviewSourceBreakDown({ data }) {
       <Chart
         id="chart-donut2"
         type="donut"
-        width={532}
+        width={580}
         options={options}
         series={options.series}
       />
