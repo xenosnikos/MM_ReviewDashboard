@@ -45,22 +45,17 @@ function ReviewGrowth({ setMonth }) {
   const { client } = router.query;
   const clientId = typeof client === "string" ? client : "";
 
-  const getLastYearData = (data) => {
+  const getCurrentYearData = (data) => {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1;
 
-    const lastYearData = data.filter((item) => {
+    const currentYearData = data.filter((item) => {
       const itemDate = new Date(item.date);
       const itemYear = itemDate.getFullYear();
-      const itemMonth = itemDate.getMonth() + 1;
 
-      return (
-        currentYear - itemYear === 1 ||
-        (currentYear === itemYear && itemMonth <= currentMonth)
-      );
+      return currentYear === itemYear;
     });
-    return lastYearData;
+    return currentYearData;
   };
 
   const customDateData = (data) => {
@@ -77,7 +72,7 @@ function ReviewGrowth({ setMonth }) {
   };
 
   const initOptions = useMemo<ApexOptions>(() => {
-    const lastYearData = getLastYearData(data?.reviewGrowth || []);
+    const lastYearData = getCurrentYearData(data?.reviewGrowth || []);
     const seriesData = lastYearData.map((item) => item.count);
 
     return {
@@ -258,7 +253,7 @@ function ReviewGrowth({ setMonth }) {
       selectedOption === "current_month"
         ? getCurrentMonthData(data?.reviewGrowth || [])
         : selectedOption === "current_year"
-        ? getLastYearData(data?.reviewGrowth || [])
+        ? getCurrentYearData(data?.reviewGrowth || [])
         : customDateData(data?.reviewGrowth || []);
 
     const currentDate = new Date();
