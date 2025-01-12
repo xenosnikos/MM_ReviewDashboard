@@ -35,12 +35,11 @@ function DocConfirm({ open, onClose, onConfirm }) {
 
   const handleChangeOption = (event) => {
     const value = event.target.value;
-    setDataState({ selectedDateOption: value });
-
-    if (value === "all") {
-      setDataState({ startDate: null, endDate: null });
-      return;
-    }
+    setDataState({
+      selectedDateOption: value,
+      startDate: value === "all" ? null : state[0].startDate,
+      endDate: value === "all" ? null : state[0].endDate
+    });
   };
 
   const isAllSelectedSources =
@@ -67,12 +66,27 @@ function DocConfirm({ open, onClose, onConfirm }) {
   };
 
   const handleConfirm = async () => {
-    await setDataState({
-      startDate: state[0].startDate,
-      endDate: state[0].endDate
-    });
-    onConfirm(selectedSources);
+    if (
+      selectedDateOption === "dateRange" &&
+      (!state[0].startDate || !state[0].endDate)
+    ) {
+      setDataState({
+        alertMessage: "Please select both start and end dates",
+        alertSeverity: "warning",
+        isAlertOpen: true
+      });
+      return;
+    }
+
+    if (selectedDateOption === "dateRange") {
+      await setDataState({
+        startDate: state[0].startDate,
+        endDate: state[0].endDate
+      });
+    }
+
     onClose();
+    onConfirm();
   };
 
   return (
@@ -148,6 +162,11 @@ function DocConfirm({ open, onClose, onConfirm }) {
                   editableDateInputs={true}
                   onChange={(item) => {
                     setState([item.selection]);
+                    // Immediately update the context when dates change
+                    setDataState({
+                      startDate: item.selection.startDate,
+                      endDate: item.selection.endDate
+                    });
                   }}
                   moveRangeOnFirstSelection={false}
                   ranges={state}
