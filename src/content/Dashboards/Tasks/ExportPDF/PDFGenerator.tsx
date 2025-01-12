@@ -4,7 +4,6 @@ import { pdf } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
 import DocPDF from "./DocPDF";
 import { getReviewsData } from "@/services";
-import { ReviewsDataResponse } from "@/models";
 import { providers } from "@/helpers/constant";
 import DataContext from "@/contexts/DataContext";
 
@@ -19,40 +18,57 @@ function PDFGenerator({
   setDataState
 }) {
   const { startDate, endDate } = useContext(DataContext);
+
   useEffect(() => {
+    let isMounted = true;
+
     const generatePDF = async () => {
-      const props = await getProps();
-      const doc = <DocPDF {...props} />;
-      const asPdf = pdf(doc);
-      asPdf.updateContainer(doc);
-      const blob = await asPdf.toBlob();
-      saveAs(blob, `${clientName}.pdf`);
+      if (!data || !reviewsData || !refreshPDF) return;
 
       try {
-        const response: ReviewsDataResponse = await getReviewsData(params);
+        // Add delay to ensure charts are rendered
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+
+        const props = await getProps();
+        const doc = <DocPDF {...props} />;
+        const asPdf = pdf(doc);
+        asPdf.updateContainer(doc);
+        const blob = await asPdf.toBlob();
+
+        if (!isMounted) return;
+
+        saveAs(blob, `${clientName}.pdf`);
+
+        const response = await getReviewsData(params);
+
+        if (!isMounted) return;
+
         setDataState({
           reviewsData: response,
           selectedSources: providers,
-          disabledButton: false
+          disabledButton: false,
+          refreshPDF: false
         });
       } catch (error) {
-        const errorMessage = "Something went wrong, please try again later.";
-        const severity = "error";
+        if (!isMounted) return;
 
+        console.error("Error generating PDF:", error);
         setDataState({
-          alertMessage: errorMessage,
-          alertSeverity: severity,
+          alertMessage: "Something went wrong, please try again later.",
+          alertSeverity: "error",
           isAlertOpen: true,
-          disabledButton: false
+          disabledButton: false,
+          refreshPDF: false
         });
       }
     };
 
-    if (refreshPDF) {
-      setDataState({ refreshPDF: false });
-      generatePDF();
-    }
-  }, [refreshPDF]);
+    generatePDF();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [refreshPDF, data, reviewsData]);
 
   const getProps = async () => {
     const chartInstance = ApexCharts.getChartByID("review-chart");

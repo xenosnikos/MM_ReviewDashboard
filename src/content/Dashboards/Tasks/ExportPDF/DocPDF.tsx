@@ -20,21 +20,63 @@ function DocPDF({
   startDate,
   endDate
 }) {
-  const reviews = reviewsData?.data;
+  // Filter reviews based on selected sources and date range
+  const filteredReviews = (reviewsData?.data || []).filter((review) => {
+    // Parse dates properly
+    const reviewDate = new Date(review.raw_date); // Use raw_date instead of date
+    const start = startDate ? new Date(startDate) : null;
+    const end = endDate ? new Date(endDate) : null;
 
+    return (
+      selectedSources.includes(review.type) &&
+      (!start || reviewDate >= start) &&
+      (!end || reviewDate <= end)
+    );
+  });
+
+  // Filter source table data based on selected sources
+  const filteredSourceTableData = (data?.sourceTableData || []).filter((value) =>
+    selectedSources.includes(value.type)
+  );
+
+  // Recalculate positive, neutral, and negative counts based on filtered sources
   const { positive, neutral, negative } = (data?.sourcesGraphData?.series || []).reduce(
     (acc, value) => {
       switch (value.name) {
         case "5 Stars":
         case "4 Stars":
-          acc.positive += value.data.reduce((prev, curr) => prev + curr, 0);
+          acc.positive += value.data.reduce(
+            (prev, curr, index) =>
+              selectedSources.includes(
+                Object.keys(data.sourcesGraphData.categories)[index]
+              )
+                ? prev + curr
+                : prev,
+            0
+          );
           break;
         case "3 Stars":
-          acc.neutral += value.data.reduce((prev, curr) => prev + curr, 0);
+          acc.neutral += value.data.reduce(
+            (prev, curr, index) =>
+              selectedSources.includes(
+                Object.keys(data.sourcesGraphData.categories)[index]
+              )
+                ? prev + curr
+                : prev,
+            0
+          );
           break;
         case "2 Stars":
         case "1 Stars":
-          acc.negative += value.data.reduce((prev, curr) => prev + curr, 0);
+          acc.negative += value.data.reduce(
+            (prev, curr, index) =>
+              selectedSources.includes(
+                Object.keys(data.sourcesGraphData.categories)[index]
+              )
+                ? prev + curr
+                : prev,
+            0
+          );
           break;
         default:
           break;
@@ -43,6 +85,41 @@ function DocPDF({
     },
     { positive: 0, neutral: 0, negative: 0 }
   );
+
+  // Filter star rating breakdown based on calculations
+  const filteredStarRatingBreakdown = data?.starRatingBreakdown.filter((rating) => {
+    const matchingCount = {
+      1: negative,
+      2: negative,
+      3: neutral,
+      4: positive,
+      5: positive
+    }[rating.rating];
+
+    return matchingCount > 0;
+  });
+
+  // Filter review source breakdown based on selected sources
+  const filteredReviewSourceBreakDown = data?.reviewSourceBreakDown.filter((source) =>
+    selectedSources.includes(source.type)
+  );
+
+  // Calculate average rating based on filtered data
+  const averageRating = filteredStarRatingBreakdown
+    ? (
+        filteredStarRatingBreakdown.reduce(
+          (sum, rating) => sum + rating.rating * parseFloat(rating.count),
+          0
+        ) /
+        filteredStarRatingBreakdown.reduce(
+          (sum, rating) => sum + parseFloat(rating.count),
+          0
+        )
+      ).toFixed(1)
+    : data?.averageRating || "0.0";
+
+  // Calculate total reviews based on filtered data
+  const totalReviews = filteredReviews.length;
 
   const backStyle = (index: number) => {
     if (index % 2 === 0) return styles.backColor;
@@ -58,12 +135,6 @@ function DocPDF({
       </View>
     );
   };
-
-  const filteredSourceTableData = data?.sourceTableData.filter((value) =>
-    selectedSources.includes(value.type)
-  );
-
-  console.log(startDate, endDate);
 
   const toDate = (time) => {
     const d = new Date(time);
@@ -91,7 +162,7 @@ function DocPDF({
           <View style={styles.totalReviews}>
             <Image src={reviewIcon} style={styles.reviewIcon} />
             <Text>Reviews</Text>
-            <Text style={styles.valueReviews}>{data?.totalReviews}</Text>
+            <Text style={styles.valueReviews}>{totalReviews}</Text>
           </View>
           <View style={[styles.sectionReviews, styles.borderRight]}>
             <Image src={positiveIcon} style={styles.emoji} />
@@ -121,14 +192,15 @@ function DocPDF({
             styles.borderRight
           ]}
         >
-          <Text style={styles.valueAverage}>{data?.averageRating}</Text>
+          <Text style={styles.valueAverage}>{averageRating}</Text>
           <View style={styles.sourceBreakdown}>
-            {data?.reviewSourceBreakDown.map((value: any, index: number) => (
-              <View key={index} style={styles.table}>
-                <Text style={styles.textBreakdown}>{value.type}</Text>
-                <Text style={styles.subTextBreakdown}>({value.count}%)</Text>
-              </View>
-            ))}
+            {Array.isArray(filteredReviewSourceBreakDown) &&
+              filteredReviewSourceBreakDown.map((value: any, index: number) => (
+                <View key={index} style={styles.table}>
+                  <Text style={styles.textBreakdown}>{value.type}</Text>
+                  <Text style={styles.subTextBreakdown}>({value.count}%)</Text>
+                </View>
+              ))}
           </View>
         </View>
         <View style={[styles.sectionAverage, styles.paddingTopChart]}>
@@ -180,28 +252,29 @@ function DocPDF({
               <Text style={styles.title}>Total Count</Text>
             </View>
           </View>
-          {filteredSourceTableData.map((value: any, index: number) => (
-            <View key={index} style={[styles.tableData, styles.borderTop]}>
-              <View style={styles.section20}>
-                <Text style={styles.title}>{value.type}:</Text>
+          {Array.isArray(filteredSourceTableData) &&
+            filteredSourceTableData.map((value: any, index: number) => (
+              <View key={index} style={[styles.tableData, styles.borderTop]}>
+                <View style={styles.section20}>
+                  <Text style={styles.title}>{value.type}:</Text>
+                </View>
+                <View style={styles.section16}>
+                  <Text>{value.thisMonth || "0"}</Text>
+                </View>
+                <View style={styles.section16}>
+                  <Text>{value.lastThirtyDaysCount || "0"}</Text>
+                </View>
+                <View style={styles.section16}>
+                  <Text>{value.lastMonth || "0"}</Text>
+                </View>
+                <View style={styles.section16}>
+                  <Text>{value.thisYear || "0"}</Text>
+                </View>
+                <View style={styles.section16}>
+                  <Text>{value.totalCount || "0"}</Text>
+                </View>
               </View>
-              <View style={styles.section16}>
-                <Text>{value.thisMonth || "0"}</Text>
-              </View>
-              <View style={styles.section16}>
-                <Text>{value.lastThirtyDaysCount || "0"}</Text>
-              </View>
-              <View style={styles.section16}>
-                <Text>{value.lastMonth || "0"}</Text>
-              </View>
-              <View style={styles.section16}>
-                <Text>{value.thisYear || "0"}</Text>
-              </View>
-              <View style={styles.section16}>
-                <Text>{value.totalCount || "0"}</Text>
-              </View>
-            </View>
-          ))}
+            ))}
         </View>
         <View
           style={[
@@ -213,31 +286,32 @@ function DocPDF({
         >
           <Text style={styles.title}>Reviews</Text>
         </View>
-        {reviews.map((review: any, index: number) => (
-          <View
-            key={index}
-            wrap={false}
-            style={[styles.reviewBox, styles.borderBottom, backStyle(index)]}
-          >
-            <View style={styles.sectionReview}>
-              <View style={styles.sectionLogo}>
-                <Image src={logo(review.type)} style={styles.logo} />
+        {Array.isArray(filteredReviews) &&
+          filteredReviews.map((review: any, index: number) => (
+            <View
+              key={review.reviewid}
+              wrap={false}
+              style={[styles.reviewBox, styles.borderBottom, backStyle(index)]}
+            >
+              <View style={styles.sectionReview}>
+                <View style={styles.sectionLogo}>
+                  <Image src={logo(review.type)} style={styles.logo} />
+                </View>
+                <Text style={styles.textDate}>
+                  {review.date} - {data.clientName}
+                </Text>
               </View>
-              <Text style={styles.textDate}>
-                {review.date} - {data.clientName}
-              </Text>
+              <View style={styles.sectionReview}>
+                <Text style={styles.textReviewer}>Review by {review.author}:</Text>
+                {rating(review.rating)}
+              </View>
+              <View style={styles.sectionReview}>
+                <Text style={styles.textComment}>
+                  {review.review ? review.review : "(No comments)"}
+                </Text>
+              </View>
             </View>
-            <View style={styles.sectionReview}>
-              <Text style={styles.textReviewer}>Review by {review.author}:</Text>
-              {rating(review.rating)}
-            </View>
-            <View style={styles.sectionReview}>
-              <Text style={styles.textComment}>
-                {review.review ? review.review : "(No comments)"}
-              </Text>
-            </View>
-          </View>
-        ))}
+          ))}
       </Page>
     </Document>
   );

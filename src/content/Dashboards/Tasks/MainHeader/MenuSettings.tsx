@@ -22,7 +22,6 @@ import { getDashboardData, getDashboardDateData, getReviewsData } from "@/servic
 import SignOut from "./SignOut";
 import dynamic from "next/dynamic";
 import DocConfirm from "./DocConfirm";
-import { DashboardDataResponse, ReviewsDataResponse } from "@/models";
 import { getCurrentUser } from "@/services/login/index";
 
 const PDFGenerator = dynamic(() => import("../ExportPDF/PDFGenerator"), {
@@ -69,7 +68,6 @@ function MenuSettings({ clientName, params }) {
     currentTab,
     refreshPDF,
     reviewsData,
-    data,
     disabledButton,
     selectedDateOption,
     startDate,
@@ -135,93 +133,94 @@ function MenuSettings({ clientName, params }) {
   };
 
   const handlePDF = async () => {
-    setDataState({
-      disabledButton: true
-    });
-
     try {
-      const response: ReviewsDataResponse = await getReviewsData({
-        ...params,
-        per_page: totalReviews
+      setDataState({
+        disabledButton: true
       });
-      const selectedDate = [
-        {
-          startDate: startDate,
-          endDate: endDate
-        }
-      ];
 
       if (selectedDateOption !== "all") {
-        const data2: any = await getDashboardDateData(clientId, selectedDate, false);
-        await setDataState({
-          data: data2
-        });
-
-        await setcustomdateData(data2);
-        const response2: DashboardDataResponse = await getDashboardData(clientId);
-        setDataState({
-          data: response2
-        });
-
-        if (typeof response === "object" && response !== null && "data" in response) {
-          const filteredResponse = {
-            ...response,
-            data: (response.data as Array<any>).filter((review) => {
-              const reviewDate = new Date(
-                review.date.replace(/\b(\d+)(st|nd|rd|th)\b/g, "$1")
-              );
-              const startDateFormatted = new Date(startDate);
-              const endDateFormatted = new Date(endDate);
-
-              const reviewDateUTC = new Date(
-                Date.UTC(
-                  reviewDate.getFullYear(),
-                  reviewDate.getMonth(),
-                  reviewDate.getDate()
-                )
-              );
-              const startDateUTC = new Date(
-                Date.UTC(
-                  startDateFormatted.getFullYear(),
-                  startDateFormatted.getMonth(),
-                  startDateFormatted.getDate()
-                )
-              );
-              const endDateUTC = new Date(
-                Date.UTC(
-                  endDateFormatted.getFullYear(),
-                  endDateFormatted.getMonth(),
-                  endDateFormatted.getDate()
-                )
-              );
-
-              return reviewDateUTC >= startDateUTC && reviewDateUTC <= endDateUTC;
-            })
-          };
-          setDataState({
-            reviewsData: filteredResponse,
-            refreshPDF: true
-          });
+        if (!startDate || !endDate) {
+          throw new Error("Please select a valid date range");
         }
-        handleConfirmationDialogClose();
-        return;
-      }
 
-      await setcustomdateData(data);
-      await setDataState({
-        data: data,
-        reviewsData: response,
-        refreshPDF: true
-      });
+        const selectedDate = [{ startDate, endDate }];
+
+        // Use Promise.all to fetch data in parallel
+        const [dateData, reviewsResponse] = await Promise.all([
+          getDashboardDateData(clientId, selectedDate, false),
+          getReviewsData({
+            ...params,
+            per_page: totalReviews
+          })
+        ]);
+
+        // Filter reviews by date
+        const filteredReviews = {
+          ...reviewsResponse,
+          data: reviewsResponse.data?.filter((review) => {
+            const reviewDate = new Date(
+              review.date.replace(/\b(\d+)(st|nd|rd|th)\b/g, "$1")
+            );
+            const startDateFormatted = new Date(startDate);
+            const endDateFormatted = new Date(endDate);
+
+            const reviewDateUTC = new Date(
+              Date.UTC(
+                reviewDate.getFullYear(),
+                reviewDate.getMonth(),
+                reviewDate.getDate()
+              )
+            );
+            const startDateUTC = new Date(
+              Date.UTC(
+                startDateFormatted.getFullYear(),
+                startDateFormatted.getMonth(),
+                startDateFormatted.getDate()
+              )
+            );
+            const endDateUTC = new Date(
+              Date.UTC(
+                endDateFormatted.getFullYear(),
+                endDateFormatted.getMonth(),
+                endDateFormatted.getDate()
+              )
+            );
+
+            return reviewDateUTC >= startDateUTC && reviewDateUTC <= endDateUTC;
+          })
+        };
+
+        // Single state update with all changes
+        await setDataState({
+          data: dateData,
+          reviewsData: filteredReviews,
+          refreshPDF: true
+        });
+        setcustomdateData(dateData);
+      } else {
+        const [reviewsResponse, dashboardData] = await Promise.all([
+          getReviewsData({
+            ...params,
+            per_page: totalReviews
+          }),
+          getDashboardData(clientId)
+        ]);
+
+        // Single state update
+        await setDataState({
+          data: dashboardData,
+          reviewsData: reviewsResponse,
+          refreshPDF: true
+        });
+        setcustomdateData(dashboardData);
+      }
 
       handleConfirmationDialogClose();
     } catch (error) {
-      const errorMessage = "Something went wrong, please try again later.";
-      const severity: AlertColor = "error";
-
+      console.error("Error in handlePDF:", error);
       setDataState({
-        alertMessage: errorMessage,
-        alertSeverity: severity,
+        alertMessage: error.message || "Something went wrong, please try again later.",
+        alertSeverity: "error",
         isAlertOpen: true,
         disabledButton: false
       });
@@ -284,7 +283,7 @@ function MenuSettings({ clientName, params }) {
       <DocConfirm
         open={isConfirmationDialogOpen}
         onClose={handleConfirmationDialogClose}
-        onConfirm={handlePDF}
+        onConfirm={() => handlePDF()}
       />
       {typeof window !== "undefined" && (
         <PDFGenerator

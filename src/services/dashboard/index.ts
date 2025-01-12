@@ -21,16 +21,15 @@ export const getDashboardData = async (
   });
 };
 
-function formatDate(date: Date, isEndDate: boolean = false) {
-  var d = new Date(date),
-    month = "" + (d.getMonth() + 1),
-    day = "" + d.getDate(),
-    year = d.getFullYear();
+function formatDate(date: Date | string, isEndDate: boolean = false) {
+  // Handle ISO string
+  const d = date instanceof Date ? date : new Date(date);
 
-  if (month.length < 2) month = "0" + month;
-  if (day.length < 2) day = "0" + day;
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
 
-  const baseDate = [year, month, day].join("-");
+  const baseDate = `${year}-${month}-${day}`;
   return isEndDate ? `${baseDate} 23:59:59` : `${baseDate} 00:00:00`;
 }
 
@@ -52,19 +51,20 @@ export const getDashboardDateData = async (
     enddate = formatDate(value[0]?.endDate, true);
   }
 
+  const url = `/getDashboardDateData?client=${client}&startdate=${encodeURIComponent(
+    startdate
+  )}&enddate=${encodeURIComponent(enddate)}`;
+
   return await new Promise((resolve, reject) => {
     api
-      .get(
-        `/getDashboardDateData?client=${client}&startdate=${encodeURIComponent(
-          startdate
-        )}&enddate=${encodeURIComponent(enddate)}`
-      )
+      .get(url)
       .then((response) => {
         if (response?.data?.status === "success" && response?.data?.data)
           resolve(response.data.data);
         else reject("Something went wrong");
       })
       .catch((error) => {
+        console.error("API Error:", error);
         if (error?.message) reject(error.message);
         else reject("Something went wrong");
       });
