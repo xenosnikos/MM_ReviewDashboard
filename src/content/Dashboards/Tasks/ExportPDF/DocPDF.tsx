@@ -22,8 +22,10 @@ function DocPDF({
 }) {
   // Filter reviews based on selected sources and date range
   const filteredReviews = (reviewsData?.data || []).filter((review) => {
-    // Parse dates properly
-    const reviewDate = new Date(review.raw_date); // Use raw_date instead of date
+    // avoiding timezone shifts
+    const [year, month, day] = review.raw_date.split("-").map(Number);
+    const reviewDate = new Date(year, month - 1, day);
+
     const start = startDate ? new Date(startDate) : null;
     const end = endDate ? new Date(endDate) : null;
 
